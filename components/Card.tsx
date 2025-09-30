@@ -5,11 +5,12 @@ interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const Card: React.FC<CardProps> = ({ variant = 'default', className = '', ...props }) => {
-  const baseClasses = 'rounded-xl p-8 transition-all duration-200';
+  // Base classes that match DesignSystem.json specifications
+  const baseClasses = 'card bg-card text-card-foreground border border-border transition-all duration-200 ease';
 
   const variantClasses = {
-    default: 'bg-neutral-white shadow-md border border-neutral-gray-200 hover:shadow-lg hover:-translate-y-1',
-    testimonial: 'bg-neutral-gray-50 border-l-4 border-primary-red shadow-sm',
+    default: '',
+    testimonial: 'card-testimonial bg-muted border-l-4 border-l-primary',
   };
 
   return (

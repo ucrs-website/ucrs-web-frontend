@@ -19,8 +19,8 @@ const Navigation: React.FC<NavigationProps> = ({ links, className = '' }) => {
         <Link
           key={link.href}
           href={link.href}
-          className={`text-neutral-gray-600 hover:text-primary-red font-medium text-base transition-colors duration-200 ${
-            link.active ? 'text-primary-red' : ''
+          className={`nav-link hover:text-primary font-medium text-base transition-colors duration-200 ${
+            link.active ? 'nav-link active' : ''
           }`}
         >
           {link.label}
