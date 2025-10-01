@@ -1,16 +1,17 @@
-import Logo from "@/components/navbar-components/logo"
-import { Button } from "@/components/ui/button"
+// import Logo from "@/components/navbar-components/logo"
+import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-} from "@/components/ui/navigation-menu"
+} from "@/components/ui/navigation-menu";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/components/ui/popover";
+import Image from "next/image";
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
@@ -18,9 +19,9 @@ const navigationLinks = [
   { href: "#", label: "Features" },
   { href: "#", label: "Pricing" },
   { href: "#", label: "About" },
-]
+];
 
-export default function Component() {
+export default function HeaderNavigation() {
   return (
     <header className="border-b px-4 md:px-6">
       <div className="flex h-16 items-center justify-between gap-4">
@@ -82,7 +83,16 @@ export default function Component() {
           {/* Main nav */}
           <div className="flex items-center gap-6">
             <a href="#" className="text-primary hover:text-primary/90">
-              <Logo />
+              <div className="relative w-12 h-12 md:w-16 md:h-16">
+                <Image
+                  src="/images/logo.png"
+                  alt="UCRS - Upper Canada Railway Services"
+                  fill
+                  className="object-contain"
+                  sizes="(max-width: 768px) 48px, 64px"
+                  priority
+                />
+              </div>
             </a>
             {/* Navigation menu */}
             <NavigationMenu className="max-md:hidden">
@@ -113,5 +123,5 @@ export default function Component() {
         </div>
       </div>
     </header>
-  )
+  );
 }
