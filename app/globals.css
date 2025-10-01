@@ -48,6 +48,10 @@
 
     /* Extended UCRS Color Variables */
     --primary-50: 0 86% 97%;   /* #FED7D7 */
+
+    /* Font Variables */
+    --font-primary: var(--font-manrope);
+    --font-heading: var(--font-manrope);
     --primary-100: 0 93% 94%;  /* #FEB2B2 */
     --primary-200: 0 96% 89%;  /* #FC8181 */
     --primary-300: 0 91% 83%;  /* #F56565 */
