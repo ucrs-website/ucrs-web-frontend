@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Navigation from './Navigation';
+import Container from './Container';
 
 interface NavLink {
  href: string;
@@ -25,12 +26,12 @@ const navigationLinks: NavLink[] = [
 ];
 
 const Header: React.FC<HeaderProps> = ({
- className = '',
- transparent = false,
- ...props
+  className = '',
+  transparent = false,
+  ...props
 }) => {
- const [isMenuOpen, setIsMenuOpen] = useState(false);
- const [isScrolled, setIsScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
  // Handle scroll effect for header background
  useEffect(() => {
@@ -75,7 +76,7 @@ const Header: React.FC<HeaderProps> = ({
 
  return (
    <header className={headerClasses} {...props}>
-     <div className="max-w-7xl mx-auto h-full flex items-center justify-between">
+     <Container className="h-full flex items-center justify-between">
        {/* Logo Section */}
        <div className="flex-shrink-0">
          <Link href="/" className="flex items-center space-x-2">
@@ -149,7 +150,7 @@ const Header: React.FC<HeaderProps> = ({
            </svg>
          </button>
        </div>
-     </div>
+     </Container>
 
      {/* Mobile Menu Overlay */}
      <div

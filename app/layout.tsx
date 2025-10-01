@@ -166,23 +166,9 @@ export default function RootLayout({
         />
       </head>
       <body className={`${manrope.variable} min-h-screen flex flex-col`}>
-        <Header>
-          <div className="container mx-auto flex items-center justify-between h-full">
-            <div className="font-bold text-xl text-primary-red">UCRS</div>
-            <Navigation
-              links={[
-                { href: '/', label: 'Home' },
-                { href: '/products', label: 'Products' },
-                { href: '/services', label: 'Services' },
-                { href: '/contact', label: 'Contact' },
-              ]}
-            />
-          </div>
-        </Header>
-        <main className="flex-1">
-          <div className="container mx-auto px-4 py-8">
-            {children}
-          </div>
+        <Header />
+        <main>
+            {children}          
         </main>
         <Footer />
       </body>
