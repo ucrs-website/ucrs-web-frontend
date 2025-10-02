@@ -1,127 +1,150 @@
-// import Logo from "@/components/navbar-components/logo"
-import { Button } from "@/components/ui/button";
+'use client'
+
+import React from 'react'
+import Link from 'next/link'
+import Image from 'next/image'
+import { Menu, Search } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-} from "@/components/ui/navigation-menu";
+} from '@/components/ui/navigation-menu'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
-import Image from "next/image";
+} from '@/components/ui/popover'
 
-// Navigation links array to be used in both desktop and mobile menus
+// Navigation links from Figma design
 const navigationLinks = [
-  { href: "#", label: "Home", active: true },
-  { href: "#", label: "Features" },
-  { href: "#", label: "Pricing" },
-  { href: "#", label: "About" },
-];
+  { href: '/products', label: 'Explore Products' },
+  { href: '/factory-tour', label: 'Factory Tour' },
+  { href: '/services', label: 'Services' },
+  { href: '/about', label: 'About' },
+]
 
 export default function HeaderNavigation() {
   return (
-    <header className="border-b px-4 md:px-6">
-      <div className="flex h-16 items-center justify-between gap-4">
-        {/* Left side */}
-        <div className="flex items-center gap-2">
-          {/* Mobile menu trigger */}
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                className="group size-8 md:hidden"
-                variant="ghost"
-                size="icon"
-              >
-                <svg
-                  className="pointer-events-none"
-                  width={16}
-                  height={16}
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M4 12L20 12"
-                    className="origin-center -translate-y-[7px] transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.1)] group-aria-expanded:translate-x-0 group-aria-expanded:translate-y-0 group-aria-expanded:rotate-[315deg]"
-                  />
-                  <path
-                    d="M4 12H20"
-                    className="origin-center transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.8)] group-aria-expanded:rotate-45"
-                  />
-                  <path
-                    d="M4 12H20"
-                    className="origin-center translate-y-[7px] transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.1)] group-aria-expanded:translate-y-0 group-aria-expanded:rotate-[135deg]"
-                  />
-                </svg>
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent align="start" className="w-36 p-1 md:hidden">
-              <NavigationMenu className="max-w-none *:w-full">
-                <NavigationMenuList className="flex-col items-start gap-0 md:gap-2">
-                  {navigationLinks.map((link, index) => (
-                    <NavigationMenuItem key={index} className="w-full">
-                      <NavigationMenuLink
-                        href={link.href}
-                        className="py-1.5"
-                        active={link.active}
-                      >
-                        {link.label}
-                      </NavigationMenuLink>
-                    </NavigationMenuItem>
-                  ))}
-                </NavigationMenuList>
-              </NavigationMenu>
-            </PopoverContent>
-          </Popover>
-          {/* Main nav */}
-          <div className="flex items-center gap-6">
-            <a href="#" className="text-primary hover:text-primary/90">
-              <div className="relative w-12 h-12 md:w-16 md:h-16">
+    <header className="sticky top-0 z-50 w-full">
+      {/* Container with max-width */}
+      <div className="mx-auto w-full max-w-[var(--container-max-width,1200px)] px-4">
+        {/* Nav wrapper with rounded background */}
+        <nav
+          className="my-4 rounded-xl border border-border bg-background shadow-sm"
+          role="navigation"
+          aria-label="Main navigation"
+        >
+          <div className="flex items-center justify-between gap-6 px-6 py-4">
+            {/* Left: Logo */}
+            <Link href="/" className="flex-shrink-0" aria-label="UCRS Home">
+              <div className="relative h-8 w-[116px]">
                 <Image
                   src="/images/logo.png"
                   alt="UCRS - Upper Canada Railway Services"
                   fill
                   className="object-contain"
-                  sizes="(max-width: 768px) 48px, 64px"
+                  sizes="116px"
                   priority
                 />
               </div>
-            </a>
-            {/* Navigation menu */}
-            <NavigationMenu className="max-md:hidden">
-              <NavigationMenuList className="gap-2">
-                {navigationLinks.map((link, index) => (
-                  <NavigationMenuItem key={index}>
-                    <NavigationMenuLink
-                      active={link.active}
-                      href={link.href}
-                      className="text-muted-foreground hover:text-primary py-1.5 font-medium"
-                    >
-                      {link.label}
+            </Link>
+
+            {/* Center: Desktop Navigation */}
+            <NavigationMenu className="hidden lg:flex">
+              <NavigationMenuList className="gap-6">
+                {navigationLinks.map((link) => (
+                  <NavigationMenuItem key={link.href}>
+                    <NavigationMenuLink asChild>
+                      <Link href={link.href} className="text-sm font-semibold text-[rgb(83,88,98)] hover:text-foreground transition-colors duration-200">
+                        {link.label}
+                      </Link>
                     </NavigationMenuLink>
                   </NavigationMenuItem>
                 ))}
               </NavigationMenuList>
             </NavigationMenu>
+
+            {/* Right: Search + CTA */}
+            <div className="flex items-center gap-4 ml-auto">
+              {/* Search Input - Hidden on mobile */}
+              <div className="relative hidden md:block">
+                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                <Input
+                  type="search"
+                  placeholder="Search in products"
+                  className="w-[200px] pl-9 h-9 text-sm"
+                  aria-label="Search products"
+                />
+              </div>
+
+              {/* Request a Quote Button - Hidden on small mobile */}
+              <Button
+                asChild
+                size="sm"
+                className="hidden sm:inline-flex h-9 px-4 text-sm font-semibold"
+              >
+                <Link href="/quote">Request a Quote</Link>
+              </Button>
+
+              {/* Mobile Menu Toggle */}
+              <div className="lg:hidden">
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-10 w-10"
+                      aria-label="Toggle menu"
+                    >
+                      <Menu className="h-5 w-5" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent align="end" className="w-64 p-2">
+                    <div className="space-y-2">
+                      {/* Mobile Search */}
+                      <div className="relative md:hidden mb-3">
+                        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                        <Input
+                          type="search"
+                          placeholder="Search in products"
+                          className="pl-9 h-9 text-sm"
+                        />
+                      </div>
+
+                      {/* Mobile Navigation */}
+                      <NavigationMenu className="w-full">
+                        <NavigationMenuList className="flex-col items-start gap-1 w-full">
+                          {navigationLinks.map((link) => (
+                            <NavigationMenuItem key={link.href} className="w-full">
+                              <NavigationMenuLink asChild>
+                                <Link href={link.href} className="block w-full rounded-md px-3 py-2 text-sm font-semibold text-[rgb(83,88,98)] hover:bg-muted hover:text-foreground transition-colors duration-200">
+                                  {link.label}
+                                </Link>
+                              </NavigationMenuLink>
+                            </NavigationMenuItem>
+                          ))}
+                        </NavigationMenuList>
+                      </NavigationMenu>
+
+                      {/* Mobile CTA */}
+                      <Button
+                        asChild
+                        size="sm"
+                        className="w-full sm:hidden h-9 text-sm font-semibold"
+                      >
+                        <Link href="/quote">Request a Quote</Link>
+                      </Button>
+                    </div>
+                  </PopoverContent>
+                </Popover>
+              </div>
+            </div>
           </div>
-        </div>
-        {/* Right side */}
-        <div className="flex items-center gap-2">
-          <Button asChild variant="ghost" size="sm" className="text-sm">
-            <a href="#">Sign In</a>
-          </Button>
-          <Button asChild size="sm" className="text-sm">
-            <a href="#">Get Started</a>
-          </Button>
-        </div>
+        </nav>
       </div>
     </header>
-  );
+  )
 }
