@@ -3,15 +3,45 @@ on:
   pull_request:
   push:
     branches: [main, develop]
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+
+      - name: Detect Node project
+        id: detect
+        run: |
+          if [ -f package.json ]; then
+            echo "has_node=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_node=false" >> $GITHUB_OUTPUT
+          fi
+
+      - if: steps.detect.outputs.has_node == 'true'
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
-      - run: npm ci
-      - run: npm run build --if-present
-      - run: npm test --if-present
+
+      - name: Install deps
+        if: steps.detect.outputs.has_node == 'true'
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install --no-audit --no-fund
+          fi
+
+      - name: Build
+        if: steps.detect.outputs.has_node == 'true'
+        run: npm run build --if-present
+
+      - name: Test
+        if: steps.detect.outputs.has_node == 'true'
+        run: npm test --if-present
+
+      - name: No Node project yet — skipping
+        if: steps.detect.outputs.has_node == 'false'
+        run: echo "No package.json yet; skipping build."
