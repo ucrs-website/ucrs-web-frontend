@@ -96,7 +96,7 @@ export default function HomePage() {
       />
 
       {/* Social Proof */}
-      <SocialProofSection heading="Join 4,000+ companies already growing" />
+      <SocialProofSection heading="Over +300 happy customers" />
 
       {/* Features Section 1 */}
       <FeaturesSection
