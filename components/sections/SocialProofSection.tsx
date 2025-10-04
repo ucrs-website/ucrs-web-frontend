@@ -1,9 +1,13 @@
+'use client'
+
 import React from 'react'
 import Image from 'next/image'
+import { Marquee } from '@/components/ui/marquee'
 
 interface Company {
   name: string
-  logo: string
+  logoMark: string
+  logoText: string
 }
 
 interface SocialProofSectionProps {
@@ -12,44 +16,79 @@ interface SocialProofSectionProps {
 }
 
 const defaultCompanies: Company[] = [
-  { name: 'Company 1', logo: '/images/companies/company1.svg' },
-  { name: 'Company 2', logo: '/images/companies/company2.svg' },
-  { name: 'Company 3', logo: '/images/companies/company3.svg' },
-  { name: 'Company 4', logo: '/images/companies/company4.svg' },
-  { name: 'Company 5', logo: '/images/companies/company5.svg' },
-  { name: 'Company 6', logo: '/images/companies/company6.svg' },
+  {
+    name: 'OdeaoLabs',
+    logoMark: '',
+    logoText: '/images/companies/odeaolabs-text.svg',
+  },
+  {
+    name: 'Kintsugi',
+    logoMark: '/images/companies/kintsugi-mark.svg',
+    logoText: '/images/companies/kintsugi-text.svg',
+  },
+  {
+    name: 'StackedLab',
+    logoMark: '/images/companies/stackedlab-mark.svg',
+    logoText: '/images/companies/stackedlab-text.svg',
+  },
+  {
+    name: 'Magnolia',
+    logoMark: '/images/companies/magnolia-mark.svg',
+    logoText: '/images/companies/magnolia-text.svg',
+  },
+  {
+    name: 'Warpspeed',
+    logoMark: '/images/companies/warpspeed-mark.svg',
+    logoText: '/images/companies/warpspeed-text.svg',
+  },
+  {
+    name: 'Sisyphus',
+    logoMark: '/images/companies/sisyphus-mark.svg',
+    logoText: '/images/companies/sisyphus-text.svg',
+  },
 ]
 
 export function SocialProofSection({
-  heading = 'Join 4,000+ companies already growing',
+  heading = 'Over +300 happy customers',
   companies = defaultCompanies,
 }: SocialProofSectionProps) {
   return (
-    <section className="bg-background py-24">
-      <div className="container mx-auto px-4">
-        <div className="max-w-[1200px] mx-auto">
+    <section className="bg-white py-24">
+      <div className="container mx-auto px-8">
+        <div className="max-w-[1280px] mx-auto space-y-8">
           {/* Heading */}
-          <p className="text-center text-base font-medium text-muted-foreground mb-8">
+          <p className="text-center text-base font-medium text-[#535862] leading-6">
             {heading}
           </p>
 
-          {/* Company logos grid */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center justify-items-center">
+          {/* Company logos marquee */}
+          <Marquee speed={40} pauseOnHover={true} className="py-4">
             {companies.map((company, index) => (
               <div
                 key={index}
-                className="relative w-full h-12 grayscale hover:grayscale-0 transition-all opacity-50 hover:opacity-100"
+                className="flex items-center gap-2 mx-6 h-12"
               >
-                <Image
-                  src={company.logo}
-                  alt={company.name}
-                  fill
-                  className="object-contain"
-                  sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 16vw"
-                />
+                {company.logoMark && (
+                  <div className="relative h-12 w-10 flex-shrink-0">
+                    <Image
+                      src={company.logoMark}
+                      alt=""
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                )}
+                <div className="relative h-12 flex-shrink-0" style={{ width: company.name === 'OdeaoLabs' ? '140px' : company.name === 'Kintsugi' ? '99px' : company.name === 'StackedLab' ? '149px' : company.name === 'Magnolia' ? '125px' : company.name === 'Warpspeed' ? '143px' : '115px' }}>
+                  <Image
+                    src={company.logoText}
+                    alt={company.name}
+                    fill
+                    className="object-contain"
+                  />
+                </div>
               </div>
             ))}
-          </div>
+          </Marquee>
         </div>
       </div>
     </section>
