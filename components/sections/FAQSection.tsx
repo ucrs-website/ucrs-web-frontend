@@ -9,6 +9,7 @@ import {
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
 import { Plus } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { generateFAQSchema } from "@/lib/seo";
 import { StructuredData } from "@/components/seo/StructuredData";
 
@@ -182,61 +183,120 @@ export function FAQSection({
                     )}
                 </p>
               </div>
-              {/* Vertical Tabs with Categories and FAQs */}
-              <Tabs
-                defaultValue="0"
-                orientation="vertical"
-                className="w-full flex-row gap-8"
-              >
-                <TabsList className="flex-col justify-start items-start gap-1 bg-transparent py-0 w-1/2">
-                  {categories.map((category, index) => (
-                    <TabsTrigger
-                      key={index}
-                      value={index.toString()}
-                      className="data-[state=active]:bg-[#fcf1f0] data-[state=active]:text-[#e4342d] w-fit justify-start data-[state=active]:shadow-none text-[#717680] h-9 px-3 py-2 rounded-md text-sm font-semibold"
-                    >
-                      {category.name}
-                    </TabsTrigger>
-                  ))}
-                </TabsList>
+              {/* Responsive Tabs - Vertical on desktop, Horizontal on mobile */}
+              <div className="w-full">
+                {/* Mobile: Horizontal scrollable tabs */}
+                <div className="md:hidden w-full">
+                  <Tabs defaultValue="0">
+                    <ScrollArea className="w-full">
+                      <TabsList className="mb-3 h-auto gap-2 rounded-none border-b bg-transparent px-0 py-1 w-full inline-flex">
+                        {categories.map((category, index) => (
+                          <TabsTrigger
+                            key={index}
+                            value={index.toString()}
+                            className="hover:bg-accent hover:text-foreground data-[state=active]:after:bg-[#e4342d] data-[state=active]:hover:bg-accent relative after:absolute after:inset-x-0 after:bottom-0 after:-mb-1 after:h-0.5 data-[state=active]:bg-transparent data-[state=active]:shadow-none text-sm font-semibold whitespace-nowrap"
+                          >
+                            {category.name}
+                          </TabsTrigger>
+                        ))}
+                      </TabsList>
+                      <ScrollBar orientation="horizontal" />
+                    </ScrollArea>
 
-                {/* Right column - FAQ Accordion in Tab Content */}
-                {categories.map((category, categoryIndex) => (
-                  <TabsContent
-                    key={categoryIndex}
-                    value={categoryIndex.toString()}
-                    className="flex-1 min-w-[480px] mt-0"
-                  >
-                    <Accordion
-                      type="single"
-                      collapsible
-                      className="w-full space-y-2"
-                    >
-                      {category.faqs.map((faq, faqIndex) => (
-                        <AccordionItem
-                          key={faqIndex}
-                          value={faqIndex.toString()}
-                          className="data-[state=open]:bg-neutral-50 has-focus-visible:border-ring has-focus-visible:ring-ring/50 rounded-2xl px-8 py-1 border-none outline-none has-focus-visible:ring-[3px]"
+                    {categories.map((category, categoryIndex) => (
+                      <TabsContent
+                        key={categoryIndex}
+                        value={categoryIndex.toString()}
+                        className="w-full mt-4"
+                      >
+                        <Accordion
+                          type="single"
+                          collapsible
+                          className="w-full space-y-2"
                         >
-                          <AccordionPrimitive.Header className="flex">
-                            <AccordionPrimitive.Trigger className="flex flex-1 items-center justify-between rounded-md py-4 text-left text-lg font-medium leading-7 text-[#181d27] transition-all outline-none focus-visible:ring-0 [&>svg>path:last-child]:origin-center [&>svg>path:last-child]:transition-all [&>svg>path:last-child]:duration-200 [&[data-state=open]>svg]:rotate-180 [&[data-state=open]>svg>path:last-child]:rotate-90 [&[data-state=open]>svg>path:last-child]:opacity-0">
-                              {faq.question}
-                              <Plus
-                                size={24}
-                                className="pointer-events-none shrink-0 text-[#a4a7ae] transition-transform duration-200"
-                                aria-hidden="true"
-                              />
-                            </AccordionPrimitive.Trigger>
-                          </AccordionPrimitive.Header>
-                          <AccordionContent className="text-base leading-6 text-[#535862] pb-4">
-                            {faq.answer}
-                          </AccordionContent>
-                        </AccordionItem>
-                      ))}
-                    </Accordion>
-                  </TabsContent>
-                ))}
-              </Tabs>
+                          {category.faqs.map((faq, faqIndex) => (
+                            <AccordionItem
+                              key={faqIndex}
+                              value={faqIndex.toString()}
+                              className="data-[state=open]:bg-neutral-50 has-focus-visible:border-ring has-focus-visible:ring-ring/50 rounded-2xl px-8 py-1 border-none outline-none has-focus-visible:ring-[3px]"
+                            >
+                              <AccordionPrimitive.Header className="flex">
+                                <AccordionPrimitive.Trigger className="flex flex-1 items-center justify-between rounded-md py-4 text-left text-lg font-medium leading-7 text-[#181d27] transition-all outline-none focus-visible:ring-0 [&>svg>path:last-child]:origin-center [&>svg>path:last-child]:transition-all [&>svg>path:last-child]:duration-200 [&[data-state=open]>svg]:rotate-180 [&[data-state=open]>svg>path:last-child]:rotate-90 [&[data-state=open]>svg>path:last-child]:opacity-0">
+                                  {faq.question}
+                                  <Plus
+                                    size={24}
+                                    className="pointer-events-none shrink-0 text-[#a4a7ae] transition-transform duration-200"
+                                    aria-hidden="true"
+                                  />
+                                </AccordionPrimitive.Trigger>
+                              </AccordionPrimitive.Header>
+                              <AccordionContent className="text-base leading-6 text-[#535862] pb-4">
+                                {faq.answer}
+                              </AccordionContent>
+                            </AccordionItem>
+                          ))}
+                        </Accordion>
+                      </TabsContent>
+                    ))}
+                  </Tabs>
+                </div>
+
+                {/* Desktop: Vertical tabs */}
+                <Tabs
+                  defaultValue="0"
+                  orientation="vertical"
+                  className="hidden md:flex w-full flex-row gap-8"
+                >
+                  <TabsList className="flex-col justify-start items-start gap-1 bg-transparent py-0 w-1/2">
+                    {categories.map((category, index) => (
+                      <TabsTrigger
+                        key={index}
+                        value={index.toString()}
+                        className="data-[state=active]:bg-[#fcf1f0] data-[state=active]:text-[#e4342d] w-fit justify-start data-[state=active]:shadow-none text-[#717680] h-9 px-3 py-2 rounded-md text-sm font-semibold"
+                      >
+                        {category.name}
+                      </TabsTrigger>
+                    ))}
+                  </TabsList>
+
+                  {/* Right column - FAQ Accordion in Tab Content */}
+                  {categories.map((category, categoryIndex) => (
+                    <TabsContent
+                      key={categoryIndex}
+                      value={categoryIndex.toString()}
+                      className="flex-1 min-w-[480px] mt-0"
+                    >
+                      <Accordion
+                        type="single"
+                        collapsible
+                        className="w-full space-y-2"
+                      >
+                        {category.faqs.map((faq, faqIndex) => (
+                          <AccordionItem
+                            key={faqIndex}
+                            value={faqIndex.toString()}
+                            className="data-[state=open]:bg-neutral-50 has-focus-visible:border-ring has-focus-visible:ring-ring/50 rounded-2xl px-8 py-1 border-none outline-none has-focus-visible:ring-[3px]"
+                          >
+                            <AccordionPrimitive.Header className="flex">
+                              <AccordionPrimitive.Trigger className="flex flex-1 items-center justify-between rounded-md py-4 text-left text-lg font-medium leading-7 text-[#181d27] transition-all outline-none focus-visible:ring-0 [&>svg>path:last-child]:origin-center [&>svg>path:last-child]:transition-all [&>svg>path:last-child]:duration-200 [&[data-state=open]>svg]:rotate-180 [&[data-state=open]>svg>path:last-child]:rotate-90 [&[data-state=open]>svg>path:last-child]:opacity-0">
+                                {faq.question}
+                                <Plus
+                                  size={24}
+                                  className="pointer-events-none shrink-0 text-[#a4a7ae] transition-transform duration-200"
+                                  aria-hidden="true"
+                                />
+                              </AccordionPrimitive.Trigger>
+                            </AccordionPrimitive.Header>
+                            <AccordionContent className="text-base leading-6 text-[#535862] pb-4">
+                              {faq.answer}
+                            </AccordionContent>
+                          </AccordionItem>
+                        ))}
+                      </Accordion>
+                    </TabsContent>
+                  ))}
+                </Tabs>
+              </div>
             </div>
           </div>
         </div>
