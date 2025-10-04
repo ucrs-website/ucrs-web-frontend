@@ -1,76 +1,147 @@
-'use client'
+"use client";
 
-import React, { useState } from 'react'
+import React from "react";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion'
-import { generateFAQSchema } from '@/lib/seo'
-import { StructuredData } from '@/components/seo/StructuredData'
+} from "@/components/ui/accordion";
+import * as AccordionPrimitive from "@radix-ui/react-accordion";
+import { Plus } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { generateFAQSchema } from "@/lib/seo";
+import { StructuredData } from "@/components/seo/StructuredData";
 
 export interface FAQItem {
-  question: string
-  answer: string
+  question: string;
+  answer: string;
 }
 
 export interface FAQCategory {
-  name: string
-  faqs: FAQItem[]
+  name: string;
+  faqs: FAQItem[];
 }
 
 interface FAQSectionProps {
-  title?: string
-  subtitle?: string
-  description?: string
-  categories?: FAQCategory[]
+  title?: string;
+  subtitle?: string;
+  description?: string;
+  categories?: FAQCategory[];
 }
 
 const defaultCategories: FAQCategory[] = [
   {
-    name: 'General',
+    name: "General",
     faqs: [
       {
-        question: 'Is there a free trial available?',
+        question: "What is UCRS and what do you specialize in?",
         answer:
-          "Yes, you can try us for free for 30 days. If you want, we'll provide you with a free, personalized 30-minute onboarding call to get you up and running as soon as possible.",
+          "UCRS is an Ontario-based corporation specializing in railway equipment. We manufacture and supply assembly components and spare parts for locomotives, freight cars, and passenger coaches. Our mission is to provide the highest quality products that meet or exceed OEM designs and specifications.",
       },
       {
-        question: 'Can I change my plan later?',
-        answer: 'Yes, you can change your plan at any time from your account settings.',
+        question: "Which countries do you serve?",
+        answer:
+          "We provide railway solutions and services to over 57 countries worldwide, ensuring reliable support wherever you operate.",
       },
       {
-        question: 'What is your cancellation policy?',
-        answer: 'You can cancel your subscription at any time with no penalties or fees.',
-      },
-      {
-        question: 'Can other info be added to an invoice?',
-        answer: 'Yes, you can add custom information to your invoices from the billing settings.',
-      },
-      {
-        question: 'How does billing work?',
-        answer: 'We bill monthly or annually depending on your subscription plan.',
-      },
-      {
-        question: 'How do I change my account email?',
-        answer: 'You can change your account email from your profile settings.',
+        question: "How can I request a quote?",
+        answer:
+          'You can request a quote by clicking the "Request a Quote" button in our header, filling out our contact form, or reaching out to our sales team directly via phone or email.',
       },
     ],
   },
-]
+  {
+    name: "Products & Parts",
+    faqs: [
+      {
+        question: "What types of railway parts do you offer?",
+        answer:
+          "We offer a comprehensive range of railway parts including locomotive components, traction motor pinion tooth contour gauges, assembly components for freight cars and passenger coaches, and spare parts. All parts are manufactured to meet or exceed OEM specifications.",
+      },
+      {
+        question:
+          "Are your parts compatible with major locomotive manufacturers?",
+        answer:
+          "Yes, our parts are designed to be compatible with major manufacturers including EMD® and GE® locomotives. We ensure all products meet OEM designs and specifications.",
+      },
+      {
+        question: "Do you offer custom manufacturing?",
+        answer:
+          "Yes, we provide custom manufacturing services for railway components. Our team works closely with global manufacturers to deliver solutions tailored to your specific requirements.",
+      },
+    ],
+  },
+  {
+    name: "Quality & Certification",
+    faqs: [
+      {
+        question: "What quality standards do you follow?",
+        answer:
+          "All our products are manufactured in compliance with the AAR-M1003 quality assurance program, ensuring the highest standards of quality and reliability in the railway industry.",
+      },
+      {
+        question: "Do you provide warranty on your products?",
+        answer:
+          "Yes, we offer comprehensive warranties on all our products. The warranty terms vary depending on the product type. Contact our team for specific warranty information.",
+      },
+      {
+        question: "Are your products AAR-M1003 certified?",
+        answer:
+          "Yes, all our products are manufactured in compliance with AAR-M1003 quality assurance program standards.",
+      },
+    ],
+  },
+  {
+    name: "Services & Support",
+    faqs: [
+      {
+        question: "What services do you provide?",
+        answer:
+          "We offer equipment repairs and supply, technical support and training, overhaul project management and consulting, and re-manufacturing of main alternators for EMD® and GE® locomotives.",
+      },
+      {
+        question: "Do you provide installation and technical support?",
+        answer:
+          "Yes, we provide comprehensive technical support and training services. Our expert team ensures proper installation and integration with your existing systems.",
+      },
+      {
+        question: "Do you offer re-manufacturing services?",
+        answer:
+          "Yes, we specialize in re-manufacturing main alternators for EMD® and GE® locomotives, providing cost-effective solutions while maintaining the highest quality standards.",
+      },
+    ],
+  },
+  {
+    name: "Ordering & Shipping",
+    faqs: [
+      {
+        question: "How do I place an order?",
+        answer:
+          "You can place an order by contacting our sales team directly, submitting a request through our website, or working with your designated account manager.",
+      },
+      {
+        question: "What are your delivery times?",
+        answer:
+          "Delivery times vary depending on the product and your location. Our team will provide specific delivery estimates when you place your order.",
+      },
+      {
+        question: "Do you ship internationally?",
+        answer:
+          "Yes, we ship to over 57 countries worldwide. Our global network ensures reliable delivery wherever you operate.",
+      },
+    ],
+  },
+];
 
 export function FAQSection({
-  title = 'Support',
-  subtitle = 'FAQs',
+  title = "Support",
+  subtitle = "FAQs",
   description = "Everything you need to know about the product and billing. Can't find the answer you're looking for? Please chat to our friendly team.",
   categories = defaultCategories,
 }: FAQSectionProps) {
-  const [activeCategory, setActiveCategory] = useState(0)
-
   // Generate FAQ schema for all FAQs
-  const allFaqs = categories.flatMap((cat) => cat.faqs)
-  const faqSchema = generateFAQSchema(allFaqs)
+  const allFaqs = categories.flatMap((cat) => cat.faqs);
+  const faqSchema = generateFAQSchema(allFaqs);
 
   return (
     <>
@@ -79,7 +150,7 @@ export function FAQSection({
         <div className="container mx-auto px-8">
           <div className="max-w-[1280px] mx-auto">
             <div className="flex flex-wrap gap-16 items-start">
-              {/* Left column - Heading and categories */}
+              {/* Left column - Heading */}
               <div className="flex flex-col gap-5 max-w-[768px] min-w-[480px] w-[480px]">
                 {/* Heading and subheading */}
                 <div className="flex flex-col gap-3">
@@ -93,60 +164,83 @@ export function FAQSection({
 
                 {/* Description */}
                 <p className="text-lg leading-7 text-[#535862]">
-                  {description.split('chat to our friendly team').map((part, i) =>
-                    i === 0 ? (
-                      <React.Fragment key={i}>
-                        {part}
-                        <a href="/contact" className="underline decoration-solid">
-                          chat to our friendly team
-                        </a>
-                        .
-                      </React.Fragment>
-                    ) : null
-                  )}
+                  {description
+                    .split("chat to our friendly team")
+                    .map((part, i) =>
+                      i === 0 ? (
+                        <React.Fragment key={i}>
+                          {part}
+                          <a
+                            href="/contact"
+                            className="underline decoration-solid"
+                          >
+                            chat to our friendly team
+                          </a>
+                          .
+                        </React.Fragment>
+                      ) : null
+                    )}
                 </p>
-
-                {/* Category tabs */}
-                <div className="flex flex-col gap-1 w-[248px]">
+              </div>
+              {/* Vertical Tabs with Categories and FAQs */}
+              <Tabs
+                defaultValue="0"
+                orientation="vertical"
+                className="w-full flex-row gap-8"
+              >
+                <TabsList className="flex-col justify-start items-start gap-1 bg-transparent py-0 w-1/2">
                   {categories.map((category, index) => (
-                    <button
+                    <TabsTrigger
                       key={index}
-                      onClick={() => setActiveCategory(index)}
-                      className={`h-9 px-3 py-2 rounded-md text-sm font-semibold leading-5 text-left transition-colors ${
-                        activeCategory === index
-                          ? 'bg-[#fcf1f0] text-[#e4342d]'
-                          : 'text-[#717680] hover:bg-gray-50'
-                      }`}
+                      value={index.toString()}
+                      className="data-[state=active]:bg-[#fcf1f0] data-[state=active]:text-[#e4342d] w-fit justify-start data-[state=active]:shadow-none text-[#717680] h-9 px-3 py-2 rounded-md text-sm font-semibold"
                     >
                       {category.name}
-                    </button>
+                    </TabsTrigger>
                   ))}
-                </div>
-              </div>
+                </TabsList>
 
-              {/* Right column - FAQ Accordion */}
-              <div className="flex-1 min-w-[480px] flex flex-col gap-4">
-                <Accordion type="single" collapsible className="w-full space-y-4">
-                  {categories[activeCategory].faqs.map((faq, index) => (
-                    <AccordionItem
-                      key={index}
-                      value={`item-${index}`}
-                      className="border-none bg-neutral-50 rounded-2xl p-8 data-[state=open]:bg-neutral-50"
+                {/* Right column - FAQ Accordion in Tab Content */}
+                {categories.map((category, categoryIndex) => (
+                  <TabsContent
+                    key={categoryIndex}
+                    value={categoryIndex.toString()}
+                    className="flex-1 min-w-[480px] mt-0"
+                  >
+                    <Accordion
+                      type="single"
+                      collapsible
+                      className="w-full space-y-2"
                     >
-                      <AccordionTrigger className="text-left text-lg font-medium leading-7 text-[#181d27] hover:no-underline gap-6 [&[data-state=open]>svg]:rotate-0">
-                        {faq.question}
-                      </AccordionTrigger>
-                      <AccordionContent className="text-base leading-6 text-[#535862] pt-2">
-                        {faq.answer}
-                      </AccordionContent>
-                    </AccordionItem>
-                  ))}
-                </Accordion>
-              </div>
+                      {category.faqs.map((faq, faqIndex) => (
+                        <AccordionItem
+                          key={faqIndex}
+                          value={faqIndex.toString()}
+                          className="data-[state=open]:bg-neutral-50 has-focus-visible:border-ring has-focus-visible:ring-ring/50 rounded-2xl px-8 py-1 border-none outline-none has-focus-visible:ring-[3px]"
+                        >
+                          <AccordionPrimitive.Header className="flex">
+                            <AccordionPrimitive.Trigger className="flex flex-1 items-center justify-between rounded-md py-4 text-left text-lg font-medium leading-7 text-[#181d27] transition-all outline-none focus-visible:ring-0 [&>svg>path:last-child]:origin-center [&>svg>path:last-child]:transition-all [&>svg>path:last-child]:duration-200 [&[data-state=open]>svg]:rotate-180 [&[data-state=open]>svg>path:last-child]:rotate-90 [&[data-state=open]>svg>path:last-child]:opacity-0">
+                              {faq.question}
+                              <Plus
+                                size={24}
+                                className="pointer-events-none shrink-0 text-[#a4a7ae] transition-transform duration-200"
+                                aria-hidden="true"
+                              />
+                            </AccordionPrimitive.Trigger>
+                          </AccordionPrimitive.Header>
+                          <AccordionContent className="text-base leading-6 text-[#535862] pb-4">
+                            {faq.answer}
+                          </AccordionContent>
+                        </AccordionItem>
+                      ))}
+                    </Accordion>
+                  </TabsContent>
+                ))}
+              </Tabs>
             </div>
           </div>
         </div>
       </section>
     </>
-  )
+  );
 }
