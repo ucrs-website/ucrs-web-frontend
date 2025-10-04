@@ -3,7 +3,8 @@
     "allow": [
       "Bash(curl -H \"X-Figma-Token: figd_sRpnHFSMBT3D6eO3gtLkSq01a-dmge4Moh6LtyOY\" \"https://api.figma.com/v1/files/2yCCBG4VgUhlw1WsmYsQom?node-id=1770-37940\")",
       "Read(//tmp/**)",
-      "Bash(curl -s -H \"X-Figma-Token: figd_sRpnHFSMBT3D6eO3gtLkSq01a-dmge4Moh6LtyOY\" \"https://api.figma.com/v1/files/2yCCBG4VgUhlw1WsmYsQom/nodes?ids=1770:37940\")"
+      "Bash(curl -s -H \"X-Figma-Token: figd_sRpnHFSMBT3D6eO3gtLkSq01a-dmge4Moh6LtyOY\" \"https://api.figma.com/v1/files/2yCCBG4VgUhlw1WsmYsQom/nodes?ids=1770:37940\")",
+      "Bash(curl -s -H \"X-Figma-Token: figd_sRpnHFSMBT3D6eO3gtLkSq01a-dmge4Moh6LtyOY\" \"https://api.figma.com/v1/files/2yCCBG4VgUhlw1WsmYsQom/nodes?ids=1770:37939\")"
     ],
     "deny": [],
     "ask": []
