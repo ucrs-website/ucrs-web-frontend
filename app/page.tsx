@@ -64,26 +64,31 @@ export default function HomePage() {
   }
 
   // FAQ data
-  const faqs = [
+  const faqCategories = [
     {
-      question: 'What countries do you serve?',
-      answer: 'We provide railway solutions and services to over 57 countries across North America, Europe, Asia, and other regions. Our global network ensures reliable support wherever you operate.',
-    },
-    {
-      question: 'What types of railway parts do you offer?',
-      answer: 'We offer a comprehensive range of railway parts including locomotive components, track systems, signaling equipment, and maintenance tools. All parts meet international quality standards.',
-    },
-    {
-      question: 'Do you provide installation services?',
-      answer: 'Yes, we provide complete installation and commissioning services. Our expert technicians ensure proper setup and integration with your existing systems.',
-    },
-    {
-      question: 'What is your warranty policy?',
-      answer: 'We offer comprehensive warranties on all our products, typically ranging from 1-5 years depending on the product type. Extended warranty options are also available.',
-    },
-    {
-      question: 'How can I request a quote?',
-      answer: 'You can request a quote by clicking the "Request a Quote" button in our header, filling out our contact form, or reaching out to our sales team directly via phone or email.',
+      name: 'General',
+      faqs: [
+        {
+          question: 'What countries do you serve?',
+          answer: 'We provide railway solutions and services to over 57 countries across North America, Europe, Asia, and other regions. Our global network ensures reliable support wherever you operate.',
+        },
+        {
+          question: 'What types of railway parts do you offer?',
+          answer: 'We offer a comprehensive range of railway parts including locomotive components, track systems, signaling equipment, and maintenance tools. All parts meet international quality standards.',
+        },
+        {
+          question: 'Do you provide installation services?',
+          answer: 'Yes, we provide complete installation and commissioning services. Our expert technicians ensure proper setup and integration with your existing systems.',
+        },
+        {
+          question: 'What is your warranty policy?',
+          answer: 'We offer comprehensive warranties on all our products, typically ranging from 1-5 years depending on the product type. Extended warranty options are also available.',
+        },
+        {
+          question: 'How can I request a quote?',
+          answer: 'You can request a quote by clicking the "Request a Quote" button in our header, filling out our contact form, or reaching out to our sales team directly via phone or email.',
+        },
+      ],
     },
   ]
 
@@ -127,9 +132,10 @@ export default function HomePage() {
 
       {/* FAQ Section */}
       <FAQSection
-        heading="Frequently asked questions"
-        supportingText="Everything you need to know about our products and services"
-        faqs={faqs}
+        title="Support"
+        subtitle="FAQs"
+        description="Everything you need to know about the product and billing. Can't find the answer you're looking for? Please chat to our friendly team."
+        categories={faqCategories}
       />
 
       {/* Newsletter CTA */}
