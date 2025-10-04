@@ -26,15 +26,15 @@ export function HeroSection({
         <div className="absolute inset-0 bg-gradient-radial from-black/10 to-transparent opacity-5" />
       </div>
 
-      <div className="relative z-10 container mx-auto px-8 py-24">
-        <div className="max-w-[1280px] mx-auto space-y-16">
+      <div className="relative z-10 container mx-auto px-8">
+        <div className="max-w-[1280px] mx-auto space-y-10">
           {/* Main content */}
-          <div className="flex gap-8 items-end">
+          <div className="md:flex flex-1 gap-8 items-start space-y-12">
             {/* Left column - Text and form */}
             <div className="flex-1 max-w-[768px] space-y-12">
               {/* Text and supporting text */}
               <div className="space-y-6">
-                <h1 className="text-6xl font-semibold text-[#181d27] leading-[72px] tracking-[-1.2px]">
+                <h1 className="text-4xl md:text-6xl font-bold md:font-semibold text-[#181d27] md:leading-[72px] tracking-[-1.2px]">
                   {heading}
                 </h1>
                 <p className="text-xl text-[#535862] leading-[30px]">
@@ -64,7 +64,7 @@ export function HeroSection({
             </div>
 
             {/* Right column - Check items */}
-            <div className="flex flex-col gap-5 max-w-[480px] pl-4 pb-6">
+            <div className="flex flex-col gap-5 max-w-[480px] m:pl-4 pl-0 pb-6">
               {checkItems.map((item, index) => (
                 <div key={index} className="flex gap-3 items-start">
                   <div className="bg-[#dcfae6] rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">
