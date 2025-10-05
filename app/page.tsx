@@ -1,5 +1,6 @@
 import { HeroSection } from "@/components/sections/HeroSection";
 import { SocialProofSection } from "@/components/sections/SocialProofSection";
+import { FactoryTourSection } from "@/components/sections/FactoryTourSection";
 import { FeaturesSection } from "@/components/sections/FeaturesSection";
 import { TestimonialSection } from "@/components/sections/TestimonialSection";
 import { FAQSection } from "@/components/sections/FAQSection";
@@ -75,21 +76,8 @@ export default function HomePage() {
       {/* Social Proof */}
       <SocialProofSection heading="Over +300 happy customers" />
 
-      {/* Features Section 1 */}
-      <FeaturesSection
-        heading="Cutting-edge features"
-        supportingText="Everything you need to manage your railway operations efficiently"
-        features={features1}
-        layout="grid"
-      />
-
-      {/* Features Section 2 */}
-      <FeaturesSection
-        heading="Why Choose UCRS"
-        supportingText="Discover what makes us the preferred choice for railway solutions"
-        features={features2}
-        layout="grid"
-      />
+      {/* Factory Tour Section */}
+      <FactoryTourSection />
 
       {/* Testimonial */}
       <TestimonialSection testimonial={testimonial} />

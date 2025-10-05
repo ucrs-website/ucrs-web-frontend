@@ -1,0 +1,147 @@
+'use client'
+
+import React from 'react'
+import { TrendingDown, Zap, Users } from 'lucide-react'
+import {
+  VideoPlayer,
+  VideoPlayerContent,
+  VideoPlayerControlBar,
+  VideoPlayerPlayButton,
+  VideoPlayerTimeRange,
+  VideoPlayerTimeDisplay,
+  VideoPlayerVolumeRange,
+  VideoPlayerMuteButton,
+} from '@/components/kibo-ui/video-player'
+
+interface Feature {
+  icon: React.ElementType
+  title: string
+}
+
+interface FactoryTourSectionProps {
+  subheading?: string
+  heading?: string
+  description?: string
+  features?: Feature[]
+  videoUrl?: string
+  videoPoster?: string
+}
+
+const defaultFeatures: Feature[] = [
+  {
+    icon: TrendingDown,
+    title: '50% Cost Savings vs. OEM',
+  },
+  {
+    icon: Zap,
+    title: 'Deliver instant answers24/7 Technical Support',
+  },
+  {
+    icon: Users,
+    title: 'Lifetime Warranty Options',
+  },
+]
+
+export function FactoryTourSection({
+  subheading = 'We know the way',
+  heading = 'Inside Factory Tour',
+  description = 'est. odio elementum laoreet est. tincidunt gravida Donec urna efficitur. libero, luctus ex. dolor amet, placerat. urna. placerat efficitur. placerat. elit nec',
+  features = defaultFeatures,
+  videoUrl = '/videos/factory-tour.mp4',
+  videoPoster = '/images/factory-tour-poster.png',
+}: FactoryTourSectionProps) {
+  return (
+    <section className="bg-gray-50 py-16 md:py-24">
+      <div className="container mx-auto px-4 md:px-8">
+        <div className="max-w-[1280px] mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+            {/* Left: Heading and Description */}
+            <div className="space-y-5">
+              {/* Subheading */}
+              <p className="text-sm md:text-base font-semibold text-[rgb(1,64,194)] leading-6">
+                {subheading}
+              </p>
+
+              {/* Heading */}
+              <h2 className="text-2xl md:text-4xl font-semibold text-[rgb(24,29,39)] leading-tight md:leading-[44px] tracking-tight md:-tracking-[0.72px]">
+                {heading}
+              </h2>
+
+              {/* Description */}
+              <p className="text-base md:text-xl text-[rgb(83,88,98)] leading-relaxed md:leading-[30px]">
+                {description}
+              </p>
+
+              {/* Desktop: Features List */}
+              <div className="hidden lg:block space-y-6 pt-4">
+                {features.map((feature, index) => {
+                  const Icon = feature.icon
+                  return (
+                    <div
+                      key={index}
+                      className="flex items-center gap-4 min-w-[240px]"
+                    >
+                      {/* Icon Container */}
+                      <div className="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 rounded-lg md:rounded-[10px] bg-white border border-[rgb(233,234,235)] shadow-sm flex items-center justify-center">
+                        <Icon className="w-5 h-5 md:w-6 md:h-6 text-[rgb(65,70,81)]" strokeWidth={2} />
+                      </div>
+
+                      {/* Feature Title */}
+                      <h3 className="text-base md:text-xl font-semibold text-[rgb(24,29,39)] leading-[30px] flex-1">
+                        {feature.title}
+                      </h3>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+
+            {/* Right: Video Player */}
+            <div className="w-full" suppressHydrationWarning>
+              <VideoPlayer className="w-full rounded-xl overflow-hidden shadow-lg" suppressHydrationWarning>
+                <VideoPlayerContent
+                  slot="media"
+                  src={videoUrl}
+                  poster={videoPoster}
+                  playsInline
+                  className="w-full aspect-video object-cover"
+                  suppressHydrationWarning
+                />
+                <VideoPlayerControlBar className="flex items-center gap-1 bg-gradient-to-t from-black/80 to-transparent">
+                  <VideoPlayerPlayButton />
+                  <VideoPlayerTimeRange />
+                  <VideoPlayerTimeDisplay showDuration />
+                  <VideoPlayerVolumeRange />
+                  <VideoPlayerMuteButton />
+                </VideoPlayerControlBar>
+              </VideoPlayer>
+            </div>
+
+            {/* Mobile: Features List (Below Video) */}
+            <div className="lg:hidden space-y-6">
+              {features.map((feature, index) => {
+                const Icon = feature.icon
+                return (
+                  <div
+                    key={index}
+                    className="flex items-center gap-4 min-w-[240px]"
+                  >
+                    {/* Icon Container */}
+                    <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-white border border-[rgb(233,234,235)] shadow-sm flex items-center justify-center">
+                      <Icon className="w-5 h-5 text-[rgb(65,70,81)]" strokeWidth={2} />
+                    </div>
+
+                    {/* Feature Title */}
+                    <h3 className="text-base font-semibold text-[rgb(24,29,39)] leading-[30px] flex-1">
+                      {feature.title}
+                    </h3>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
