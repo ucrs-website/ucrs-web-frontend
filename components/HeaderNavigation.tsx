@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Menu, Search, X, ChevronDown } from 'lucide-react'
+import { Search, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import {
@@ -73,17 +73,23 @@ export default function HeaderNavigation() {
           aria-label="Main navigation"
         >
           <div className="flex items-center justify-between gap-3 md:gap-6 px-4 md:px-6 py-3 md:py-4">
-            {/* Mobile: Hamburger Menu (Left) */}
-            <div className="lg:hidden">
+            {/* Mobile: Hamburger Menu + Logo (Left) */}
+            <div className="flex items-center gap-2 lg:hidden">
               <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
                 <SheetTrigger asChild>
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="h-10 w-10 p-2"
+                    className="h-10 w-10 p-0 hover:bg-transparent"
                     aria-label="Toggle menu"
                   >
-                    <Menu className="h-6 w-6 text-[rgb(89,89,89)]" strokeWidth={1.5} />
+                    <Image
+                      src="/icons/hamburger-menu.svg"
+                      alt="Menu"
+                      width={40}
+                      height={40}
+                      className="h-10 w-10"
+                    />
                   </Button>
                 </SheetTrigger>
                 <SheetContent side="left" className="w-full p-0 bg-white">
@@ -104,10 +110,10 @@ export default function HeaderNavigation() {
                       variant="ghost"
                       size="icon"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="h-10 w-10 p-2"
+                      className="h-10 w-10 p-2 hover:bg-gray-100"
                       aria-label="Close menu"
                     >
-                      <X className="h-6 w-6 text-[rgb(65,70,81)]" strokeWidth={2} />
+                      {/* <X className="h-6 w-6 text-[rgb(65,70,81)]" strokeWidth={2} /> */}
                     </Button>
                   </div>
 
@@ -152,17 +158,30 @@ export default function HeaderNavigation() {
                   </div>
                 </SheetContent>
               </Sheet>
+
+              <Link href="/" className="flex-shrink-0" aria-label="UCRS Home">
+                <div className="relative h-8 w-[116px]">
+                  <Image
+                    src="/images/logo.png"
+                    alt="UCRS"
+                    fill
+                    className="object-contain"
+                    sizes="116px"
+                    priority
+                  />
+                </div>
+              </Link>
             </div>
 
-            {/* Logo - Center on mobile, Left on desktop */}
-            <Link href="/" className="flex-shrink-0 lg:mr-auto" aria-label="UCRS Home">
-              <div className="relative h-8 w-[116px] md:w-[139px]">
+            {/* Logo - Desktop only */}
+            <Link href="/" className="hidden lg:block flex-shrink-0" aria-label="UCRS Home">
+              <div className="relative h-8 w-[139px]">
                 <Image
                   src="/images/logo.png"
                   alt="UCRS - Upper Canada Railway Services"
                   fill
                   className="object-contain"
-                  sizes="(max-width: 768px) 116px, 139px"
+                  sizes="139px"
                   priority
                 />
               </div>
