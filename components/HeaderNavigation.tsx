@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Search, X } from 'lucide-react'
+import { Search } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import {
@@ -16,6 +16,7 @@ import {
   Sheet,
   SheetContent,
   SheetTrigger,
+  SheetTitle,
 } from '@/components/ui/sheet'
 import {
   Accordion,
@@ -23,6 +24,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion'
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
 
 // Navigation links from Figma design
 const navigationLinks = [
@@ -57,7 +59,37 @@ const mobileMenuItems = [
     href: '/pricing',
     hasDropdown: false,
   },
+  {
+    label: 'Resources',
+    hasDropdown: true,
+    items: [
+      { href: '/resources/blog', label: 'Blog' },
+      { href: '/resources/guides', label: 'Guides' },
+      { href: '/resources/documentation', label: 'Documentation' },
+    ]
+  },
+  {
+    label: 'About',
+    href: '/about',
+    hasDropdown: false,
+  },
 ]
+
+// Footer links for mobile menu (two columns)
+const mobileFooterLinks = {
+  column1: [
+    { href: '/about', label: 'About us' },
+    { href: '/press', label: 'Press' },
+    { href: '/careers', label: 'Careers' },
+    { href: '/legal', label: 'Legal' },
+  ],
+  column2: [
+    { href: '/support', label: 'Support' },
+    { href: '/contact', label: 'Contact' },
+    { href: '/sitemap', label: 'Sitemap' },
+    { href: '/cookie-settings', label: 'Cookie settings' },
+  ]
+}
 
 export default function HeaderNavigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -93,6 +125,10 @@ export default function HeaderNavigation() {
                   </Button>
                 </SheetTrigger>
                 <SheetContent side="left" className="w-full p-0 bg-white">
+                  <VisuallyHidden>
+                    <SheetTitle>Navigation Menu</SheetTitle>
+                  </VisuallyHidden>
+
                   {/* Mobile Menu Header */}
                   <div className="flex items-center justify-between px-4 py-3 border-b">
                     <Link href="/" onClick={() => setMobileMenuOpen(false)}>
@@ -106,55 +142,101 @@ export default function HeaderNavigation() {
                         />
                       </div>
                     </Link>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="h-10 w-10 p-2 hover:bg-gray-100"
-                      aria-label="Close menu"
-                    >
-                      {/* <X className="h-6 w-6 text-[rgb(65,70,81)]" strokeWidth={2} /> */}
-                    </Button>
                   </div>
 
                   {/* Mobile Menu Content */}
-                  <div className="px-4 py-8">
-                    <Accordion type="single" collapsible className="w-full space-y-1">
-                      {mobileMenuItems.map((item, index) => (
-                        item.hasDropdown ? (
-                          <AccordionItem key={index} value={`item-${index}`} className="border-0">
-                            <AccordionTrigger className="px-4 py-3 hover:no-underline hover:bg-transparent rounded-lg">
-                              <span className="text-base font-semibold text-[rgb(24,29,39)]">
-                                {item.label}
-                              </span>
-                            </AccordionTrigger>
-                            <AccordionContent className="px-4 pb-0 pt-1">
-                              <div className="space-y-1">
-                                {item.items?.map((subItem) => (
-                                  <Link
-                                    key={subItem.href}
-                                    href={subItem.href}
-                                    onClick={() => setMobileMenuOpen(false)}
-                                    className="block px-4 py-2 text-sm text-[rgb(71,74,81)] hover:bg-gray-50 rounded-md"
-                                  >
-                                    {subItem.label}
-                                  </Link>
-                                ))}
-                              </div>
-                            </AccordionContent>
-                          </AccordionItem>
-                        ) : (
-                          <Link
-                            key={index}
-                            href={item.href || '#'}
-                            onClick={() => setMobileMenuOpen(false)}
-                            className="block px-4 py-3 text-base font-semibold text-[rgb(24,29,39)] hover:bg-gray-50 rounded-lg"
-                          >
-                            {item.label}
+                  <div className="flex flex-col h-[calc(100vh-64px)]">
+                    {/* Main Menu Items - Scrollable */}
+                    <div className="flex-1 overflow-y-auto px-4 py-6">
+                      <Accordion type="single" collapsible className="w-full space-y-1">
+                        {mobileMenuItems.map((item, index) => (
+                          item.hasDropdown ? (
+                            <AccordionItem key={index} value={`item-${index}`} className="border-0">
+                              <AccordionTrigger className="px-4 py-3 hover:no-underline hover:bg-transparent rounded-lg">
+                                <span className="text-base font-semibold text-[rgb(24,29,39)]">
+                                  {item.label}
+                                </span>
+                              </AccordionTrigger>
+                              <AccordionContent className="px-4 pb-0 pt-1">
+                                <div className="space-y-1">
+                                  {item.items?.map((subItem) => (
+                                    <Link
+                                      key={subItem.href}
+                                      href={subItem.href}
+                                      onClick={() => setMobileMenuOpen(false)}
+                                      className="block px-4 py-2 text-sm text-[rgb(71,74,81)] hover:bg-gray-50 rounded-md"
+                                    >
+                                      {subItem.label}
+                                    </Link>
+                                  ))}
+                                </div>
+                              </AccordionContent>
+                            </AccordionItem>
+                          ) : (
+                            <Link
+                              key={index}
+                              href={item.href || '#'}
+                              onClick={() => setMobileMenuOpen(false)}
+                              className="block px-4 py-3 text-base font-semibold text-[rgb(24,29,39)] hover:bg-gray-50 rounded-lg"
+                            >
+                              {item.label}
+                            </Link>
+                          )
+                        ))}
+                      </Accordion>
+                    </div>
+
+                    {/* Footer Section - Sticky to Bottom */}
+                    <div className="border-t border-gray-200 bg-white px-4 py-6 space-y-4 mt-auto">
+                      {/* Two Column Links */}
+                      <div className="grid grid-cols-2 gap-x-4 gap-y-2.5">
+                        <div className="space-y-2.5">
+                          {mobileFooterLinks.column1.map((link) => (
+                            <Link
+                              key={link.href}
+                              href={link.href}
+                              onClick={() => setMobileMenuOpen(false)}
+                              className="block text-sm text-[rgb(71,74,81)] hover:text-[rgb(24,29,39)]"
+                            >
+                              {link.label}
+                            </Link>
+                          ))}
+                        </div>
+                        <div className="space-y-2.5">
+                          {mobileFooterLinks.column2.map((link) => (
+                            <Link
+                              key={link.href}
+                              href={link.href}
+                              onClick={() => setMobileMenuOpen(false)}
+                              className="block text-sm text-[rgb(71,74,81)] hover:text-[rgb(24,29,39)]"
+                            >
+                              {link.label}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Sign up / Log in Buttons */}
+                      <div className="space-y-2.5 pt-2">
+                        <Button
+                          asChild
+                          className="w-full h-11 text-base font-semibold"
+                        >
+                          <Link href="/signup" onClick={() => setMobileMenuOpen(false)}>
+                            Sign up
                           </Link>
-                        )
-                      ))}
-                    </Accordion>
+                        </Button>
+                        <Button
+                          asChild
+                          variant="outline"
+                          className="w-full h-11 text-base font-semibold bg-white"
+                        >
+                          <Link href="/login" onClick={() => setMobileMenuOpen(false)}>
+                            Log in
+                          </Link>
+                        </Button>
+                      </div>
+                    </div>
                   </div>
                 </SheetContent>
               </Sheet>
