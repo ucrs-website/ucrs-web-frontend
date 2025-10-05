@@ -1,9 +1,9 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Menu, Search } from 'lucide-react'
+import { Menu, Search, X, ChevronDown } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import {
@@ -13,10 +13,16 @@ import {
   NavigationMenuList,
 } from '@/components/ui/navigation-menu'
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover'
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+} from '@/components/ui/sheet'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion'
 
 // Navigation links from Figma design
 const navigationLinks = [
@@ -26,27 +32,137 @@ const navigationLinks = [
   { href: '/about', label: 'About' },
 ]
 
+// Mobile menu items with dropdowns
+const mobileMenuItems = [
+  {
+    label: 'Products',
+    hasDropdown: true,
+    items: [
+      { href: '/products/locomotives', label: 'Locomotives' },
+      { href: '/products/parts', label: 'Railway Parts' },
+      { href: '/products/equipment', label: 'Equipment' },
+    ]
+  },
+  {
+    label: 'Services',
+    hasDropdown: true,
+    items: [
+      { href: '/services/maintenance', label: 'Maintenance' },
+      { href: '/services/repair', label: 'Repair' },
+      { href: '/services/consulting', label: 'Consulting' },
+    ]
+  },
+  {
+    label: 'Pricing',
+    href: '/pricing',
+    hasDropdown: false,
+  },
+]
+
 export default function HeaderNavigation() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
   return (
     <header className="sticky top-0 z-50 w-full">
       {/* Container with max-width */}
-      <div className="mx-auto w-full max-w-[var(--container-max-width,1200px)] px-4">
+      <div className="mx-auto w-full max-w-[var(--container-max-width,1200px)] px-2 md:px-4">
         {/* Nav wrapper with rounded background */}
         <nav
-          className="my-4 rounded-xl border border-border bg-background shadow-sm"
+          className="my-3 md:my-4 rounded-2xl bg-white shadow-sm"
           role="navigation"
           aria-label="Main navigation"
         >
-          <div className="flex items-center justify-between gap-6 px-6 py-4">
-            {/* Left: Logo */}
-            <Link href="/" className="flex-shrink-0" aria-label="UCRS Home">
-              <div className="relative h-8 w-[116px]">
+          <div className="flex items-center justify-between gap-3 md:gap-6 px-4 md:px-6 py-3 md:py-4">
+            {/* Mobile: Hamburger Menu (Left) */}
+            <div className="lg:hidden">
+              <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+                <SheetTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-10 w-10 p-2"
+                    aria-label="Toggle menu"
+                  >
+                    <Menu className="h-6 w-6 text-[rgb(89,89,89)]" strokeWidth={1.5} />
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="left" className="w-full p-0 bg-white">
+                  {/* Mobile Menu Header */}
+                  <div className="flex items-center justify-between px-4 py-3 border-b">
+                    <Link href="/" onClick={() => setMobileMenuOpen(false)}>
+                      <div className="relative h-8 w-[116px]">
+                        <Image
+                          src="/images/logo.png"
+                          alt="UCRS"
+                          fill
+                          className="object-contain"
+                          sizes="116px"
+                        />
+                      </div>
+                    </Link>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="h-10 w-10 p-2"
+                      aria-label="Close menu"
+                    >
+                      <X className="h-6 w-6 text-[rgb(65,70,81)]" strokeWidth={2} />
+                    </Button>
+                  </div>
+
+                  {/* Mobile Menu Content */}
+                  <div className="px-4 py-8">
+                    <Accordion type="single" collapsible className="w-full space-y-1">
+                      {mobileMenuItems.map((item, index) => (
+                        item.hasDropdown ? (
+                          <AccordionItem key={index} value={`item-${index}`} className="border-0">
+                            <AccordionTrigger className="px-4 py-3 hover:no-underline hover:bg-transparent rounded-lg">
+                              <span className="text-base font-semibold text-[rgb(24,29,39)]">
+                                {item.label}
+                              </span>
+                            </AccordionTrigger>
+                            <AccordionContent className="px-4 pb-0 pt-1">
+                              <div className="space-y-1">
+                                {item.items?.map((subItem) => (
+                                  <Link
+                                    key={subItem.href}
+                                    href={subItem.href}
+                                    onClick={() => setMobileMenuOpen(false)}
+                                    className="block px-4 py-2 text-sm text-[rgb(71,74,81)] hover:bg-gray-50 rounded-md"
+                                  >
+                                    {subItem.label}
+                                  </Link>
+                                ))}
+                              </div>
+                            </AccordionContent>
+                          </AccordionItem>
+                        ) : (
+                          <Link
+                            key={index}
+                            href={item.href || '#'}
+                            onClick={() => setMobileMenuOpen(false)}
+                            className="block px-4 py-3 text-base font-semibold text-[rgb(24,29,39)] hover:bg-gray-50 rounded-lg"
+                          >
+                            {item.label}
+                          </Link>
+                        )
+                      ))}
+                    </Accordion>
+                  </div>
+                </SheetContent>
+              </Sheet>
+            </div>
+
+            {/* Logo - Center on mobile, Left on desktop */}
+            <Link href="/" className="flex-shrink-0 lg:mr-auto" aria-label="UCRS Home">
+              <div className="relative h-8 w-[116px] md:w-[139px]">
                 <Image
                   src="/images/logo.png"
                   alt="UCRS - Upper Canada Railway Services"
                   fill
                   className="object-contain"
-                  sizes="116px"
+                  sizes="(max-width: 768px) 116px, 139px"
                   priority
                 />
               </div>
@@ -58,7 +174,10 @@ export default function HeaderNavigation() {
                 {navigationLinks.map((link) => (
                   <NavigationMenuItem key={link.href}>
                     <NavigationMenuLink asChild>
-                      <Link href={link.href} className="text-sm font-semibold text-[rgb(83,88,98)] hover:text-foreground transition-colors duration-200">
+                      <Link
+                        href={link.href}
+                        className="text-sm font-semibold text-[rgb(83,88,98)] hover:text-foreground transition-colors duration-200"
+                      >
                         {link.label}
                       </Link>
                     </NavigationMenuLink>
@@ -68,9 +187,19 @@ export default function HeaderNavigation() {
             </NavigationMenu>
 
             {/* Right: Search + CTA */}
-            <div className="flex items-center gap-4 ml-auto">
-              {/* Search Input - Hidden on mobile */}
-              <div className="relative hidden md:block">
+            <div className="flex items-center gap-3">
+              {/* Search Icon Button - Mobile */}
+              <Button
+                variant="ghost"
+                size="icon"
+                className="lg:hidden h-7 w-7 p-1.5"
+                aria-label="Search"
+              >
+                <Search className="h-4 w-4 text-primary" strokeWidth={1.67} />
+              </Button>
+
+              {/* Search Input - Desktop */}
+              <div className="relative hidden lg:block">
                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                 <Input
                   type="search"
@@ -80,67 +209,14 @@ export default function HeaderNavigation() {
                 />
               </div>
 
-              {/* Request a Quote Button - Hidden on small mobile */}
+              {/* Request a Quote Button */}
               <Button
                 asChild
                 size="sm"
-                className="hidden sm:inline-flex h-9 px-4 text-sm font-semibold"
+                className="h-7 px-2 text-xs font-semibold lg:h-9 lg:px-4 lg:text-sm"
               >
                 <Link href="/quote">Request a Quote</Link>
               </Button>
-
-              {/* Mobile Menu Toggle */}
-              <div className="lg:hidden">
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-10 w-10"
-                      aria-label="Toggle menu"
-                    >
-                      <Menu className="h-5 w-5" />
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent align="end" className="w-64 p-2">
-                    <div className="space-y-2">
-                      {/* Mobile Search */}
-                      <div className="relative md:hidden mb-3">
-                        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                        <Input
-                          type="search"
-                          placeholder="Search in products"
-                          className="pl-9 h-9 text-sm"
-                        />
-                      </div>
-
-                      {/* Mobile Navigation */}
-                      <NavigationMenu className="w-full">
-                        <NavigationMenuList className="flex-col items-start gap-1 w-full">
-                          {navigationLinks.map((link) => (
-                            <NavigationMenuItem key={link.href} className="w-full">
-                              <NavigationMenuLink asChild>
-                                <Link href={link.href} className="block w-full rounded-md px-3 py-2 text-sm font-semibold text-[rgb(83,88,98)] hover:bg-muted hover:text-foreground transition-colors duration-200">
-                                  {link.label}
-                                </Link>
-                              </NavigationMenuLink>
-                            </NavigationMenuItem>
-                          ))}
-                        </NavigationMenuList>
-                      </NavigationMenu>
-
-                      {/* Mobile CTA */}
-                      <Button
-                        asChild
-                        size="sm"
-                        className="w-full sm:hidden h-9 text-sm font-semibold"
-                      >
-                        <Link href="/quote">Request a Quote</Link>
-                      </Button>
-                    </div>
-                  </PopoverContent>
-                </Popover>
-              </div>
             </div>
           </div>
         </nav>
