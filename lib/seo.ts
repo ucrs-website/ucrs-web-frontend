@@ -62,7 +62,7 @@ export function generateSEO({
     authors: author ? [{ name: author }] : [{ name: siteConfig.name }],
     robots: noIndex ? 'noindex, nofollow' : 'index, follow',
     openGraph: {
-      type,
+      type: type === 'product' || type === 'service' ? 'website' : type,
       title: pageTitle,
       description,
       url: pageUrl,
