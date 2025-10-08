@@ -2,6 +2,7 @@ import { HeroSection } from "@/components/sections/HeroSection";
 import { SocialProofSection } from "@/components/sections/SocialProofSection";
 import { FactoryTourSection } from "@/components/sections/FactoryTourSection";
 import { FeaturesSection } from "@/components/sections/FeaturesSection";
+import { WorldMapSection } from "@/components/sections/WorldMapSection";
 import { TestimonialSection } from "@/components/sections/TestimonialSection";
 import { WarrantySection } from "@/components/sections/WarrantySection";
 import { FAQSection } from "@/components/sections/FAQSection";
@@ -140,6 +141,9 @@ export default function HomePage() {
 
       {/* Factory Tour Section */}
       <FactoryTourSection />
+
+      {/* World Map Section */}
+      <WorldMapSection />
 
       {/* Testimonials Carousel */}
       <TestimonialSection testimonials={testimonials} />
