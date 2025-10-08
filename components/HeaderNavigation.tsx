@@ -102,7 +102,7 @@ export default function HeaderNavigation() {
       <div className="mx-auto w-full max-w-[var(--container-max-width,1200px)] px-2 md:px-4">
         {/* Nav wrapper with rounded background */}
         <nav
-          className="my-3 md:my-4 rounded-2xl bg-white shadow-sm"
+          className="my-3 md:my-4 rounded-2xl bg-white shadow-sm border-[1px] border-gray-100"
           role="navigation"
           aria-label="Main navigation"
         >
@@ -132,7 +132,7 @@ export default function HeaderNavigation() {
                   </VisuallyHidden>
 
                   {/* Mobile Menu Header */}
-                  <div className="flex items-center justify-between px-4 py-3 border-b">
+                  <div className="flex items-center justify-between px-4 py-3 border-0">
                     <Link href="/" onClick={() => setMobileMenuOpen(false)}>
                       <div className="relative h-8 w-[116px]">
                         <Image
@@ -224,17 +224,8 @@ export default function HeaderNavigation() {
                           asChild
                           className="w-full h-11 text-base font-semibold"
                         >
-                          <Link href="/signup" onClick={() => setMobileMenuOpen(false)}>
-                            Sign up
-                          </Link>
-                        </Button>
-                        <Button
-                          asChild
-                          variant="outline"
-                          className="w-full h-11 text-base font-semibold bg-white"
-                        >
-                          <Link href="/login" onClick={() => setMobileMenuOpen(false)}>
-                            Log in
+                          <Link href="/contact" onClick={() => setMobileMenuOpen(false)}>
+                            Get Quote
                           </Link>
                         </Button>
                       </div>
