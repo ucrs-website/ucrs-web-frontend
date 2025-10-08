@@ -145,14 +145,6 @@ export default function HomePage() {
       {/* Testimonials Carousel */}
       <TestimonialSection testimonials={testimonials} />
 
-      {/* Features Section 3 - could be different variant */}
-      <FeaturesSection
-        heading="Complete Railway Solutions"
-        supportingText="From parts to maintenance, we've got you covered"
-        features={features1}
-        layout="list"
-      />
-
       {/* Warranty Section */}
       <WarrantySection />
 
