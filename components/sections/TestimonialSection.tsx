@@ -1,9 +1,9 @@
 'use client'
 
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import Image from 'next/image'
 import useEmblaCarousel from 'embla-carousel-react'
-import { ChevronLeft, ChevronRight, Star } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Star } from 'lucide-react'
 
 /**
  * Testimonial Interface
@@ -45,6 +45,7 @@ interface TestimonialSectionProps {
 
 export function TestimonialSection({ testimonials }: TestimonialSectionProps) {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true })
+  const [selectedIndex, setSelectedIndex] = useState(0)
 
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev()
@@ -54,54 +55,62 @@ export function TestimonialSection({ testimonials }: TestimonialSectionProps) {
     if (emblaApi) emblaApi.scrollNext()
   }, [emblaApi])
 
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return
+    setSelectedIndex(emblaApi.selectedScrollSnap())
+  }, [emblaApi])
+
+  useEffect(() => {
+    if (!emblaApi) return
+    onSelect()
+    emblaApi.on('select', onSelect)
+    return () => {
+      emblaApi.off('select', onSelect)
+    }
+  }, [emblaApi, onSelect])
+
+  const currentTestimonial = testimonials[selectedIndex] || testimonials[0]
+
   return (
     <section className="bg-background">
-      <div className="flex flex-col lg:flex-row lg:h-[600px]">
+      <div className="flex flex-col lg:flex-row lg:h-full">
         {/* Left side - Quote and Controls */}
-        <div className="flex-1 flex items-center justify-end py-12 lg:py-24 px-4 lg:px-0">
-          <div className="w-full max-w-[640px] lg:pr-16">
-            <div className="overflow-hidden" ref={emblaRef}>
-              <div className="flex">
-                {testimonials.map((testimonial, index) => (
-                  <div key={index} className="flex-[0_0_100%] min-w-0 px-4 lg:px-8">
-                    <div className="flex flex-col gap-10">
-                      {/* Quote */}
-                      <blockquote className="text-3xl lg:text-[48px] font-medium text-foreground lg:leading-[60px] tracking-tight">
-                        &ldquo;{testimonial.quote}&rdquo;
-                      </blockquote>
+        <div className="flex-1 flex items-center justify-end lg:py-24 px-4 lg:px-0">
+          <div className="w-full max-w-[640px] lg:pr-8 py-16 lg:py-0">
+            <div className="flex flex-col gap-10 px-4 lg:px-8">
+              {/* Quote */}
+              <blockquote className="text-3xl lg:text-[48px] font-medium text-foreground lg:leading-[60px] tracking-tight">
+                &ldquo;{currentTestimonial.quote}&rdquo;
+              </blockquote>
 
-                      {/* Attribution and Controls */}
-                      <div className="flex items-start justify-between gap-3">
-                        <div className="flex flex-col gap-1">
-                          <p className="text-lg font-semibold text-foreground leading-7">
-                            {testimonial.author.name}
-                          </p>
-                          <p className="text-base text-muted-foreground leading-6">
-                            {testimonial.author.role}
-                          </p>
-                        </div>
+              {/* Attribution and Controls */}
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex flex-col gap-1">
+                  <p className="text-lg font-semibold text-foreground leading-7">
+                    {currentTestimonial.author.name}
+                  </p>
+                  <p className="text-base text-muted-foreground leading-6">
+                    {currentTestimonial.author.role}
+                  </p>
+                </div>
 
-                        {/* Navigation Arrows */}
-                        <div className="flex gap-8 shrink-0">
-                          <button
-                            onClick={scrollPrev}
-                            className="w-14 h-14 rounded-full border border-border flex items-center justify-center hover:bg-accent transition-colors"
-                            aria-label="Previous testimonial"
-                          >
-                            <ChevronLeft className="w-6 h-6 text-muted-foreground" />
-                          </button>
-                          <button
-                            onClick={scrollNext}
-                            className="w-14 h-14 rounded-full border border-border flex items-center justify-center hover:bg-accent transition-colors"
-                            aria-label="Next testimonial"
-                          >
-                            <ChevronRight className="w-6 h-6 text-muted-foreground" />
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+                {/* Navigation Arrows */}
+                <div className="flex gap-8 shrink-0">
+                  <button
+                    onClick={scrollPrev}
+                    className="w-14 h-14 rounded-full border border-border flex items-center justify-center hover:bg-accent transition-colors"
+                    aria-label="Previous testimonial"
+                  >
+                    <ArrowLeft className="w-6 h-6 text-muted-foreground" strokeWidth={2} />
+                  </button>
+                  <button
+                    onClick={scrollNext}
+                    className="w-14 h-14 rounded-full border border-border flex items-center justify-center hover:bg-accent transition-colors"
+                    aria-label="Next testimonial"
+                  >
+                    <ArrowRight className="w-6 h-6 text-muted-foreground" strokeWidth={2} />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
