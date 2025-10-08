@@ -6,20 +6,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ```bash
 # Development server with Turbopack
-npm run dev
-# or
-bun dev
+pnpm dev
 
 # Production build with Turbopack
-npm run build
+pnpm build
 
 # Start production server
-npm start
+pnpm start
 
 # Install dependencies
-npm install
-# or
-bun install
+pnpm install
 ```
 
 ## Architecture Overview
@@ -157,7 +153,7 @@ When adding data fetching for products/services/blog:
 ### Adding shadcn/ui Components
 
 ```bash
-npx shadcn@latest add [component-name]
+pnpx shadcn@latest add [component-name]
 ```
 
 Components are added to `components/ui/` and use the design system tokens from `tailwind.config.js`.
