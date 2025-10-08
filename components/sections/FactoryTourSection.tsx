@@ -30,22 +30,22 @@ interface FactoryTourSectionProps {
 const defaultFeatures: Feature[] = [
   {
     icon: TrendingDown,
-    title: '50% Cost Savings vs. OEM',
+    title: 'OEM quality at competitive cost',
   },
   {
     icon: Zap,
-    title: 'Deliver instant answers24/7 Technical Support',
+    title: 'Excellent technical and after sales support',
   },
   {
     icon: Users,
-    title: 'Lifetime Warranty Options',
+    title: 'Backed by Industry-Leading Warranty',
   },
 ]
 
 export function FactoryTourSection({
-  subheading = 'We know the way',
+  subheading = 'We are the best at what we do',
   heading = 'Inside Factory Tour',
-  description = 'est. odio elementum laoreet est. tincidunt gravida Donec urna efficitur. libero, luctus ex. dolor amet, placerat. urna. placerat efficitur. placerat. elit nec',
+  description = 'State of art facility on 3.5 acre land dedicated to manufacturing and service of rolling stock parts and assemblies.',
   features = defaultFeatures,
   videoUrl = '/videos/factory-tour.mp4',
   videoPoster = '/images/factory-tour-poster.png',
