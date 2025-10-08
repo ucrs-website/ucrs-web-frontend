@@ -131,13 +131,10 @@ export default function HomePage() {
   return (
     <main>
       {/* Hero Section */}
-      <HeroSection
-        heading="Precision Railroad Solutions for 57+ Countries"
-        supportingText="Engage with like-minded creatives in a unique, interactive setting that turns your spontaneous performances into polished digital memories."
-      />
+      <HeroSection />
 
       {/* Social Proof */}
-      <SocialProofSection heading="Over +300 happy customers" />
+      <SocialProofSection heading="Well engaged in railway community" />
 
       {/* Factory Tour Section */}
       <FactoryTourSection />

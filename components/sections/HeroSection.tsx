@@ -1,22 +1,28 @@
 import React from 'react'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import Image from 'next/image'
+import Link from 'next/link'
 
 interface HeroSectionProps {
-  heading?: string
+  heading?: React.ReactNode
   supportingText?: string
+  subtitle?: string
   checkItems?: string[]
 }
 
 export function HeroSection({
-  heading = 'Precision Railroad Solutions for 57+ Countries',
-  supportingText = 'Engage with like-minded creatives in a unique, interactive setting that turns your spontaneous performances into polished digital memories.',
+  heading = (
+    <>
+      Precision <span className="text-[#24466b]">Rolling Stock Parts & Services</span> On Global Scale
+    </>
+  ),
+  supportingText = 'Upper Canada Railway Services (UCRS) delivers high-quality parts and assemblies for railway rolling stock.',
+  subtitle = 'Trusted worldwide for precision manufacturing and dependable solutions. Backed by exceptional customer service and after-sales support.',
   checkItems = [
-    '500+ OEM-Compatible Parts',
+    '5000+ OEM-Compatible Parts',
     'AAR-M1003 Certified',
     '57+ Countries Served',
-    '30+ Years in Rail',
+    '60+ Years Combined Experience',
   ],
 }: HeroSectionProps) {
   return (
@@ -29,42 +35,46 @@ export function HeroSection({
       <div className="relative z-10 container mx-auto px-8">
         <div className="max-w-[1280px] mx-auto space-y-10">
           {/* Main content */}
-          <div className="md:flex flex-1 gap-8 items-start space-y-12">
-            {/* Left column - Text and form */}
-            <div className="flex-1 max-w-[768px] space-y-12">
+          <div className="flex flex-col lg:flex-row gap-12 lg:gap-8 items-start">
+            {/* Left column - Text and CTAs */}
+            <div className="flex-1 max-w-[768px] space-y-8">
               {/* Text and supporting text */}
               <div className="space-y-6">
-                <h1 className="text-4xl md:text-6xl font-bold md:font-semibold text-[#181d27] md:leading-[72px] tracking-[-1.2px]">
+                <h1 className="text-4xl md:text-[60px] font-semibold text-[#181d27] md:leading-[72px] tracking-[-1.2px]">
                   {heading}
                 </h1>
-                <p className="text-xl text-[#535862] leading-[30px]">
-                  {supportingText}
-                </p>
-              </div>
-
-              {/* Email capture */}
-              <div className="flex gap-4 max-w-[480px]">
-                <div className="flex-1 flex flex-col gap-1.5">
-                  <Input
-                    type="email"
-                    placeholder="Enter your email"
-                    className="h-12 rounded-xl border-[#d5d7da] bg-white"
-                  />
-                  <p className="text-sm text-[#535862] leading-5">
-                    We will contact you right away.
+                <div className="space-y-2">
+                  <p className="text-2xl text-[#535862] leading-[28.64px]">
+                    {supportingText}
+                  </p>
+                  <p className="text-base text-[#6c737f] leading-6">
+                    {subtitle}
                   </p>
                 </div>
+              </div>
+
+              {/* CTA Buttons */}
+              <div className="flex flex-col sm:flex-row gap-3">
                 <Button
+                  asChild
                   size="lg"
-                  className="bg-[#e4342d] hover:bg-[#e4342d]/90 text-white px-[18px] py-3 h-12 rounded-lg border-2 border-white/[0.12]"
+                  className="bg-[#e4342d] hover:bg-[#bb2f27] active:bg-[#bb2f27] text-white h-12 rounded-lg shadow-sm"
                 >
-                  Get Quote
+                  <Link href="/quote">Get Quote</Link>
+                </Button>
+                <Button
+                  asChild
+                  variant="outline"
+                  size="lg"
+                  className="h-12 rounded-lg text-[#e4342d] border-[#e4342d] hover:bg-[#ffe0d9]"
+                >
+                  <Link href="/products">Explore Products</Link>
                 </Button>
               </div>
             </div>
 
             {/* Right column - Check items */}
-            <div className="flex flex-col gap-5 max-w-[480px] m:pl-4 pl-0 pb-6">
+            <div className="flex flex-col gap-5 max-w-[480px] lg:pl-4">
               {checkItems.map((item, index) => (
                 <div key={index} className="flex gap-3 items-start">
                   <div className="bg-[#dcfae6] rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">
