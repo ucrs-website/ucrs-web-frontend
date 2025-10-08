@@ -78,7 +78,7 @@ export function WorldMapSection() {
     <section className="relative w-full bg-white py-16 md:py-24">
       <div className="container mx-auto px-4">
         {/* Header */}
-        <div className="mb-8 text-center">
+        <div className="mb-[-70px] lg:mb-[-150px] text-center">
           <p className="mb-2 text-sm font-medium uppercase tracking-wide text-primary">
             We are world-wide
           </p>
@@ -93,7 +93,7 @@ export function WorldMapSection() {
         {/* Map Container */}
         <div className="relative mx-auto max-w-7xl">
           {/* Zoom Controls - Desktop Only */}
-          <div className="absolute right-4 top-4 z-10 hidden flex-col gap-2 md:flex">
+          <div className="absolute right-4 bottom-[-70px] lg:top-8 z-10 flex-col gap-2 md:flex">
             <button
               onClick={handleZoomIn}
               className="flex h-10 w-10 items-center justify-center rounded-lg bg-white shadow-lg transition-all hover:bg-gray-50 disabled:opacity-50"
