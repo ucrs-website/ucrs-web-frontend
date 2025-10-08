@@ -117,7 +117,7 @@ export function TestimonialSection({ testimonials }: TestimonialSectionProps) {
         </div>
 
         {/* Right side - Image with Overlay Card */}
-        <div className="flex-1 relative min-h-[400px] lg:min-h-0 lg:min-w-[560px]">
+        <div className="flex-1 relative h-[500px] lg:h-auto lg:min-h-0 lg:min-w-[560px]">
           <div className="overflow-hidden h-full" ref={emblaRef}>
             <div className="flex h-full">
               {testimonials.map((testimonial, index) => (
