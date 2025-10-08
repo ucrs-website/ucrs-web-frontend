@@ -149,11 +149,7 @@ export default function HomePage() {
       <WarrantySection />
 
       {/* FAQ Section */}
-      <FAQSection
-        title="Support"
-        subtitle="FAQs"
-        description="Everything you need to know about the product and billing. Can't find the answer you're looking for? Please chat to our friendly team."
-      />
+      <FAQSection />
 
       {/* Newsletter CTA */}
       <NewsletterSection
