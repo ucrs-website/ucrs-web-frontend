@@ -11,6 +11,7 @@
     "@radix-ui/react-accordion": "^1.2.12",
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-scroll-area": "^1.2.10",
+    "embla-carousel-react": "^8.6.0",
     "lucide-react": "^0.544.0",
     "media-chrome": "^4.14.0",
     "next": "15.5.4",

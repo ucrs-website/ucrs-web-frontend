@@ -1,74 +1,169 @@
-import React from 'react'
-import Image from 'next/image'
-import { Star } from 'lucide-react'
+'use client'
 
-interface Testimonial {
+import React, { useCallback } from 'react'
+import Image from 'next/image'
+import useEmblaCarousel from 'embla-carousel-react'
+import { ChevronLeft, ChevronRight, Star } from 'lucide-react'
+
+/**
+ * Testimonial Interface
+ *
+ * @example
+ * ```tsx
+ * const testimonial: Testimonial = {
+ *   quote: "UCRS has transformed our railway operations...",
+ *   author: {
+ *     name: "John Smith",
+ *     role: "Operations Director"
+ *   },
+ *   company: {
+ *     name: "Global Railways Inc.",
+ *     location: "USA, California"
+ *   },
+ *   image: "/testimonial-factory.avif",
+ *   rating: 5
+ * }
+ * ```
+ */
+export interface Testimonial {
   quote: string
   author: {
     name: string
     role: string
-    company: string
-    image?: string
   }
-  rating?: number
+  company: {
+    name: string
+    location: string // e.g., "USA, California"
+  }
+  image: string // Path to the testimonial background image
+  rating?: number // Optional rating out of 5
 }
 
 interface TestimonialSectionProps {
-  testimonial: Testimonial
+  testimonials: Testimonial[]
 }
 
-export function TestimonialSection({ testimonial }: TestimonialSectionProps) {
-  return (
-    <section className="bg-muted/50 py-24">
-      <div className="container mx-auto px-4">
-        <div className="max-w-[1200px] mx-auto">
-          <div className="max-w-[768px] mx-auto text-center space-y-8">
-            {/* Company logo placeholder */}
-            <div className="flex justify-center">
-              <div className="w-32 h-8 bg-muted rounded" />
-            </div>
+export function TestimonialSection({ testimonials }: TestimonialSectionProps) {
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true })
 
-            {/* Rating stars */}
-            {testimonial.rating && (
-              <div className="flex justify-center gap-1">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className={`w-5 h-5 ${
-                      i < testimonial.rating!
-                        ? 'fill-yellow-400 text-yellow-400'
-                        : 'text-muted-foreground/30'
-                    }`}
-                  />
+  const scrollPrev = useCallback(() => {
+    if (emblaApi) emblaApi.scrollPrev()
+  }, [emblaApi])
+
+  const scrollNext = useCallback(() => {
+    if (emblaApi) emblaApi.scrollNext()
+  }, [emblaApi])
+
+  return (
+    <section className="bg-background">
+      <div className="flex flex-col lg:flex-row lg:h-[600px]">
+        {/* Left side - Quote and Controls */}
+        <div className="flex-1 flex items-center justify-end py-12 lg:py-24 px-4 lg:px-0">
+          <div className="w-full max-w-[640px] lg:pr-16">
+            <div className="overflow-hidden" ref={emblaRef}>
+              <div className="flex">
+                {testimonials.map((testimonial, index) => (
+                  <div key={index} className="flex-[0_0_100%] min-w-0 px-4 lg:px-8">
+                    <div className="flex flex-col gap-10">
+                      {/* Quote */}
+                      <blockquote className="text-3xl lg:text-[48px] font-medium text-foreground lg:leading-[60px] tracking-tight">
+                        &ldquo;{testimonial.quote}&rdquo;
+                      </blockquote>
+
+                      {/* Attribution and Controls */}
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="flex flex-col gap-1">
+                          <p className="text-lg font-semibold text-foreground leading-7">
+                            {testimonial.author.name}
+                          </p>
+                          <p className="text-base text-muted-foreground leading-6">
+                            {testimonial.author.role}
+                          </p>
+                        </div>
+
+                        {/* Navigation Arrows */}
+                        <div className="flex gap-8 shrink-0">
+                          <button
+                            onClick={scrollPrev}
+                            className="w-14 h-14 rounded-full border border-border flex items-center justify-center hover:bg-accent transition-colors"
+                            aria-label="Previous testimonial"
+                          >
+                            <ChevronLeft className="w-6 h-6 text-muted-foreground" />
+                          </button>
+                          <button
+                            onClick={scrollNext}
+                            className="w-14 h-14 rounded-full border border-border flex items-center justify-center hover:bg-accent transition-colors"
+                            aria-label="Next testimonial"
+                          >
+                            <ChevronRight className="w-6 h-6 text-muted-foreground" />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 ))}
               </div>
-            )}
+            </div>
+          </div>
+        </div>
 
-            {/* Quote */}
-            <blockquote className="text-2xl md:text-3xl font-medium text-foreground leading-[1.4]">
-              &ldquo;{testimonial.quote}&rdquo;
-            </blockquote>
-
-            {/* Author */}
-            <div className="flex flex-col items-center gap-3">
-              {testimonial.author.image && (
-                <div className="relative w-16 h-16 rounded-full overflow-hidden">
+        {/* Right side - Image with Overlay Card */}
+        <div className="flex-1 relative min-h-[400px] lg:min-h-0 lg:min-w-[560px]">
+          <div className="overflow-hidden h-full" ref={emblaRef}>
+            <div className="flex h-full">
+              {testimonials.map((testimonial, index) => (
+                <div key={index} className="flex-[0_0_100%] min-w-0 relative h-full">
+                  {/* Background Image */}
                   <Image
-                    src={testimonial.author.image}
-                    alt={testimonial.author.name}
+                    src={testimonial.image}
+                    alt={`${testimonial.company.name} - ${testimonial.company.location}`}
                     fill
                     className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 50vw"
                   />
+
+                  {/* Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/40" />
+
+                  {/* Bottom Card */}
+                  <div className="absolute bottom-0 left-0 right-0 p-6 pt-24">
+                    <div className="backdrop-blur-md bg-white/30 border border-white/30 rounded-2xl p-5 space-y-2">
+                      {/* Company Name and Rating */}
+                      <div className="flex items-start justify-between gap-4">
+                        <h3 className="text-white text-[30px] font-semibold leading-[38px] flex-1">
+                          {testimonial.company.name}
+                        </h3>
+
+                        {/* Rating Stars */}
+                        {testimonial.rating && (
+                          <div className="flex gap-1 shrink-0">
+                            {[...Array(5)].map((_, i) => (
+                              <Star
+                                key={i}
+                                className={`w-5 h-5 ${
+                                  i < testimonial.rating!
+                                    ? 'fill-white text-white'
+                                    : 'fill-white/30 text-white/30'
+                                }`}
+                              />
+                            ))}
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Location and Author */}
+                      <div className="text-white space-y-0.5">
+                        <p className="text-lg font-semibold leading-7">
+                          {testimonial.company.location}
+                        </p>
+                        <p className="text-base font-medium leading-6">
+                          {testimonial.author.name}, {testimonial.author.role}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              )}
-              <div>
-                <p className="font-semibold text-foreground">
-                  {testimonial.author.name}
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  {testimonial.author.role} at {testimonial.author.company}
-                </p>
-              </div>
+              ))}
             </div>
           </div>
         </div>

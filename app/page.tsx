@@ -52,18 +52,79 @@ export default function HomePage() {
     },
   ];
 
-  // Testimonial data
-  const testimonial = {
-    quote:
-      "UCRS has transformed our railway operations. Their precision solutions and expert support have been instrumental in our success across multiple regions.",
-    author: {
-      name: "John Smith",
-      role: "Operations Director",
-      company: "Global Railways Inc.",
-      image: "/images/testimonials/avatar1.jpg",
+  // Testimonials data - carousel with multiple testimonials
+  const testimonials = [
+    {
+      quote:
+        "The quality of products from Railroad Factory is unmatched. Their attention to detail and service is exceptional. We appreciate their dedication to our needs!",
+      author: {
+        name: "Sarah Mitchell",
+        role: "Director",
+      },
+      company: {
+        name: "Northern Rail Systems",
+        location: "Canada, Toronto",
+      },
+      image: "/testimonial-factory.avif",
+      rating: 5,
     },
-    rating: 5,
-  };
+    {
+      quote:
+        "UCRS has transformed our railway operations. Their precision solutions and expert support have been instrumental in our success across multiple regions.",
+      author: {
+        name: "Marcus Chen",
+        role: "Chief Operations Officer",
+      },
+      company: {
+        name: "Pacific Railway Group",
+        location: "USA, San Francisco",
+      },
+      image: "/testimonial-factory.avif",
+      rating: 5,
+    },
+    {
+      quote:
+        "Outstanding reliability and performance. UCRS delivers on their promises every single time. Our partnership has been nothing short of exceptional.",
+      author: {
+        name: "Elena Rodriguez",
+        role: "VP of Engineering",
+      },
+      company: {
+        name: "TransEuropa Rail",
+        location: "Spain, Madrid",
+      },
+      image: "/testimonial-factory.avif",
+      rating: 5,
+    },
+    {
+      quote:
+        "Working with UCRS has elevated our maintenance standards significantly. Their innovative solutions and responsive support team make them an invaluable partner.",
+      author: {
+        name: "James O'Connor",
+        role: "Maintenance Director",
+      },
+      company: {
+        name: "Celtic Rail Services",
+        location: "Ireland, Dublin",
+      },
+      image: "/testimonial-factory.avif",
+      rating: 5,
+    },
+    {
+      quote:
+        "The expertise and professionalism of the UCRS team is second to none. They understand our industry challenges and consistently provide solutions that exceed expectations.",
+      author: {
+        name: "Yuki Tanaka",
+        role: "Technical Manager",
+      },
+      company: {
+        name: "Asia Pacific Railways",
+        location: "Japan, Tokyo",
+      },
+      image: "/testimonial-factory.avif",
+      rating: 5,
+    },
+  ];
 
 
   return (
@@ -80,8 +141,8 @@ export default function HomePage() {
       {/* Factory Tour Section */}
       <FactoryTourSection />
 
-      {/* Testimonial */}
-      <TestimonialSection testimonial={testimonial} />
+      {/* Testimonials Carousel */}
+      <TestimonialSection testimonials={testimonials} />
 
       {/* Features Section 3 - could be different variant */}
       <FeaturesSection
