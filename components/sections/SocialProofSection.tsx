@@ -1,8 +1,5 @@
-'use client'
-
 import React from 'react'
 import Image from 'next/image'
-import { Marquee } from '@/components/ui/marquee'
 
 interface Company {
   name: string
@@ -27,29 +24,14 @@ const defaultCompanies: Company[] = [
     logoText: '/images/companies/kintsugi-text.svg',
   },
   {
-    name: 'StackedLab',
-    logoMark: '/images/companies/stackedlab-mark.svg',
-    logoText: '/images/companies/stackedlab-text.svg',
-  },
-  {
     name: 'Magnolia',
     logoMark: '/images/companies/magnolia-mark.svg',
     logoText: '/images/companies/magnolia-text.svg',
-  },
-  {
-    name: 'Warpspeed',
-    logoMark: '/images/companies/warpspeed-mark.svg',
-    logoText: '/images/companies/warpspeed-text.svg',
-  },
-  {
-    name: 'Sisyphus',
-    logoMark: '/images/companies/sisyphus-mark.svg',
-    logoText: '/images/companies/sisyphus-text.svg',
-  },
+  }
 ]
 
 export function SocialProofSection({
-  heading = 'Over +300 happy customers',
+  heading = 'Well engaged in railway community',
   companies = defaultCompanies,
 }: SocialProofSectionProps) {
   return (
@@ -61,12 +43,12 @@ export function SocialProofSection({
             {heading}
           </p>
 
-          {/* Company logos marquee */}
-          <Marquee speed={40} pauseOnHover={true} className="py-4">
+          {/* Company logos - 3 brands side by side */}
+          <div className="flex items-center justify-center gap-12 py-4">
             {companies.map((company, index) => (
               <div
                 key={index}
-                className="flex items-center gap-2 mx-6 h-12"
+                className="flex items-center gap-2 h-12"
               >
                 {company.logoMark && (
                   <div className="relative h-12 w-10 flex-shrink-0">
@@ -88,7 +70,7 @@ export function SocialProofSection({
                 </div>
               </div>
             ))}
-          </Marquee>
+          </div>
         </div>
       </div>
     </section>
