@@ -277,7 +277,7 @@ export default function HeaderNavigation() {
                     <NavigationMenuLink asChild>
                       <Link
                         href={link.href}
-                        className="text-sm font-semibold text-[rgb(83,88,98)] hover:text-foreground transition-colors duration-200"
+                        className="text-sm font-semibold text-[#535862] hover:text-[#535862] hover:bg-[#ffe0d9] transition-all duration-200 rounded-lg px-3 py-2"
                       >
                         {link.label}
                       </Link>
