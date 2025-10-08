@@ -116,7 +116,7 @@ export function FAQSection({
                   <AccordionItem
                     key={index}
                     value={index.toString()}
-                    className="border-t border-[#eaecf0] pt-6 data-[state=open]:bg-[#f9fafb] data-[state=open]:px-6 data-[state=open]:py-6 data-[state=open]:-mx-6 data-[state=open]:-mt-6 data-[state=open]:mb-2 rounded-lg"
+                    className="data-[state=open]:bg-[#f9fafb] data-[state=open]:px-6 data-[state=open]:py-6 data-[state=open]:-mx-6 data-[state=open]:mb-2 rounded-lg"
                   >
                     <AccordionPrimitive.Header className="flex">
                       <AccordionPrimitive.Trigger className="flex flex-1 items-start justify-between text-left gap-6 outline-none focus-visible:ring-0 group">
