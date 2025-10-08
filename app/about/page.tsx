@@ -1,20 +1,25 @@
 import { generateSEO } from '@/lib/seo'
+import { AboutHero } from '@/components/sections/AboutHero'
 
 export const metadata = generateSEO({
   title: 'About Us',
-  description: 'Learn about UCRS (Upper Canada Railway Services), our history, mission, and commitment to providing quality railway parts and locomotive services.',
-  keywords: ['about ucrs', 'railway company', 'locomotive services company', 'railway parts provider'],
+  description:
+    'Upper Canada Railway Services (UCRS) is an Ontario based corporation and is a first class quality manufacturer and supplier of a wide array of assembly components and spare parts for locomotives, freight cars and passenger coaches.',
   url: '/about',
+  keywords: [
+    'railway company',
+    'locomotive parts manufacturer',
+    'railway services',
+    'AAR-M1003 certified',
+    'rail industry',
+    'OEM parts',
+  ],
 })
 
 export default function AboutPage() {
   return (
-    <div className="container mx-auto px-4 py-12">
-      <h1 className="text-4xl font-bold mb-6">About UCRS</h1>
-      <p className="text-lg text-muted-foreground mb-8">
-        Content will be implemented based on Figma design
-      </p>
-      {/* Add your Figma design implementation here */}
-    </div>
+    <main className="min-h-screen">
+      <AboutHero />
+    </main>
   )
 }
