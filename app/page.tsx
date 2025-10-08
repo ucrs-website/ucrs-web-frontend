@@ -3,6 +3,7 @@ import { SocialProofSection } from "@/components/sections/SocialProofSection";
 import { FactoryTourSection } from "@/components/sections/FactoryTourSection";
 import { FeaturesSection } from "@/components/sections/FeaturesSection";
 import { TestimonialSection } from "@/components/sections/TestimonialSection";
+import { WarrantySection } from "@/components/sections/WarrantySection";
 import { FAQSection } from "@/components/sections/FAQSection";
 import { NewsletterSection } from "@/components/sections/NewsletterSection";
 import { Zap, Shield, TrendingUp, Users, Clock, Award } from "lucide-react";
@@ -89,6 +90,9 @@ export default function HomePage() {
         features={features1}
         layout="list"
       />
+
+      {/* Warranty Section */}
+      <WarrantySection />
 
       {/* FAQ Section */}
       <FAQSection
