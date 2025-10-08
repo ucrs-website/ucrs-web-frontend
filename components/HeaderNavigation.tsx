@@ -3,6 +3,7 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { usePathname } from 'next/navigation'
 import { Search } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -93,6 +94,7 @@ const mobileFooterLinks = {
 
 export default function HeaderNavigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const pathname = usePathname()
 
   return (
     <header className="sticky top-0 z-50 w-full">
@@ -272,18 +274,25 @@ export default function HeaderNavigation() {
             {/* Center: Desktop Navigation */}
             <NavigationMenu className="hidden lg:flex">
               <NavigationMenuList className="gap-6">
-                {navigationLinks.map((link) => (
-                  <NavigationMenuItem key={link.href}>
-                    <NavigationMenuLink asChild>
-                      <Link
-                        href={link.href}
-                        className="text-sm font-semibold text-[#535862] hover:text-[#535862] hover:bg-[#ffe0d9] transition-all duration-200 rounded-lg px-3 py-2"
-                      >
-                        {link.label}
-                      </Link>
-                    </NavigationMenuLink>
-                  </NavigationMenuItem>
-                ))}
+                {navigationLinks.map((link) => {
+                  const isActive = pathname === link.href
+                  return (
+                    <NavigationMenuItem key={link.href}>
+                      <NavigationMenuLink asChild>
+                        <Link
+                          href={link.href}
+                          className={`text-sm font-semibold transition-all duration-200 rounded-lg px-3 py-2 ${
+                            isActive
+                              ? 'bg-[#FFE0D9] text-[#BB2F27]'
+                              : 'text-[#535862] hover:bg-[#FFE0D9] hover:text-[#BB2F27]'
+                          }`}
+                        >
+                          {link.label}
+                        </Link>
+                      </NavigationMenuLink>
+                    </NavigationMenuItem>
+                  )
+                })}
               </NavigationMenuList>
             </NavigationMenu>
 
