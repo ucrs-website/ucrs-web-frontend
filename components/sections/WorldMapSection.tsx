@@ -117,15 +117,15 @@ export function WorldMapSection() {
               scale: 147,
             }}
             className="w-full"
-            style={{ width: '100%', height: '100%' }}
+            style={{ width: '100%', height: 'auto' }}
           >
             <ZoomableGroup
               center={[0, 20]}
               zoom={zoom}
-              onMoveEnd={({ zoom: newZoom }) => setZoom(newZoom)}
+              onMoveEnd={({ zoom: newZoom }: { zoom: number }) => setZoom(newZoom)}
               minZoom={1}
               maxZoom={4}
-              filterZoomEvent={(evt) => {
+              filterZoomEvent={(evt: any) => {
                 // Disable scroll zoom on desktop
                 if (evt.type === 'wheel') {
                   return false
@@ -135,7 +135,7 @@ export function WorldMapSection() {
               }}
             >
               <Geographies geography={geoUrl}>
-                {({ geographies }) =>
+                {({ geographies }: { geographies: Array<any> }) =>
                   geographies.map((geo) => {
                     const countryName = geo.properties.name
                     const country = countryMap.get(countryName)
