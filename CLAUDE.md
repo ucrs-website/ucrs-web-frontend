@@ -162,6 +162,24 @@ npx shadcn@latest add [component-name]
 
 Components are added to `components/ui/` and use the design system tokens from `tailwind.config.js`.
 
+#### Component Libraries (Priority Order)
+
+When creating new sections and components, use these shadcn-based libraries in the following priority order:
+
+1. **OriginUI** (Highest Priority) - https://originui.com/
+   - Primary source for section components and UI patterns
+
+2. **Kibo UI** - https://www.kibo-ui.com/components
+   - Secondary option for components not found in OriginUI
+
+3. **ReUI** - https://reui.io/
+   - Tertiary option for specialized components
+
+4. **Skiper UI** (Lowest Priority) - https://skiper-ui.com/components
+   - Fallback option for unique component requirements
+
+**Usage Pattern**: Always check libraries in order (1→2→3→4) when building new sections. If a suitable component exists in a higher-priority library, use that instead of lower-priority options.
+
 ### Working with Structured Data
 
 Always add appropriate schema markup to content pages:
