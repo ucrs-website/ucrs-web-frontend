@@ -105,7 +105,7 @@ export function FAQSection({
             </div>
 
             {/* FAQ Accordion - Single column, full width */}
-            <div className="w-full max-w-[960px]">
+            <div className="w-full">
               <Accordion
                 type="single"
                 collapsible

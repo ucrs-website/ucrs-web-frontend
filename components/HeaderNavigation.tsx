@@ -283,7 +283,7 @@ export default function HeaderNavigation() {
                           href={link.href}
                           className={`text-sm font-semibold transition-all duration-200 rounded-lg px-3 py-2 ${
                             isActive
-                              ? 'bg-[#FFE0D9] text-[#BB2F27]'
+                              ? 'bg-[#FFE0D9] text-[#BB2F27] hover:bg-[#dd2626] hover:text-[#fff]'
                               : 'text-[#535862] hover:bg-[#FFE0D9] hover:text-[#BB2F27]'
                           }`}
                         >
