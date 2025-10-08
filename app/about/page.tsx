@@ -1,5 +1,6 @@
 import { generateSEO } from '@/lib/seo'
 import { AboutHero } from '@/components/sections/AboutHero'
+import { OurJourney } from '@/components/sections/OurJourney'
 
 export const metadata = generateSEO({
   title: 'About Us',
@@ -20,6 +21,7 @@ export default function AboutPage() {
   return (
     <main className="min-h-screen">
       <AboutHero />
+      <OurJourney />
     </main>
   )
 }
