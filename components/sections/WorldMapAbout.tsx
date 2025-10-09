@@ -115,8 +115,21 @@ export function WorldMapAbout() {
             }}
             className="w-full"
             style={{ width: '100%', height: 'auto' }}
-            height={400}
+            height={500}
           >
+            <defs>
+              {/* Dotted pattern for country fills */}
+              <pattern
+                id="dot-pattern"
+                x="0"
+                y="0"
+                width="8"
+                height="8"
+                patternUnits="userSpaceOnUse"
+              >
+                <circle cx="4" cy="4" r="1.5" fill="#D5D7DA" opacity="0.4" />
+              </pattern>
+            </defs>
             <ZoomableGroup
               center={[0, 20]}
               zoom={zoom}
@@ -131,7 +144,7 @@ export function WorldMapAbout() {
                 return false
               }}
             >
-              {/* Geographies with dotted/light gray fill */}
+              {/* Geographies with dotted pattern fill */}
               <Geographies geography={geoUrl}>
                 {({ geographies }: { geographies: Array<any> }) =>
                   geographies.map((geo) => (
@@ -140,24 +153,21 @@ export function WorldMapAbout() {
                       geography={geo}
                       style={{
                         default: {
-                          fill: '#D5D7DA',
-                          fillOpacity: 0.3,
-                          stroke: '#D5D7DA',
+                          fill: 'url(#dot-pattern)',
+                          stroke: 'none',
                           strokeWidth: 0,
                           outline: 'none',
                         },
                         hover: {
-                          fill: '#D5D7DA',
-                          fillOpacity: 0.3,
-                          stroke: '#D5D7DA',
-                          strokeWidth: 0.5,
+                          fill: 'url(#dot-pattern)',
+                          stroke: 'none',
+                          strokeWidth: 0,
                           outline: 'none',
                         },
                         pressed: {
-                          fill: '#D5D7DA',
-                          fillOpacity: 0.3,
-                          stroke: '#D5D7DA',
-                          strokeWidth: 0.5,
+                          fill: 'url(#dot-pattern)',
+                          stroke: 'none',
+                          strokeWidth: 0,
                           outline: 'none',
                         },
                       }}
