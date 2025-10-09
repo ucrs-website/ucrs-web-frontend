@@ -11,7 +11,6 @@ import {
 import { capitalCoordinates } from '@/lib/data/country-capitals'
 import * as Flags from 'country-flag-icons/react/3x2'
 import { cn } from '@/lib/utils'
-import { Mail, Phone } from 'lucide-react'
 
 const geoUrl = 'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json'
 
@@ -25,35 +24,35 @@ interface TooltipData {
 }
 
 interface ContactInfo {
-  icon: React.ReactNode
   label: string
+  description: string
   value: string
   href?: string
 }
 
 const contactInfoData: ContactInfo[] = [
   {
-    icon: <Mail className="w-5 h-5" />,
     label: 'Support',
-    value: 'sales@ucrs.com',
-    href: 'mailto:sales@ucrs.com',
+    description: 'Our friendly team is here to help.',
+    value: 'support@ucrs.com',
+    href: 'mailto:support@ucrs.com',
   },
   {
-    icon: <Mail className="w-5 h-5" />,
     label: 'Sales',
+    description: 'Questions or queries? Get in touch!',
     value: 'sales@ucrs.com',
     href: 'mailto:sales@ucrs.com',
   },
   {
-    icon: <Mail className="w-5 h-5" />,
-    label: 'PR',
-    value: 'sales@ucrs.com',
-    href: 'mailto:sales@ucrs.com',
+    label: 'Fax',
+    description: 'Give us your quoete',
+    value: '289-597-8278',
+    href: 'tel:+12895978278',
   },
   {
-    icon: <Phone className="w-5 h-5" />,
     label: 'Phone',
-    value: '289-597-8277',
+    description: "24/7 we're ready to service you",
+    value: '289-597-UCRS (8277)',
     href: 'tel:+12895978277',
   },
 ]
@@ -100,14 +99,14 @@ export function WorldMapAbout() {
     <section className="relative w-full bg-white py-6 md:py-24">
       <div className="container mx-auto px-8 max-w-[1280px]">
         {/* Header */}
-        <div className="flex items-center justify-center p-2.5 overflow-hidden mb-8">
+        <div className="flex items-center justify-center p-2.5 overflow-hidden mb-8 md:mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold text-[#252b42] text-center leading-tight">
             Serving Railroad World Wide
           </h2>
         </div>
 
         {/* Map Container */}
-        <div className="relative mx-auto max-w-7xl mb-12">
+        <div className="relative mx-auto max-w-[1024px] mb-12 md:mb-16">
           <ComposableMap
             projectionConfig={{
               scale: 147,
@@ -116,7 +115,7 @@ export function WorldMapAbout() {
             style={{ width: '100%', height: 'auto' }}
           >
             <ZoomableGroup center={[0, 20]} zoom={zoom}>
-              {/* Geographies with no visible borders */}
+              {/* Geographies with dotted/light gray fill */}
               <Geographies geography={geoUrl}>
                 {({ geographies }: { geographies: Array<any> }) =>
                   geographies.map((geo) => (
@@ -125,20 +124,23 @@ export function WorldMapAbout() {
                       geography={geo}
                       style={{
                         default: {
-                          fill: '#FFFFFF',
-                          stroke: '#FFFFFF',
+                          fill: '#D5D7DA',
+                          fillOpacity: 0.3,
+                          stroke: '#D5D7DA',
                           strokeWidth: 0.5,
                           outline: 'none',
                         },
                         hover: {
-                          fill: '#FFFFFF',
-                          stroke: '#FFFFFF',
+                          fill: '#D5D7DA',
+                          fillOpacity: 0.3,
+                          stroke: '#D5D7DA',
                           strokeWidth: 0.5,
                           outline: 'none',
                         },
                         pressed: {
-                          fill: '#FFFFFF',
-                          stroke: '#FFFFFF',
+                          fill: '#D5D7DA',
+                          fillOpacity: 0.3,
+                          stroke: '#D5D7DA',
                           strokeWidth: 0.5,
                           outline: 'none',
                         },
@@ -148,7 +150,7 @@ export function WorldMapAbout() {
                 }
               </Geographies>
 
-              {/* Markers for capitals with bouncing animation */}
+              {/* Markers for capitals with pulse/tremble animation */}
               {capitalCoordinates.map((capital) => (
                 <Marker
                   key={capital.iso2}
@@ -158,21 +160,35 @@ export function WorldMapAbout() {
                   onMouseLeave={handleMarkerMouseLeave}
                 >
                   <g className="marker-group">
-                    {/* Bouncing Circle Marker */}
+                    {/* Outer Circle (10% opacity, animated) */}
                     <circle
-                      r={6}
-                      fill="#C0222B"
-                      stroke="#FFFFFF"
-                      strokeWidth={2}
+                      r={hoveredMarker === capital.iso2 ? 24 : 20}
+                      fill="#0052FF"
+                      opacity={0.1}
                       className={cn(
-                        'cursor-pointer transition-all',
+                        'transition-all duration-300',
                         hoveredMarker === capital.iso2
-                          ? 'animate-bounce-slow'
-                          : 'animate-bounce-subtle'
+                          ? 'animate-pulse-fast'
+                          : 'animate-pulse-subtle'
                       )}
-                      style={{
-                        filter: 'drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.25))',
-                      }}
+                    />
+                    {/* Middle Circle (20% opacity, animated) */}
+                    <circle
+                      r={hoveredMarker === capital.iso2 ? 14 : 12}
+                      fill="#0052FF"
+                      opacity={0.2}
+                      className={cn(
+                        'transition-all duration-300',
+                        hoveredMarker === capital.iso2
+                          ? 'animate-pulse-fast'
+                          : 'animate-pulse-subtle'
+                      )}
+                    />
+                    {/* Inner Circle (100% opacity, solid) */}
+                    <circle
+                      r={4}
+                      fill="#0052FF"
+                      className="cursor-pointer"
                     />
                   </g>
                 </Marker>
@@ -229,62 +245,68 @@ export function WorldMapAbout() {
         </div>
 
         {/* Contact Information Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-8">
           {contactInfoData.map((contact, index) => (
             <div
               key={index}
-              className="flex flex-col items-center text-center gap-3 p-6 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors"
+              className="flex flex-col items-center text-center gap-5"
             >
-              <div className="flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 text-primary">
-                {contact.icon}
-              </div>
-              <div className="flex flex-col gap-1">
-                <p className="text-sm font-semibold text-gray-900 uppercase tracking-wide">
+              <div className="flex flex-col gap-2">
+                <h3 className="text-xl font-semibold text-[#181d27] leading-[30px]">
                   {contact.label}
+                </h3>
+                <p className="text-base font-normal text-[#535862] leading-6">
+                  {contact.description}
                 </p>
-                {contact.href ? (
-                  <a
-                    href={contact.href}
-                    className="text-base font-normal text-gray-600 hover:text-primary transition-colors"
-                  >
-                    {contact.value}
-                  </a>
-                ) : (
-                  <p className="text-base font-normal text-gray-600">{contact.value}</p>
-                )}
               </div>
+              {contact.href ? (
+                <a
+                  href={contact.href}
+                  className="text-sm font-semibold text-[#023fc1] hover:underline transition-all leading-5"
+                >
+                  {contact.value}
+                </a>
+              ) : (
+                <p className="text-sm font-semibold text-[#023fc1] leading-5">
+                  {contact.value}
+                </p>
+              )}
             </div>
           ))}
         </div>
       </div>
 
       <style jsx>{`
-        @keyframes bounce-subtle {
+        @keyframes pulse-subtle {
           0%,
           100% {
-            transform: translateY(0);
+            transform: scale(1);
+            opacity: 0.1;
           }
           50% {
-            transform: translateY(-3px);
+            transform: scale(1.05);
+            opacity: 0.15;
           }
         }
 
-        @keyframes bounce-slow {
+        @keyframes pulse-fast {
           0%,
           100% {
-            transform: translateY(0) scale(1);
+            transform: scale(1);
+            opacity: 0.1;
           }
           50% {
-            transform: translateY(-6px) scale(1.2);
+            transform: scale(1.1);
+            opacity: 0.2;
           }
         }
 
-        :global(.animate-bounce-subtle) {
-          animation: bounce-subtle 3s ease-in-out infinite;
+        :global(.animate-pulse-subtle) {
+          animation: pulse-subtle 2s ease-in-out infinite;
         }
 
-        :global(.animate-bounce-slow) {
-          animation: bounce-slow 0.6s ease-in-out infinite;
+        :global(.animate-pulse-fast) {
+          animation: pulse-fast 1s ease-in-out infinite;
         }
       `}</style>
     </section>
