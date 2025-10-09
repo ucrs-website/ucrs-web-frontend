@@ -114,7 +114,18 @@ export function WorldMapAbout() {
             className="w-full"
             style={{ width: '100%', height: 'auto' }}
           >
-            <ZoomableGroup center={[0, 20]} zoom={zoom}>
+            <ZoomableGroup
+              center={[0, 20]}
+              zoom={zoom}
+              filterZoomEvent={(evt: any) => {
+                // Disable scroll zoom
+                if (evt.type === 'wheel') {
+                  return false
+                }
+                // Disable all zoom events for simplicity
+                return false
+              }}
+            >
               {/* Geographies with dotted/light gray fill */}
               <Geographies geography={geoUrl}>
                 {({ geographies }: { geographies: Array<any> }) =>
