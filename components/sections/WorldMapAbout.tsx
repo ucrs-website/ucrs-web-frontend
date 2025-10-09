@@ -108,15 +108,20 @@ export function WorldMapAbout() {
         {/* Map Container */}
         <div className="relative mx-auto max-w-[1024px] mb-12 md:mb-16">
           <ComposableMap
+            projection="geoMercator"
             projectionConfig={{
               scale: 147,
+              center: [0, 20],
             }}
             className="w-full"
             style={{ width: '100%', height: 'auto' }}
+            height={400}
           >
             <ZoomableGroup
               center={[0, 20]}
               zoom={zoom}
+              minZoom={1}
+              maxZoom={1}
               filterZoomEvent={(evt: any) => {
                 // Disable scroll zoom
                 if (evt.type === 'wheel') {
