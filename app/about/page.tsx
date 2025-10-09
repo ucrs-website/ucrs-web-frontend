@@ -5,6 +5,7 @@ import { WhoWeAre } from '@/components/sections/WhoWeAre'
 import { MeetOurExperts } from '@/components/sections/MeetOurExperts'
 import { GlobalStandards } from '@/components/sections/GlobalStandards'
 import { WorldMapAbout } from '@/components/sections/WorldMapAbout'
+import { OurLocations } from '@/components/sections/OurLocations'
 
 export const metadata = generateSEO({
   title: 'About Us',
@@ -30,6 +31,7 @@ export default function AboutPage() {
       <MeetOurExperts />
       <GlobalStandards />
       <WorldMapAbout />
+      <OurLocations />
     </main>
   )
 }
