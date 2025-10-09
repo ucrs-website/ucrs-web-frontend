@@ -127,7 +127,7 @@ export function WorldMapAbout() {
                           fill: '#D5D7DA',
                           fillOpacity: 0.3,
                           stroke: '#D5D7DA',
-                          strokeWidth: 0.5,
+                          strokeWidth: 0,
                           outline: 'none',
                         },
                         hover: {
@@ -150,7 +150,7 @@ export function WorldMapAbout() {
                 }
               </Geographies>
 
-              {/* Markers for capitals with pulse/tremble animation */}
+              {/* Markers for capitals with ripple pulse animation */}
               {capitalCoordinates.map((capital) => (
                 <Marker
                   key={capital.iso2}
@@ -160,31 +160,29 @@ export function WorldMapAbout() {
                   onMouseLeave={handleMarkerMouseLeave}
                 >
                   <g className="marker-group">
-                    {/* Outer Circle (10% opacity, animated) */}
+                    {/* Pulsing Ring 1 - starts from small and expands */}
                     <circle
-                      r={hoveredMarker === capital.iso2 ? 24 : 20}
-                      fill="#0052FF"
-                      opacity={0.1}
-                      className={cn(
-                        'transition-all duration-300',
-                        hoveredMarker === capital.iso2
-                          ? 'animate-pulse-fast'
-                          : 'animate-pulse-subtle'
-                      )}
+                      r={4}
+                      fill="none"
+                      stroke="#0052FF"
+                      strokeWidth={2}
+                      className="animate-ripple-pulse"
+                      style={{
+                        animationDelay: '0s',
+                      }}
                     />
-                    {/* Middle Circle (20% opacity, animated) */}
+                    {/* Pulsing Ring 2 - delayed for continuous effect */}
                     <circle
-                      r={hoveredMarker === capital.iso2 ? 14 : 12}
-                      fill="#0052FF"
-                      opacity={0.2}
-                      className={cn(
-                        'transition-all duration-300',
-                        hoveredMarker === capital.iso2
-                          ? 'animate-pulse-fast'
-                          : 'animate-pulse-subtle'
-                      )}
+                      r={4}
+                      fill="none"
+                      stroke="#0052FF"
+                      strokeWidth={2}
+                      className="animate-ripple-pulse"
+                      style={{
+                        animationDelay: '1s',
+                      }}
                     />
-                    {/* Inner Circle (100% opacity, solid) */}
+                    {/* Inner Circle (solid dot) */}
                     <circle
                       r={4}
                       fill="#0052FF"
@@ -277,36 +275,19 @@ export function WorldMapAbout() {
       </div>
 
       <style jsx>{`
-        @keyframes pulse-subtle {
-          0%,
+        @keyframes ripple-pulse {
+          0% {
+            r: 4px;
+            opacity: 1;
+          }
           100% {
-            transform: scale(1);
-            opacity: 0.1;
-          }
-          50% {
-            transform: scale(1.05);
-            opacity: 0.15;
+            r: 20px;
+            opacity: 0;
           }
         }
 
-        @keyframes pulse-fast {
-          0%,
-          100% {
-            transform: scale(1);
-            opacity: 0.1;
-          }
-          50% {
-            transform: scale(1.1);
-            opacity: 0.2;
-          }
-        }
-
-        :global(.animate-pulse-subtle) {
-          animation: pulse-subtle 2s ease-in-out infinite;
-        }
-
-        :global(.animate-pulse-fast) {
-          animation: pulse-fast 1s ease-in-out infinite;
+        :global(.animate-ripple-pulse) {
+          animation: ripple-pulse 2s ease-out infinite;
         }
       `}</style>
     </section>
