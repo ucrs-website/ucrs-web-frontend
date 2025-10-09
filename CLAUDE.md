@@ -206,3 +206,46 @@ SEO-related types are in `lib/types/seo.ts`:
 - `Product`, `Service`, `BlogPost`, `FAQ`, `PageSEO`
 
 Use these types when implementing real data fetching.
+
+## Design-to-Code Workflow
+
+### Figma Integration Pattern
+
+When refining or refactoring sections based on Figma designs, use this shorthand workflow:
+
+**Input Format:**
+```
+<localhost_url>
+<figma_design_url_desktop> (optional)
+<figma_design_url_mobile> (optional)
+```
+
+**Example:**
+```
+http://localhost:3000/about
+https://www.figma.com/design/2yCCBG4VgUhlw1WsmYsQom/UCRS---Website-Design?node-id=2260-99552&t=LuQ7brd7AtgIcf2W-4
+https://www.figma.com/design/2yCCBG4VgUhlw1WsmYsQom/UCRS---Website-Design?node-id=2260-100762&t=LuQ7brd7AtgIcf2W-4
+```
+
+**Behavior:**
+- **With 1 Figma link**: Identify if it's desktop or mobile design and refine the section accordingly
+- **With 2 Figma links**: First link is desktop design, second is mobile design - refine for both responsive breakpoints
+- **Process**:
+  1. Extract node-id from Figma URL
+  2. Use Figma MCP tools to fetch design specs
+  3. Compare with current implementation at localhost route
+  4. Identify discrepancies in:
+     - Layout and spacing
+     - Typography and colors
+     - Responsive behavior
+     - Interactive states
+  5. Refactor component to match design
+  6. Verify build success
+  7. Commit changes with descriptive message
+
+**Usage Notes:**
+- This pattern is for refinement of existing sections, not creating new ones
+- Always maintain existing component architecture and patterns
+- Preserve accessibility features and SEO optimization
+- Test responsive behavior on both breakpoints
+- Update only the visual presentation, not the data structure
