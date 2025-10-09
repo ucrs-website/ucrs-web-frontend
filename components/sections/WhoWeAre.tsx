@@ -32,17 +32,17 @@ export function WhoWeAre() {
         <div className="flex flex-col gap-8 items-center">
           {/* Heading */}
           <div className="flex items-center justify-center p-2.5 overflow-hidden">
-            <h2 className="text-[40px] font-bold text-[#252b42] text-center leading-tight whitespace-nowrap">
+            <h2 className="text-4xl lg:text-5xl font-bold text-[#252b42] text-center leading-tight whitespace-nowrap">
               Who We Are
             </h2>
           </div>
 
           {/* Cards Grid */}
-          <div className="flex flex-col md:flex-row gap-8 w-full">
+          <div className="flex flex-col lg:flex-row gap-8 w-full">
             {cards.map((card, index) => (
               <div
                 key={index}
-                className="relative flex-1 h-[480px] overflow-hidden"
+                className="relative w-full lg:flex-1 h-[480px] overflow-hidden"
               >
                 {/* Background Image */}
                 <Image

@@ -41,12 +41,12 @@ export function OurJourney() {
   }, [])
 
   return (
-    <section className="bg-white w-full py-16 md:py-24">
+    <section className="bg-white w-full pt-12 lg:pt-24 pb-12 lg:pb-12">
       <div className="container mx-auto px-8 max-w-[1280px]">
         <div className="flex flex-col gap-14">
           {/* Heading */}
-          <div className="px-0 md:px-12">
-            <h2 className="text-[64px] font-bold text-[#181d27] leading-tight">
+          <div className="px-0">
+            <h2 className="text-4xl lg:text-5xl text-center lg:text-left font-bold text-[#181d27] leading-tight">
               Our <span className="text-[#2a5d92]">Journey</span>
             </h2>
           </div>

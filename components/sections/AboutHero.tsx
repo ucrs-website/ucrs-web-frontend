@@ -6,7 +6,7 @@ import Link from 'next/link'
 
 export function AboutHero() {
   return (
-    <section className="relative w-full h-[720px] flex items-center justify-center overflow-hidden">
+    <section className="relative w-full h-[100dvh] mt-[-110px] flex items-center justify-center overflow-hidden">
       {/* Background Video */}
       <video
         autoPlay
@@ -28,7 +28,7 @@ export function AboutHero() {
           {/* Heading and Subheading */}
           <div className="flex flex-col items-center gap-6 max-w-[768px]">
             <div className="flex flex-col items-center gap-3">
-              <h1 className="text-[64px] font-bold text-white leading-[1.1] tracking-tight">
+              <h1 className="lg:text-7xl lg:max-w-[7568px] text-4xl font-bold text-white leading-[1.1] tracking-tight">
                 Driving Rail Innovation Since 1995
               </h1>
             </div>
