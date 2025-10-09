@@ -1,71 +1,71 @@
-'use client'
+"use client";
 
-import React, { useCallback, useEffect, useState } from 'react'
-import Image from 'next/image'
-import useEmblaCarousel from 'embla-carousel-react'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import React, { useCallback, useEffect, useState } from "react";
+import Image from "next/image";
+import useEmblaCarousel from "embla-carousel-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface TeamMember {
-  name: string
-  role: string
-  brief: string
-  image: string
+  name: string;
+  role: string;
+  brief: string;
+  image: string;
 }
 
 const teamMembers: TeamMember[] = [
   {
-    name: 'John Doe',
-    role: 'CTO',
-    brief: '20+ years in rail engineering',
-    image: '/images/about/team/member-1.png',
+    name: "John Doe",
+    role: "CTO",
+    brief: "20+ years in rail engineering",
+    image: "/images/about/team/member-1.png",
   },
   {
-    name: 'Sarah Johnson',
-    role: 'COO',
-    brief: 'Operations excellence expert',
-    image: '/images/about/team/member-2.png',
+    name: "Sarah Johnson",
+    role: "COO",
+    brief: "Operations excellence expert",
+    image: "/images/about/team/member-2.png",
   },
   {
-    name: 'Michael Chen',
-    role: 'VP Engineering',
-    brief: 'Innovation and quality leader',
-    image: '/images/about/team/member-3.png',
+    name: "Michael Chen",
+    role: "VP Engineering",
+    brief: "Innovation and quality leader",
+    image: "/images/about/team/member-3.png",
   },
-]
+];
 
 export function MeetOurExperts() {
   const [emblaRef, emblaApi] = useEmblaCarousel({
-    align: 'start',
+    align: "start",
     loop: false,
     slidesToScroll: 1,
     breakpoints: {
-      '(min-width: 1024px)': { slidesToScroll: 1 },
+      "(min-width: 1024px)": { slidesToScroll: 1 },
     },
-  })
+  });
 
-  const [canScrollPrev, setCanScrollPrev] = useState(false)
-  const [canScrollNext, setCanScrollNext] = useState(false)
+  const [canScrollPrev, setCanScrollPrev] = useState(false);
+  const [canScrollNext, setCanScrollNext] = useState(false);
 
   const scrollPrev = useCallback(() => {
-    if (emblaApi) emblaApi.scrollPrev()
-  }, [emblaApi])
+    if (emblaApi) emblaApi.scrollPrev();
+  }, [emblaApi]);
 
   const scrollNext = useCallback(() => {
-    if (emblaApi) emblaApi.scrollNext()
-  }, [emblaApi])
+    if (emblaApi) emblaApi.scrollNext();
+  }, [emblaApi]);
 
   const onSelect = useCallback(() => {
-    if (!emblaApi) return
-    setCanScrollPrev(emblaApi.canScrollPrev())
-    setCanScrollNext(emblaApi.canScrollNext())
-  }, [emblaApi])
+    if (!emblaApi) return;
+    setCanScrollPrev(emblaApi.canScrollPrev());
+    setCanScrollNext(emblaApi.canScrollNext());
+  }, [emblaApi]);
 
   useEffect(() => {
-    if (!emblaApi) return
-    onSelect()
-    emblaApi.on('select', onSelect)
-    emblaApi.on('reInit', onSelect)
-  }, [emblaApi, onSelect])
+    if (!emblaApi) return;
+    onSelect();
+    emblaApi.on("select", onSelect);
+    emblaApi.on("reInit", onSelect);
+  }, [emblaApi, onSelect]);
 
   return (
     <section className="w-full py-6 md:py-24 bg-white">
@@ -105,13 +105,11 @@ export function MeetOurExperts() {
                         <div className="flex flex-col gap-3 w-full">
                           <div className="flex flex-col gap-1 w-full">
                             <div className="flex items-center gap-2.5 w-full">
-                              <p className="text-lg font-semibold text-white leading-7">
+                              <div className="text-lg font-semibold text-white leading-7">
                                 {member.name}
-                              </p>
-                              <div className="bg-[#6e231b] px-2.5 py-1.5 rounded-lg">
-                                <p className="text-base font-light text-white">
-                                  {member.role}
-                                </p>
+                              </div>
+                              <div className="bg-[#6e231b] px-2.5 rounded-lg py-1 text-base font-light text-white">
+                                {member.role}
                               </div>
                             </div>
                             <p className="text-base font-normal text-white leading-6">
@@ -149,5 +147,5 @@ export function MeetOurExperts() {
         </div>
       </div>
     </section>
-  )
+  );
 }
