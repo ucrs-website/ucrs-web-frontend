@@ -123,11 +123,11 @@ export function WorldMapAbout() {
                 id="dot-pattern"
                 x="0"
                 y="0"
-                width="8"
-                height="8"
+                width="3"
+                height="3"
                 patternUnits="userSpaceOnUse"
               >
-                <circle cx="4" cy="4" r="1.5" fill="#D5D7DA" opacity="0.4" />
+                <circle cx="1" cy="1" r="0.9" fill="#D5D7DA" opacity="1" />
               </pattern>
             </defs>
             <ZoomableGroup
