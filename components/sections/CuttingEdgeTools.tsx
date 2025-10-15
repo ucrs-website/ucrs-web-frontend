@@ -7,9 +7,9 @@ import Link from 'next/link'
 
 export function CuttingEdgeTools() {
   const features = [
-    '3D technology for safety concrete designs',
+    '3D modeling for OEM-compatible designs',
     'Precision CNC Machining',
-    'Expert staff for perfect fit and save cost',
+    'Rigorous quality checks for every part',
   ]
 
   return (
@@ -22,7 +22,7 @@ export function CuttingEdgeTools() {
               {/* Header */}
               <div className="space-y-4 lg:space-y-6">
                 <p className="text-sm lg:text-base font-semibold text-[#e4342d] uppercase tracking-wide">
-                  Cutting Edge Tools
+                  We know the way
                 </p>
                 <h2 className="text-3xl lg:text-[48px] font-semibold text-[#181d27] lg:leading-[60px] tracking-tight">
                   Cutting-Edge Tools for Excellence
@@ -30,11 +30,11 @@ export function CuttingEdgeTools() {
               </div>
 
               {/* Feature List */}
-              <div className="space-y-4 lg:space-y-6">
+              <div className="space-y-4 lg:space-y-2">
                 {features.map((feature, index) => (
                   <div key={index} className="flex items-start gap-4">
-                    <div className="flex-shrink-0 w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-[#dcfae6] flex items-center justify-center">
-                      <Check className="w-5 h-5 lg:w-6 lg:h-6 text-[#079455]" strokeWidth={2.5} />
+                    <div className="flex-shrink-0 w-10 h-10 lg:w-8 lg:h-8 rounded-full bg-[#dcfae6] flex items-center justify-center">
+                      <Check className="w-5 h-5 lg:w-5 lg:h-5 text-[#079455]" strokeWidth={2.5} />
                     </div>
                     <p className="text-base lg:text-[20px] text-[#535862] lg:leading-[30px] pt-1 lg:pt-2">
                       {feature}
@@ -48,9 +48,9 @@ export function CuttingEdgeTools() {
                 <Button
                   asChild
                   size="lg"
-                  className="w-full sm:w-auto h-10 lg:h-[60px] px-5 lg:px-6 rounded-lg bg-[#e4342d] hover:bg-[#bb2f27] text-white text-sm lg:text-base font-semibold shadow-sm"
+                  className="w-full sm:w-auto h-10 lg:h-[50px] px-5 lg:px-6 rounded-lg bg-[#e4342d] hover:bg-[#bb2f27] text-white text-sm lg:text-base font-semibold shadow-sm"
                 >
-                  <Link href="/contact">Learn more</Link>
+                  <Link href="/contact">Contact Us</Link>
                 </Button>
               </div>
             </div>
@@ -59,7 +59,7 @@ export function CuttingEdgeTools() {
             <div className="order-1 lg:order-2">
               <div className="relative w-full h-[270px] lg:h-[450px] rounded-2xl overflow-hidden bg-gray-200">
                 {/* Placeholder with gradient */}
-                <div className="absolute inset-0 bg-gradient-to-br from-orange-200 via-yellow-100 to-green-200" />
+                <div className="absolute inset-0 bg-gradient-to-br from-orange-200 via-yellow-100 to-green-200 bg-[url('/images/factory-tour-poster.png')] bg-cover bg-center" />
 
                 {/* Play Button */}
                 <button
