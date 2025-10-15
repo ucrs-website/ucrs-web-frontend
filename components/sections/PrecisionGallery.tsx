@@ -13,22 +13,22 @@ export function PrecisionGallery() {
     {
       number: '1',
       title: 'Quality Inspection',
-      image: '/images/quality-inspection.jpg',
+      image: '/images/factory-tour/material-inspection.avif',
     },
     {
       number: '2',
       title: 'CNC Machining',
-      image: '/images/cnc-machining.jpg',
+      image: '/images/factory-tour/cnc-machin.avif',
     },
     {
       number: '3',
       title: 'Final Verification',
-      image: '/images/final-verification.jpg',
+      image: '/images/factory-tour/cmm-verification.webp',
     },
     {
       number: '4',
       title: 'Assembly Line',
-      image: '/images/assembly-line.jpg',
+      image: '/images/factory-tour/material-inspection.avif',
     },
   ]
 
@@ -52,7 +52,7 @@ export function PrecisionGallery() {
                   Precision at Every Step
                 </h2>
                 <p className="text-base lg:text-[20px] text-[#535862] lg:leading-[30px]">
-                  See how we use advanced technology to maintain excellence
+                  Every component undergoes rigorous quality checks.
                 </p>
               </div>
 
@@ -60,18 +60,18 @@ export function PrecisionGallery() {
               <div className="hidden lg:flex items-center gap-3">
                 <Button
                   asChild
-                  size="lg"
-                  className="h-12 px-6 rounded-lg bg-[#e4342d] hover:bg-[#bb2f27] text-white text-base font-semibold shadow-sm"
-                >
-                  <Link href="/contact">View our work</Link>
-                </Button>
-                <Button
-                  asChild
                   variant="outline"
                   size="lg"
                   className="h-12 px-6 rounded-lg text-[#181d27] border-gray-300 hover:bg-gray-50 text-base font-semibold"
                 >
-                  <Link href="/products">Explore</Link>
+                  <Link href="/products">Start Virtual Tour</Link>
+                </Button>
+                <Button
+                  asChild
+                  size="lg"
+                  className="h-12 px-6 rounded-lg bg-[#e4342d] hover:bg-[#bb2f27] text-white text-base font-semibold shadow-sm"
+                >
+                  <Link href="/contact">Contact Us</Link>
                 </Button>
               </div>
             </div>
@@ -94,10 +94,10 @@ export function PrecisionGallery() {
                   >
                     <div className="relative h-[200px] lg:h-[504px] rounded-2xl overflow-hidden bg-gray-100">
                       {/* Placeholder image with gradient */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-gray-200 via-gray-300 to-gray-400" />
+                      <div className="absolute inset-0 bg-gradient-to-br from-gray-200 via-gray-300 to-gray-400" style={{ backgroundImage: `url('${slide.image}')` }} />
 
                       {/* Number badge */}
-                      <div className="absolute top-4 lg:top-8 left-4 lg:left-8 w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-white flex items-center justify-center shadow-md">
+                      <div className="absolute top-4 lg:top-8 left-4 lg:left-8 w-8 h-8 lg:w-10 lg:h-10 rounded-xl bg-white/90 flex items-center justify-center shadow-md">
                         <span className="text-base lg:text-lg font-bold text-[#181d27]">
                           {slide.number}
                         </span>
@@ -119,14 +119,14 @@ export function PrecisionGallery() {
             <div className="flex items-center gap-4 mt-8 lg:mt-12">
               <button
                 onClick={handlePrev}
-                className="w-12 h-12 lg:w-14 lg:h-14 rounded-full border-2 border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors"
+                className="w-12 h-12 lg:w-14 lg:h-14 rounded-full border-2 border-gray-100 flex items-center justify-center hover:bg-gray-50 transition-colors"
                 aria-label="Previous slide"
               >
                 <ChevronLeft className="w-5 h-5 lg:w-6 lg:h-6 text-gray-700" />
               </button>
               <button
                 onClick={handleNext}
-                className="w-12 h-12 lg:w-14 lg:h-14 rounded-full border-2 border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors"
+                className="w-12 h-12 lg:w-14 lg:h-14 rounded-full border-2 border-gray-100 flex items-center justify-center hover:bg-gray-50 transition-colors"
                 aria-label="Next slide"
               >
                 <ChevronRight className="w-5 h-5 lg:w-6 lg:h-6 text-gray-700" />
