@@ -176,6 +176,25 @@ When creating new sections and components, use these shadcn-based libraries in t
 
 **Usage Pattern**: Always check libraries in order (1→2→3→4) when building new sections. If a suitable component exists in a higher-priority library, use that instead of lower-priority options.
 
+### Using Video Players
+
+When implementing video players in any section or page:
+
+- **Always use `VideoPlayerBlock`** from `components/ui/video-player-block.tsx`
+- This is a reusable component built on Kibo UI VideoPlayer with consistent controls
+- Accepts `videoUrl`, `videoPoster`, and `className` props
+- Includes play/pause, timeline, volume, and mute controls
+- Example usage:
+  ```tsx
+  import { VideoPlayerBlock } from '@/components/ui/video-player-block'
+
+  <VideoPlayerBlock
+    videoUrl="/videos/your-video.mp4"
+    videoPoster="/images/your-poster.png"
+    className="w-full max-w-[800px]"
+  />
+  ```
+
 ### Working with Structured Data
 
 Always add appropriate schema markup to content pages:
