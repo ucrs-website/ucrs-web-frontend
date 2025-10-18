@@ -44,7 +44,7 @@ export default function FactoryTourPage() {
       <FactoryTourTabs />
 
       {/* Social Proof */}
-      <SocialProofSection heading="Well engaged in railway community" />
+      <SocialProofSection heading="+60 years combined experience in the field with +200 Customers" />
     </main>
   )
 }

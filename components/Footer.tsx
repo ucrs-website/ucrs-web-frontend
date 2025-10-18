@@ -29,10 +29,10 @@ const Footer: React.FC = () => {
             {/* Heading and supporting text */}
             <div className="max-w-[768px] space-y-4">
               <h2 className="text-3xl md:text-[30px] font-semibold text-foreground leading-[38px]">
-                Start growing with Untitled
+                Your Partner in Rolling Stock Maintenance
               </h2>
               <p className="text-lg md:text-xl text-[rgb(83,88,98)] leading-[30px]">
-                Join over 4,000+ startups already growing with Untitled.
+                Be part of the growth journey alongside UCRS and industry leaders
               </p>
             </div>
 
