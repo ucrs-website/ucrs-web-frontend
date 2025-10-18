@@ -1,6 +1,7 @@
 import { generateSEO } from '@/lib/seo'
 import { ServicesHero } from '@/components/sections/ServicesHero'
 import { ExpertServicesGrid } from '@/components/sections/ExpertServicesGrid'
+import { ComprehensiveRepairs } from '@/components/sections/ComprehensiveRepairs'
 
 export const metadata = generateSEO({
   title: 'Railway Maintenance & Repair Services',
@@ -27,6 +28,9 @@ export default function ServicesPage() {
 
       {/* Expert Services Grid */}
       <ExpertServicesGrid />
+
+      {/* Comprehensive Repairs Section */}
+      <ComprehensiveRepairs />
 
       {/* Additional sections will be added here */}
     </main>

@@ -195,6 +195,28 @@ When implementing video players in any section or page:
   />
   ```
 
+### Using Before/After Image Comparison
+
+When implementing before/after image comparisons:
+
+- **Use Kibo UI Comparison component** - A slider-based component for comparing two items in an overlay
+- Installation: `npx kibo-ui add comparison`
+- Features:
+  - Draggable slider for side-by-side comparison
+  - Dual interaction modes (hover and drag)
+  - Smooth animations powered by motion.dev
+  - Touch and mouse support
+  - Responsive design
+- Example usage:
+  ```tsx
+  import { Comparison, ComparisonImage } from '@/components/ui/comparison'
+
+  <Comparison>
+    <ComparisonImage src="/before.jpg" alt="Before" />
+    <ComparisonImage src="/after.jpg" alt="After" />
+  </Comparison>
+  ```
+
 ### Working with Structured Data
 
 Always add appropriate schema markup to content pages:
@@ -282,19 +304,28 @@ For complex page or feature development, use the `.tasks/` folder to organize pl
    - Mobile/responsive design (screenshot or Figma link)
    - Any additional breakpoint designs if needed
 
-2. **Store Design References** - Save design screenshots to `.tasks/` folder:
+2. **Store Design References** - Save all design files to `.tasks/designs/` folder:
    ```
    .tasks/
-   ├── [feature-name]-plan.md          # Implementation plan
-   ├── [feature-name]-desktop.png      # Desktop design reference
-   └── [feature-name]-mobile.png       # Mobile design reference
+   ├── designs/
+   │   ├── [section-name]-desktop.png      # Desktop design reference
+   │   ├── [section-name]-mobile.png       # Mobile design reference
+   │   └── [section-name]-tablet.png       # Optional tablet breakpoint
+   ├── [feature-name]-plan.md              # Implementation plan
+   └── [section-name]-analysis.md          # Design analysis document
    ```
 
-3. **Link in Plan Document** - Reference the screenshots in the corresponding `.md` plan file:
+   **Design File Management**:
+   - If user provides **screenshot paths**: Copy the screenshots to `.tasks/designs/` with proper naming
+   - If user provides **Figma links**: Take screenshots from Figma and save to `.tasks/designs/`
+   - Naming convention: `[section-name]-[breakpoint].png` (e.g., `hero-section-desktop.png`)
+   - Always store designs in `.tasks/designs/` folder for future reference across sessions
+
+3. **Link in Plan/Analysis Document** - Reference the design files in the corresponding `.md` file:
    ```markdown
    ## Design References
-   - Desktop: `.tasks/hero-section-desktop.png`
-   - Mobile: `.tasks/hero-section-mobile.png`
+   - Desktop: `.tasks/designs/hero-section-desktop.png`
+   - Mobile: `.tasks/designs/hero-section-mobile.png`
    - Figma: [link if provided]
    ```
 
@@ -304,6 +335,7 @@ For complex page or feature development, use the `.tasks/` folder to organize pl
    - List required assets (images, icons)
    - Determine responsive behavior
    - Plan component hierarchy
+   - Create a design analysis document in `.tasks/[section-name]-analysis.md`
 
 5. **Begin Implementation** - Only after design analysis, start coding the section
 
