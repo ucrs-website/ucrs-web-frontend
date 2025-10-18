@@ -1,30 +1,34 @@
-export const metadata = {
-  title: "Locomotive Services - UCRS | Professional Railway Maintenance & Repair",
-  description: "Expert locomotive services including maintenance, repair, and inspection. Professional railway service solutions for optimal performance and safety.",
-  keywords: ["locomotive services", "railway maintenance", "train repair", "locomotive inspection", "railway services", "train maintenance"],
-  openGraph: {
-    title: "Locomotive Services - UCRS",
-    description: "Professional locomotive maintenance and repair services.",
-    url: "https://ucrs.com/services",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Locomotive Services - UCRS",
-    description: "Professional locomotive maintenance and repair services.",
-  },
-  alternates: {
-    canonical: "https://ucrs.com/services",
-  },
-};
+import { generateSEO } from '@/lib/seo'
+import { ServicesHero } from '@/components/sections/ServicesHero'
+import { ExpertServicesGrid } from '@/components/sections/ExpertServicesGrid'
 
-export default function Services() {
+export const metadata = generateSEO({
+  title: 'Railway Maintenance & Repair Services',
+  description:
+    'Expert railway maintenance, repair, and rebuild services. From locomotive component repair to comprehensive rebuild programs with OEM-compliant testing and 12-month warranty.',
+  url: '/services',
+  keywords: [
+    'railway maintenance services',
+    'locomotive repair',
+    'assembly rebuild',
+    'obsolescence management',
+    'railway component repair',
+    'OEM compliant testing',
+    'locomotive rebuild programs',
+    'railway consulting services',
+  ],
+})
+
+export default function ServicesPage() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
-      <main className="text-center">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">Locomotive Services</h1>
-        <p className="text-lg text-gray-600 mb-8">Professional railway maintenance and repair services</p>
-      </main>
-    </div>
-  );
+    <main className="min-h-screen">
+      {/* Hero Section */}
+      <ServicesHero />
+
+      {/* Expert Services Grid */}
+      <ExpertServicesGrid />
+
+      {/* Additional sections will be added here */}
+    </main>
+  )
 }

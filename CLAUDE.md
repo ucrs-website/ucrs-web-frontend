@@ -226,11 +226,113 @@ SEO-related types are in `lib/types/seo.ts`:
 
 Use these types when implementing real data fetching.
 
+## Task Planning System
+
+### The `.tasks/` Folder
+
+For complex page or feature development, use the `.tasks/` folder to organize planning documents:
+
+- **Purpose**: Store detailed implementation plans, component breakdowns, and task lists for large features
+- **Location**: `.tasks/` folder in the project root (gitignored)
+- **Format**: Markdown files with clear naming convention (e.g., `services-page-plan.md`, `checkout-flow-plan.md`)
+- **Usage**:
+  - Create a plan document before starting complex page development
+  - Break down the page into sections and components
+  - List all required assets (images, icons, content)
+  - Define component hierarchy and data structures
+  - Track implementation progress and notes
+- **Benefits**: Provides context continuity across sessions, helps organize large tasks, serves as documentation
+
+**Example plan structure**:
+```markdown
+# Services Page Implementation Plan
+
+## Overview
+[Page description and purpose]
+
+## Sections Breakdown
+1. Hero Section
+   - Component: ServicesHero.tsx
+   - Assets: hero-bg.avif
+   - Features: [list]
+
+2. Services Grid
+   - Component: ServicesGrid.tsx
+   - Data: services array
+   - Features: [list]
+
+[... more sections]
+
+## Implementation Checklist
+- [ ] Create page route
+- [ ] Build Hero section
+- [ ] Build Services Grid
+- [ ] Add SEO metadata
+- [ ] Test responsive design
+```
+
 ## Design-to-Code Workflow
 
-### Figma Integration Pattern
+### Creating New Sections - Design-First Approach
 
-When refining or refactoring sections based on Figma designs, use this shorthand workflow:
+**IMPORTANT**: When asked to create a new section or page component for the first time, ALWAYS follow this workflow:
+
+1. **Request Design Assets First** - Before writing any code, ask the user for:
+   - Desktop design (screenshot or Figma link)
+   - Mobile/responsive design (screenshot or Figma link)
+   - Any additional breakpoint designs if needed
+
+2. **Store Design References** - Save design screenshots to `.tasks/` folder:
+   ```
+   .tasks/
+   ├── [feature-name]-plan.md          # Implementation plan
+   ├── [feature-name]-desktop.png      # Desktop design reference
+   └── [feature-name]-mobile.png       # Mobile design reference
+   ```
+
+3. **Link in Plan Document** - Reference the screenshots in the corresponding `.md` plan file:
+   ```markdown
+   ## Design References
+   - Desktop: `.tasks/hero-section-desktop.png`
+   - Mobile: `.tasks/hero-section-mobile.png`
+   - Figma: [link if provided]
+   ```
+
+4. **Analyze Design** - Based on the screenshots/Figma links:
+   - Identify layout structure and components
+   - Note typography, spacing, colors
+   - List required assets (images, icons)
+   - Determine responsive behavior
+   - Plan component hierarchy
+
+5. **Begin Implementation** - Only after design analysis, start coding the section
+
+**Example Interaction**:
+```
+User: "Create a new Features section for the home page"
+
+Claude: "I'd be happy to help create the Features section! Before I start, could you please provide:
+1. Desktop design (screenshot or Figma link)
+2. Mobile/responsive design (screenshot or Figma link)
+
+This will ensure I build the section exactly to your specifications."
+
+User: [provides screenshots or Figma links]
+
+Claude: [Saves screenshots to .tasks/, analyzes design, creates implementation plan, then builds component]
+```
+
+**Why This Matters**:
+- Ensures pixel-perfect implementation matching design specs
+- Prevents rework and unnecessary iterations
+- Creates proper documentation for future reference
+- Establishes clear requirements before coding begins
+
+---
+
+### Refining Existing Sections - Figma Integration Pattern
+
+When refining or refactoring existing sections based on Figma designs, use this shorthand workflow:
 
 **Input Format:**
 ```
