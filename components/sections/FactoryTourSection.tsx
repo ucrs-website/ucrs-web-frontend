@@ -2,16 +2,7 @@
 
 import React from 'react'
 import { TrendingDown, Zap, Users } from 'lucide-react'
-import {
-  VideoPlayer,
-  VideoPlayerContent,
-  VideoPlayerControlBar,
-  VideoPlayerPlayButton,
-  VideoPlayerTimeRange,
-  VideoPlayerTimeDisplay,
-  VideoPlayerVolumeRange,
-  VideoPlayerMuteButton,
-} from '@/components/kibo-ui/video-player'
+import { VideoPlayerBlock } from '@/components/ui/video-player-block'
 
 interface Feature {
   icon: React.ElementType
@@ -99,25 +90,11 @@ export function FactoryTourSection({
           </div>
 
           {/* Bottom Row: Full-width Video Player */}
-          <div className="w-full max-w-[800px] mx-auto" suppressHydrationWarning>
-            <VideoPlayer className="w-full rounded-xl overflow-hidden shadow-lg" suppressHydrationWarning>
-              <VideoPlayerContent
-                slot="media"
-                src={videoUrl}
-                poster={videoPoster}
-                playsInline
-                className="w-full aspect-video object-cover"
-                suppressHydrationWarning
-              />
-              <VideoPlayerControlBar className="flex items-center gap-1 bg-gradient-to-t from-black/80 to-transparent">
-                <VideoPlayerPlayButton />
-                <VideoPlayerTimeRange />
-                <VideoPlayerTimeDisplay showDuration />
-                <VideoPlayerVolumeRange />
-                <VideoPlayerMuteButton />
-              </VideoPlayerControlBar>
-            </VideoPlayer>
-          </div>
+          <VideoPlayerBlock
+            videoUrl={videoUrl}
+            videoPoster={videoPoster}
+            className="w-full max-w-[800px] mx-auto"
+          />
         </div>
       </div>
     </section>

@@ -1,15 +1,158 @@
 'use client'
 
 import React from 'react'
-import { Check } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { VideoPlayerBlock } from '@/components/ui/video-player-block'
 import Link from 'next/link'
 
 export function CuttingEdgeTools() {
   const features = [
-    '3D modeling for OEM-compatible designs',
-    'Precision CNC Machining',
-    'Rigorous quality checks for every part',
+    {
+      icon: (
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-6 h-6"
+        >
+          <path
+            d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      ),
+      title: '3D modeling for OEM-compatible designs',
+    },
+    {
+      icon: (
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-6 h-6"
+        >
+          <path
+            d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M12 7l-1.5 1.5M16 11l-1.5 1.5"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      ),
+      title: 'Precision CNC Machining',
+    },
+    {
+      icon: (
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-6 h-6"
+        >
+          <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2" />
+          <path
+            d="M12 1v6m0 6v6M23 12h-6m-6 0H1"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+          />
+          <circle cx="12" cy="12" r="8" stroke="currentColor" strokeWidth="2" />
+        </svg>
+      ),
+      title: 'Rigorous quality checks for every part',
+    },
+  ]
+
+  // Mobile-specific features
+  const mobileFeatures = [
+    {
+      icon: (
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-6 h-6"
+        >
+          <path
+            d="M12 2L2 7l10 5 10-5-10-5z"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M2 17l10 5 10-5M2 12l10 5 10-5"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      ),
+      title: 'Robotic welding systems for precision',
+    },
+    {
+      icon: (
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-6 h-6"
+        >
+          <path
+            d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      ),
+      title: '3D modeling for OEM-compatible designs',
+    },
+    {
+      icon: (
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-6 h-6"
+        >
+          <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2" />
+          <path
+            d="M12 1v6m0 6v6M23 12h-6m-6 0H1"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+          />
+          <circle cx="12" cy="12" r="8" stroke="currentColor" strokeWidth="2" />
+        </svg>
+      ),
+      title: 'AI-driven predictive maintenance tools',
+    },
   ]
 
   return (
@@ -29,15 +172,29 @@ export function CuttingEdgeTools() {
                 </h2>
               </div>
 
-              {/* Feature List */}
-              <div className="space-y-4 lg:space-y-2">
+              {/* Feature List - Desktop */}
+              <div className="hidden lg:block space-y-6">
                 {features.map((feature, index) => (
                   <div key={index} className="flex items-start gap-4">
-                    <div className="flex-shrink-0 w-10 h-10 lg:w-8 lg:h-8 rounded-full bg-[#dcfae6] flex items-center justify-center">
-                      <Check className="w-5 h-5 lg:w-5 lg:h-5 text-[#079455]" strokeWidth={2.5} />
+                    <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-white border border-gray-200 shadow-sm flex items-center justify-center text-gray-700">
+                      {feature.icon}
                     </div>
-                    <p className="text-base lg:text-[20px] text-[#535862] lg:leading-[30px] pt-1 lg:pt-2">
-                      {feature}
+                    <p className="text-lg font-medium text-[#181d27] pt-3">
+                      {feature.title}
+                    </p>
+                  </div>
+                ))}
+              </div>
+
+              {/* Feature List - Mobile */}
+              <div className="lg:hidden space-y-6">
+                {mobileFeatures.map((feature, index) => (
+                  <div key={index} className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-white border border-gray-200 shadow-sm flex items-center justify-center text-gray-700">
+                      {feature.icon}
+                    </div>
+                    <p className="text-base font-medium text-[#181d27] pt-3">
+                      {feature.title}
                     </p>
                   </div>
                 ))}
@@ -57,30 +214,11 @@ export function CuttingEdgeTools() {
 
             {/* Right Column - Video Player */}
             <div className="order-1 lg:order-2">
-              <div className="relative w-full h-[270px] lg:h-[450px] rounded-2xl overflow-hidden bg-gray-200">
-                {/* Placeholder with gradient */}
-                <div className="absolute inset-0 bg-gradient-to-br from-orange-200 via-yellow-100 to-green-200 bg-[url('/images/factory-tour-poster.png')] bg-cover bg-center" />
-
-                {/* Play Button */}
-                <button
-                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 lg:w-20 lg:h-20 rounded-full backdrop-blur-sm bg-white/80 border-2 border-white/90 flex items-center justify-center hover:bg-white transition-colors shadow-lg"
-                  aria-label="Play video"
-                >
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="ml-1"
-                  >
-                    <path
-                      d="M8 6L18 12L8 18V6Z"
-                      fill="#181d27"
-                    />
-                  </svg>
-                </button>
-              </div>
+              <VideoPlayerBlock
+                videoUrl="/videos/factory-tour.mp4"
+                videoPoster="/images/factory-tour-poster.png"
+                className="w-full"
+              />
             </div>
           </div>
         </div>
