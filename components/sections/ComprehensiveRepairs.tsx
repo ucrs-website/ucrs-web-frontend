@@ -5,6 +5,11 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Search, Settings, ClipboardList, Package, Award } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import {
+  Comparison,
+  ComparisonItem,
+  ComparisonHandle,
+} from '@/components/kibo-ui/comparison'
 
 interface ProcessStep {
   id: string
@@ -101,17 +106,38 @@ export function ComprehensiveRepairs({
               ))}
             </div>
 
-            {/* Product Image */}
+            {/* Product Image - Before/After Comparison */}
             <div className="relative w-full aspect-square max-w-[360px] mx-auto rounded-xl overflow-hidden bg-[#F3F4F6] shadow-sm">
-              <Image
-                src={productImage}
-                alt="Before and after comparison of locomotive motor repair - showing damaged motor on left and restored motor on right"
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 360px"
-              />
-              {/* Red vertical divider */}
-              <div className="absolute top-0 bottom-0 left-1/2 w-0.5 bg-[#E4342D] transform -translate-x-1/2" />
+              <Comparison mode="drag" className="aspect-square">
+                {/* Before Image (Left) */}
+                <ComparisonItem position="left">
+                  <Image
+                    src="/images/services/before.avif"
+                    alt="Damaged locomotive motor before repair"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 360px"
+                    priority
+                  />
+                </ComparisonItem>
+
+                {/* After Image (Right) */}
+                <ComparisonItem position="right">
+                  <Image
+                    src="/images/services/after.avif"
+                    alt="Restored locomotive motor after repair"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 360px"
+                    priority
+                  />
+                </ComparisonItem>
+
+                {/* Custom Red Handle */}
+                <ComparisonHandle>
+                  <div className="-translate-x-1/2 absolute left-1/2 h-full w-0.5 bg-[#E4342D]" />
+                </ComparisonHandle>
+              </Comparison>
             </div>
 
             {/* CTA Button */}
@@ -155,17 +181,38 @@ export function ComprehensiveRepairs({
               ))}
             </div>
 
-            {/* Product Image */}
+            {/* Product Image - Before/After Comparison */}
             <div className="relative w-full max-w-[750px] aspect-[3/2] rounded-2xl overflow-hidden bg-[#F3F4F6] shadow-md">
-              <Image
-                src={productImage}
-                alt="Before and after comparison of locomotive motor repair - showing damaged motor on left and restored motor on right"
-                fill
-                className="object-cover"
-                sizes="(min-width: 1024px) 750px, 100vw"
-              />
-              {/* Red vertical divider */}
-              <div className="absolute top-0 bottom-0 left-1/2 w-0.5 bg-[#E4342D] transform -translate-x-1/2" />
+              <Comparison mode="drag" className="aspect-[3/2]">
+                {/* Before Image (Left) */}
+                <ComparisonItem position="left">
+                  <Image
+                    src="/images/services/before.avif"
+                    alt="Damaged locomotive motor before repair"
+                    fill
+                    className="object-cover"
+                    sizes="(min-width: 1024px) 750px, 100vw"
+                    priority
+                  />
+                </ComparisonItem>
+
+                {/* After Image (Right) */}
+                <ComparisonItem position="right">
+                  <Image
+                    src="/images/services/after.avif"
+                    alt="Restored locomotive motor after repair"
+                    fill
+                    className="object-cover"
+                    sizes="(min-width: 1024px) 750px, 100vw"
+                    priority
+                  />
+                </ComparisonItem>
+
+                {/* Custom Red Handle */}
+                <ComparisonHandle>
+                  <div className="-translate-x-1/2 absolute left-1/2 h-full w-0.5 bg-[#E4342D]" />
+                </ComparisonHandle>
+              </Comparison>
             </div>
 
             {/* CTA Button */}

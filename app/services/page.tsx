@@ -2,6 +2,8 @@ import { generateSEO } from '@/lib/seo'
 import { ServicesHero } from '@/components/sections/ServicesHero'
 import { ExpertServicesGrid } from '@/components/sections/ExpertServicesGrid'
 import { ComprehensiveRepairs } from '@/components/sections/ComprehensiveRepairs'
+import { BreathingNewLife } from '@/components/sections/BreathingNewLife'
+import { RequestQuoteForm } from '@/components/sections/RequestQuoteForm'
 
 export const metadata = generateSEO({
   title: 'Railway Maintenance & Repair Services',
@@ -32,7 +34,11 @@ export default function ServicesPage() {
       {/* Comprehensive Repairs Section */}
       <ComprehensiveRepairs />
 
-      {/* Additional sections will be added here */}
+      {/* Breathing New Life Section */}
+      <BreathingNewLife />
+
+      {/* Request Quote Form Section */}
+      <RequestQuoteForm />
     </main>
   )
 }
