@@ -32,7 +32,8 @@ const navigationLinks = [
   { href: '/products', label: 'Explore Products' },
   { href: '/factory-tour', label: 'Factory Tour' },
   { href: '/services', label: 'Services' },
-  { href: '/about', label: 'About' },
+  { href: '/export', label: 'Export & Global Presence' },
+  { href: '/about', label: 'About Us' },
 ]
 
 // Mobile menu items with dropdowns
