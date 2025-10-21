@@ -26,7 +26,7 @@ export function HeroSection({
   ],
 }: HeroSectionProps) {
   return (
-    <section className="bg-white relative pt-16 pb-8">
+    <section className="bg-white relative pt-16 pb-8 lg:pt-40 pt-[100px]">
       {/* Background pattern */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1920px] h-[1440px] pointer-events-none z-0 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-radial from-black/10 to-transparent opacity-5" />

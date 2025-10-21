@@ -98,7 +98,7 @@ export default function HeaderNavigation() {
   const pathname = usePathname()
 
   return (
-    <header className="sticky top-0 z-50 w-full">
+    <header className="fixed top-0 z-50 w-full">
       {/* Container with max-width */}
       <div className="mx-auto w-full max-w-[var(--container-max-width,1200px)] px-2 md:px-4">
         {/* Nav wrapper with rounded background */}
@@ -265,7 +265,7 @@ export default function HeaderNavigation() {
 
             {/* Center: Desktop Navigation */}
             <NavigationMenu className="hidden lg:flex">
-              <NavigationMenuList className="gap-6">
+              <NavigationMenuList className="gap-1">
                 {navigationLinks.map((link) => {
                   const isActive = pathname === link.href
                   return (
@@ -273,7 +273,7 @@ export default function HeaderNavigation() {
                       <NavigationMenuLink asChild>
                         <Link
                           href={link.href}
-                          className={`text-sm font-semibold transition-all duration-200 rounded-lg px-3 py-2 ${
+                          className={`text-xs font-semibold transition-all duration-200 rounded-lg px-2.5 py-2 whitespace-nowrap ${
                             isActive
                               ? 'bg-red-100 text-red-700 hover:bg-red-200 hover:text-red-800'
                               : 'hover:bg-red-100 hover:text-red-700 text-[rgb(71,74,81)]'

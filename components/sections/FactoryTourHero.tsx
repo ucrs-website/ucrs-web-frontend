@@ -7,7 +7,7 @@ import Image from 'next/image'
 
 export function FactoryTourHero() {
   return (
-    <section className="relative w-full mt-[-110px] pt-[80px] overflow-hidden">
+    <section className="relative w-full mt-[-110px] lg:pt-40 pt-[200px] overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image

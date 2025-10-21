@@ -6,7 +6,7 @@ import Link from 'next/link'
 
 export function AboutHero() {
   return (
-    <section className="relative w-full h-[100dvh] mt-[-110px] flex items-center justify-center overflow-hidden">
+    <section className="relative w-full lg:py-40 pt-[100px] flex items-center justify-center overflow-hidden">
       {/* Background Video */}
       <video
         autoPlay

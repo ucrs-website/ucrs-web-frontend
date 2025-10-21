@@ -22,7 +22,7 @@ export function ServicesHero({
   backgroundImage = '/images/services/hero-bg.avif',
 }: ServicesHeroProps) {
   return (
-    <section className="relative w-full min-h-[434px] lg:min-h-[720px] overflow-hidden">
+    <section className="relative w-full lg:pt-40 pt-[100px] min-h-[434px] lg:min-h-[720px] overflow-hidden">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0">
         <Image
