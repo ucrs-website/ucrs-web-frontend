@@ -32,26 +32,26 @@ interface ContactInfo {
 
 const contactInfoData: ContactInfo[] = [
   {
-    label: 'Support',
-    description: 'Our friendly team is here to help.',
-    value: 'support@ucrs.com',
-    href: 'mailto:support@ucrs.com',
-  },
-  {
     label: 'Sales',
     description: 'Questions or queries? Get in touch!',
     value: 'sales@ucrs.com',
     href: 'mailto:sales@ucrs.com',
   },
   {
-    label: 'Fax',
-    description: 'Give us your quoete',
-    value: '289-597-8278',
-    href: 'tel:+12895978278',
+    label: 'Customer Support',
+    description: 'Track your order in real time',
+    value: 'commercial@ucrs.com',
+    href: 'mailto:commercial@ucrs.com',
+  },
+  {
+    label: 'Technical Support',
+    description: 'Our friendly team is here to help.',
+    value: 'support@ucrs.com',
+    href: 'mailto:support@ucrs.com',
   },
   {
     label: 'Phone',
-    description: "24/7 we're ready to service you",
+    description: "We're ready to service you",
     value: '289-597-UCRS (8277)',
     href: 'tel:+12895978277',
   },

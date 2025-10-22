@@ -14,22 +14,22 @@ interface TeamMember {
 
 const teamMembers: TeamMember[] = [
   {
-    name: "John Doe",
+    name: "Sam Hosseini",
     role: "CTO",
     brief: "20+ years in rail engineering",
-    image: "/images/about/team/member-1.png",
+    image: "/images/about/team/sam-hosseini.avif",
   },
   {
-    name: "Sarah Johnson",
-    role: "COO",
-    brief: "Operations excellence expert",
-    image: "/images/about/team/member-2.png",
+    name: "Zahra Rafeyi",
+    role: "CFO",
+    brief: "Financial strategist with a focus on growth",
+    image: "/images/about/team/zahra-rafeyi.avif",
   },
   {
-    name: "Michael Chen",
-    role: "VP Engineering",
+    name: "Daniel Ahmady",
+    role: "Design Engineer",
     brief: "Innovation and quality leader",
-    image: "/images/about/team/member-3.png",
+    image: "/images/about/team/daniel-ahmady.avif",
   },
 ];
 

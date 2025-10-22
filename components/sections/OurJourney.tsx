@@ -11,20 +11,29 @@ interface JourneyItem {
 
 const journeyData: JourneyItem[] = [
   {
-    year: '2005',
-    description: 'Achieved AAR-M1003 certification.',
+    year: '2001',
+    description:
+      'Journey to Excellence started: Company restructured with focus on manufacturing',
     image: '/images/about/459f635cf9869865b5dfd76db94e357bfc1c499d.png',
   },
   {
-    year: '2015',
-    description:
-      'Expanded operations to serve major rail networks across North America with comprehensive parts manufacturing.',
+    year: '2018',
+    description: 'Manufacturing Startup Allanburg, ON',
     image: '/images/about/459f635cf9869865b5dfd76db94e357bfc1c499d.png',
   },
   {
-    year: '2025',
-    description:
-      'Continuing innovation with advanced manufacturing techniques and expanding global partnerships in the railway industry.',
+    year: '2019',
+    description: 'Construction started in Welland, ON',
+    image: '/images/about/459f635cf9869865b5dfd76db94e357bfc1c499d.png',
+  },
+  {
+    year: '2021',
+    description: 'AAR-M1003 Certification',
+    image: '/images/about/459f635cf9869865b5dfd76db94e357bfc1c499d.png',
+  },
+  {
+    year: '2022',
+    description: 'Operation moved to Welland, ON',
     image: '/images/about/459f635cf9869865b5dfd76db94e357bfc1c499d.png',
   },
 ]

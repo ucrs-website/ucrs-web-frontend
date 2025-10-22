@@ -7,20 +7,14 @@ import Link from 'next/link'
 export function AboutHero() {
   return (
     <section className="relative w-full lg:py-40 pt-[100px] flex items-center justify-center overflow-hidden">
-      {/* Background Video */}
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover"
-        poster="/images/factory-tour-poster.png"
-      >
-        <source src="/videos/factory-tour.mp4" type="video/mp4" />
-      </video>
+      {/* Background Image */}
+      <div
+        className="absolute inset-0 w-full h-full bg-cover bg-center"
+        style={{ backgroundImage: 'url(/images/about/about-hero.avif)' }}
+      />
 
       {/* Overlay */}
-      <div className="absolute inset-0 bg-black/40" />
+      <div className="absolute inset-0 bg-black/20" />
 
       {/* Content */}
       <div className="relative z-10 container mx-auto px-8 max-w-[1280px]">
@@ -29,7 +23,7 @@ export function AboutHero() {
           <div className="flex flex-col items-center gap-6 max-w-[768px]">
             <div className="flex flex-col items-center gap-3">
               <h1 className="lg:text-7xl lg:max-w-[7568px] text-4xl font-bold text-white leading-[1.1] tracking-tight">
-                Driving Rail Innovation Since 1995
+                Driving Rail Innovation Since 2001
               </h1>
             </div>
             <p className="text-[20px] text-[#feeaea] leading-[1.5] max-w-[470px]">

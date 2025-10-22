@@ -32,21 +32,6 @@ export function GlobalStandards() {
             />
           </div>
 
-          {/* Bottom Quote */}
-          <div className="relative w-full max-w-[720px] px-8 py-5 rounded-[20px] bg-gradient-to-r from-[#4a4a4a] to-[#2a2a2a] shadow-lg">
-            <p className="text-xl md:text-2xl font-bold text-white text-center leading-tight">
-              "Every part undergoes 12+ quality checks."
-            </p>
-          </div>
-
-          {/* Additional Context */}
-          <div className="max-w-[800px] text-center mt-4">
-            <p className="text-base md:text-lg text-[#737373] leading-relaxed">
-              Our AAR-M1003 certification demonstrates our commitment to meeting the highest quality standards
-              set by the Association of American Railroads. This certification ensures that every component we
-              manufacture meets rigorous industry requirements for safety, reliability, and performance.
-            </p>
-          </div>
         </div>
       </div>
     </section>
