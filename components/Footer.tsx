@@ -1,11 +1,11 @@
-import React from 'react'
-import Link from 'next/link'
-import Image from 'next/image'
-import { PlayCircle, ArrowRight } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import React from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { PlayCircle, ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const Footer: React.FC = () => {
-  const currentYear = new Date().getFullYear()
+  const currentYear = new Date().getFullYear();
 
   return (
     <footer className="bg-background py-16">
@@ -32,7 +32,8 @@ const Footer: React.FC = () => {
                 Your Partner in Rolling Stock Maintenance
               </h2>
               <p className="text-lg md:text-xl text-[rgb(83,88,98)] leading-[30px]">
-                Be part of the growth journey alongside UCRS and industry leaders
+                Be part of the growth journey alongside UCRS and industry
+                leaders
               </p>
             </div>
 
@@ -45,7 +46,7 @@ const Footer: React.FC = () => {
                 className="h-12 px-5 gap-2 text-base font-semibold"
               >
                 <PlayCircle className="h-5 w-5" />
-                View demo
+                Factory Tour
               </Button>
 
               {/* Explore products button */}
@@ -96,7 +97,7 @@ const Footer: React.FC = () => {
         </div>
       </div>
     </footer>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

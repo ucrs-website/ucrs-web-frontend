@@ -7,7 +7,6 @@ import type { Metadata } from 'next'
 import { fetchCategories } from '@/lib/api/products'
 import { ExploreProductsHero } from '@/components/products/ExploreProductsHero'
 import { CategoriesGrid } from '@/components/products/CategoriesGrid'
-import { ProductsCTA } from '@/components/products/ProductsCTA'
 import { generateSEO } from '@/lib/seo'
 
 // ISR: Revalidate every hour
@@ -106,9 +105,6 @@ export default async function ProductsPage() {
       ) : (
         <CategoriesGrid categories={categories} />
       )}
-
-      {/* CTA Section */}
-      <ProductsCTA />
     </>
   )
 }

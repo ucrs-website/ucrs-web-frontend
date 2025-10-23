@@ -3,21 +3,21 @@
  * Individual category card with image, name, and product count
  */
 
-'use client'
+"use client";
 
-import Image from 'next/image'
-import Link from 'next/link'
-import { useState } from 'react'
-import type { CategoryWithImage } from '@/lib/types/products'
-import { getCategoryImageFallback } from '@/lib/utils/image-helpers'
-import { cn } from '@/lib/utils'
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
+import type { CategoryWithImage } from "@/lib/types/products";
+import { getCategoryImageFallback } from "@/lib/utils/image-helpers";
+import { cn } from "@/lib/utils";
 
 interface CategoryCardProps {
-  category: CategoryWithImage
+  category: CategoryWithImage;
 }
 
 export function CategoryCard({ category }: CategoryCardProps) {
-  const [imageError, setImageError] = useState(false)
+  const [imageError, setImageError] = useState(false);
 
   return (
     <Link
@@ -25,12 +25,12 @@ export function CategoryCard({ category }: CategoryCardProps) {
       className="group block bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
     >
       {/* Image Container */}
-      <div className="relative w-full aspect-[4/3] bg-gray-100 overflow-hidden">
+      <div className="relative w-full aspect-[4/3] bg-white overflow-hidden">
         <Image
           src={imageError ? getCategoryImageFallback() : category.imageUrl}
-          alt={category.name || 'Category'}
+          alt={category.name || "Category"}
           fill
-          className="object-cover group-hover:scale-105 transition-transform duration-300"
+          className="object-contain group-hover:scale-105 transition-transform duration-300"
           sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
           onError={() => setImageError(true)}
         />
@@ -46,5 +46,5 @@ export function CategoryCard({ category }: CategoryCardProps) {
         </p>
       </div>
     </Link>
-  )
+  );
 }

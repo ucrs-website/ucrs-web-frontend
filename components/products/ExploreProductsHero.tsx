@@ -3,30 +3,30 @@
  * Hero section with heading, subheading, and search bar
  */
 
-'use client'
+"use client";
 
-import { Search } from 'lucide-react'
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { Search } from "lucide-react";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export function ExploreProductsHero() {
-  const [searchQuery, setSearchQuery] = useState('')
-  const router = useRouter()
+  const [searchQuery, setSearchQuery] = useState("");
+  const router = useRouter();
 
   const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     if (searchQuery.trim()) {
       // TODO: Navigate to search results or filter products
       // For now, just log the search
-      console.log('Searching for:', searchQuery)
+      console.log("Searching for:", searchQuery);
       // Future: router.push(`/products/search?q=${encodeURIComponent(searchQuery)}`)
     }
-  }
+  };
 
   return (
     <section className="bg-gradient-to-b from-gray-50 to-white py-16 md:py-20">
       <div className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="max-w-4xl mx-auto text-center pt-12 lg:pt-20">
           {/* Heading */}
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 md:mb-6">
             Premium Locomotive Components
@@ -35,12 +35,13 @@ export function ExploreProductsHero() {
           </h1>
 
           {/* Subheading */}
-          <p className="text-lg md:text-xl text-gray-600 mb-8 md:mb-10">
-            Browse 5000+ Certified Parts for Locomotives, Freight Cars, and Coaches
+          <p className="text-lg md:text-xl text-gray-600 mb-8 md:mb-10 max-w-[470px] mx-auto">
+            Browse 5000+ Certified Parts for Locomotives, Freight Cars, and
+            Coaches
           </p>
 
           {/* Search Bar */}
-          <form onSubmit={handleSearch} className="max-w-2xl mx-auto">
+          <form onSubmit={handleSearch} className="max-w-md mx-auto">
             <div className="relative flex items-center">
               <div className="absolute left-4 pointer-events-none">
                 <Search className="w-5 h-5 text-gray-400" />
@@ -63,5 +64,5 @@ export function ExploreProductsHero() {
         </div>
       </div>
     </section>
-  )
+  );
 }

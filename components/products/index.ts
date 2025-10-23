@@ -6,5 +6,4 @@
 export { ExploreProductsHero } from './ExploreProductsHero'
 export { CategoriesGrid } from './CategoriesGrid'
 export { CategoryCard } from './CategoryCard'
-export { ProductsCTA } from './ProductsCTA'
 export * from './QuoteCart'
