@@ -1,30 +1,114 @@
-export const metadata = {
-  title: "Railway Parts - UCRS | High-Quality Train Components & Parts",
-  description: "Browse our extensive catalog of railway parts including locomotive components, track parts, and maintenance equipment. Quality assured railway parts for all systems.",
-  keywords: ["railway parts", "train parts", "locomotive parts", "track components", "railway equipment", "train components"],
-  openGraph: {
-    title: "Railway Parts - UCRS",
-    description: "High-quality railway parts and components for all locomotive systems.",
-    url: "https://ucrs.com/products",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Railway Parts - UCRS",
-    description: "High-quality railway parts and components.",
-  },
-  alternates: {
-    canonical: "https://ucrs.com/products",
-  },
-};
+/**
+ * Products Page - Categories List
+ * Main landing page for browsing product categories
+ */
 
-export default function Products() {
+import type { Metadata } from 'next'
+import { fetchCategories } from '@/lib/api/products'
+import { ExploreProductsHero } from '@/components/products/ExploreProductsHero'
+import { CategoriesGrid } from '@/components/products/CategoriesGrid'
+import { ProductsCTA } from '@/components/products/ProductsCTA'
+import { generateSEO } from '@/lib/seo'
+
+// ISR: Revalidate every hour
+export const revalidate = 3600
+
+// SEO Metadata
+export const metadata: Metadata = generateSEO({
+  title: 'Explore Products | Premium Locomotive Components | UCRS',
+  description:
+    'Browse 5000+ certified parts for locomotives, freight cars, and coaches. Premium locomotive components made to OEM standards. Engines, traction motors, brake systems, and more.',
+  url: '/products',
+  keywords: [
+    'locomotive parts',
+    'railway components',
+    'train parts',
+    'locomotive engines',
+    'traction motors',
+    'brake systems',
+    'railway equipment',
+    'locomotive maintenance',
+    'OEM parts',
+    'certified parts',
+    'freight car parts',
+    'coach parts',
+  ],
+})
+
+// Structured Data - Organization
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'UCRS',
+  url: 'https://ucrs.com',
+  logo: 'https://ucrs.com/logo.png',
+  description: 'Leading provider of premium locomotive components and railway parts',
+}
+
+// Structured Data - ItemList (Categories)
+const generateItemListSchema = (categoriesCount: number) => ({
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  numberOfItems: categoriesCount,
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Locomotive Components',
+      description: 'Premium locomotive parts and components',
+    },
+  ],
+})
+
+export default async function ProductsPage() {
+  // Fetch categories from API
+  let categories: Awaited<ReturnType<typeof fetchCategories>> = []
+  let error: string | null = null
+
+  try {
+    categories = await fetchCategories()
+  } catch (err) {
+    error = err instanceof Error ? err.message : 'Failed to load categories'
+    console.error('Error fetching categories:', err)
+  }
+
+  const itemListSchema = generateItemListSchema(categories.length)
+
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
-      <main className="text-center">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">Railway Parts</h1>
-        <p className="text-lg text-gray-600 mb-8">Discover our range of high-quality railway parts</p>
-      </main>
-    </div>
-  );
+    <>
+      {/* Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(organizationSchema),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(itemListSchema),
+        }}
+      />
+
+      {/* Hero Section */}
+      <ExploreProductsHero />
+
+      {/* Categories Grid */}
+      {error ? (
+        <section className="py-16">
+          <div className="container mx-auto px-4">
+            <div className="text-center">
+              <p className="text-red-600 mb-4">Failed to load categories</p>
+              <p className="text-gray-500">{error}</p>
+            </div>
+          </div>
+        </section>
+      ) : (
+        <CategoriesGrid categories={categories} />
+      )}
+
+      {/* CTA Section */}
+      <ProductsCTA />
+    </>
+  )
 }

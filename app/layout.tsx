@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "../components/Header";
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
+import { QuoteCartBar } from "@/components/products/QuoteCart";
 
 const manrope = Manrope({
   variable: "--font-manrope",
@@ -167,8 +168,9 @@ export default function RootLayout({
       </head>
       <body className={`${manrope.variable} min-h-screen flex flex-col`}>
         <Header />
+        <QuoteCartBar />
         <main>
-            {children}          
+            {children}
         </main>
         <Footer />
       </body>
