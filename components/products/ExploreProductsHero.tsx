@@ -16,10 +16,8 @@ export function ExploreProductsHero() {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      // TODO: Navigate to search results or filter products
-      // For now, just log the search
-      console.log("Searching for:", searchQuery);
-      // Future: router.push(`/products/search?q=${encodeURIComponent(searchQuery)}`)
+      // Navigate to search results page
+      router.push(`/products/search?q=${encodeURIComponent(searchQuery.trim())}`);
     }
   };
 

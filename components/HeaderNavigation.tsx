@@ -1,101 +1,101 @@
-'use client'
+"use client";
 
-import React, { useState } from 'react'
-import Link from 'next/link'
-import Image from 'next/image'
-import { usePathname } from 'next/navigation'
-import { Search } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
+import React, { useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { Search } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-} from '@/components/ui/navigation-menu'
+} from "@/components/ui/navigation-menu";
 import {
   Sheet,
   SheetContent,
   SheetTrigger,
   SheetTitle,
-} from '@/components/ui/sheet'
+} from "@/components/ui/sheet";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '@/components/ui/accordion'
-import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
+} from "@/components/ui/accordion";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 // Navigation links from Figma design
 const navigationLinks = [
-  { href: '/products', label: 'Explore Products' },
-  { href: '/factory-tour', label: 'Factory Tour' },
-  { href: '/services', label: 'Services' },
-  { href: '/export', label: 'Export & Global Presence' },
-  { href: '/about', label: 'About Us' },
-]
+  { href: "/products", label: "Explore Products" },
+  { href: "/factory-tour", label: "Factory Tour" },
+  { href: "/services", label: "Services" },
+  { href: "/export", label: "Export & Global Presence" },
+  { href: "/about", label: "About Us" },
+];
 
 // Mobile menu items with dropdowns
 const mobileMenuItems = [
   {
-    label: 'Products',
+    label: "Products",
     hasDropdown: true,
     items: [
-      { href: '/products/locomotives', label: 'Locomotives' },
-      { href: '/products/parts', label: 'Railway Parts' },
-      { href: '/products/equipment', label: 'Equipment' },
-    ]
+      { href: "/products/locomotives", label: "Locomotives" },
+      { href: "/products/parts", label: "Railway Parts" },
+      { href: "/products/equipment", label: "Equipment" },
+    ],
   },
   {
-    label: 'Services',
+    label: "Services",
     hasDropdown: true,
     items: [
-      { href: '/services/maintenance', label: 'Maintenance' },
-      { href: '/services/repair', label: 'Repair' },
-      { href: '/services/consulting', label: 'Consulting' },
-    ]
+      { href: "/services/maintenance", label: "Maintenance" },
+      { href: "/services/repair", label: "Repair" },
+      { href: "/services/consulting", label: "Consulting" },
+    ],
   },
   {
-    label: 'Pricing',
-    href: '/pricing',
+    label: "Pricing",
+    href: "/pricing",
     hasDropdown: false,
   },
   {
-    label: 'Resources',
+    label: "Resources",
     hasDropdown: true,
     items: [
-      { href: '/resources/blog', label: 'Blog' },
-      { href: '/resources/guides', label: 'Guides' },
-      { href: '/resources/documentation', label: 'Documentation' },
-    ]
+      { href: "/resources/blog", label: "Blog" },
+      { href: "/resources/guides", label: "Guides" },
+      { href: "/resources/documentation", label: "Documentation" },
+    ],
   },
   {
-    label: 'About',
-    href: '/about',
+    label: "About",
+    href: "/about",
     hasDropdown: false,
   },
-]
+];
 
 // Footer links for mobile menu (two columns)
 const mobileFooterLinks = {
   column1: [
-    { href: '/about', label: 'About us' },
-    { href: '/press', label: 'Press' },
-    { href: '/careers', label: 'Careers' },
-    { href: '/legal', label: 'Legal' },
+    { href: "/about", label: "About us" },
+    { href: "/press", label: "Press" },
+    { href: "/careers", label: "Careers" },
+    { href: "/legal", label: "Legal" },
   ],
   column2: [
-    { href: '/support', label: 'Support' },
-    { href: '/contact', label: 'Contact' },
-    { href: '/sitemap', label: 'Sitemap' },
-    { href: '/cookie-settings', label: 'Cookie settings' },
-  ]
-}
+    { href: "/support", label: "Support" },
+    { href: "/contact", label: "Contact" },
+    { href: "/sitemap", label: "Sitemap" },
+    { href: "/cookie-settings", label: "Cookie settings" },
+  ],
+};
 
 export default function HeaderNavigation() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const pathname = usePathname()
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
     <header className="fixed top-0 z-50 w-full">
@@ -151,10 +151,18 @@ export default function HeaderNavigation() {
                   <div className="flex flex-col h-[calc(100vh-64px)]">
                     {/* Main Menu Items - Scrollable */}
                     <div className="flex-1 overflow-y-auto px-4 py-6">
-                      <Accordion type="single" collapsible className="w-full space-y-1">
-                        {mobileMenuItems.map((item, index) => (
+                      <Accordion
+                        type="single"
+                        collapsible
+                        className="w-full space-y-1"
+                      >
+                        {mobileMenuItems.map((item, index) =>
                           item.hasDropdown ? (
-                            <AccordionItem key={index} value={`item-${index}`} className="border-0">
+                            <AccordionItem
+                              key={index}
+                              value={`item-${index}`}
+                              className="border-0"
+                            >
                               <AccordionTrigger className="px-4 py-3 hover:no-underline hover:bg-transparent rounded-lg">
                                 <span className="text-base font-semibold text-[rgb(24,29,39)]">
                                   {item.label}
@@ -178,14 +186,14 @@ export default function HeaderNavigation() {
                           ) : (
                             <Link
                               key={index}
-                              href={item.href || '#'}
+                              href={item.href || "#"}
                               onClick={() => setMobileMenuOpen(false)}
                               className="block px-4 py-3 text-base font-semibold text-[rgb(24,29,39)] hover:bg-gray-50 rounded-lg"
                             >
                               {item.label}
                             </Link>
-                          )
-                        ))}
+                          ),
+                        )}
                       </Accordion>
                     </div>
 
@@ -225,7 +233,10 @@ export default function HeaderNavigation() {
                           asChild
                           className="w-full h-11 text-base font-semibold"
                         >
-                          <Link href="/contact" onClick={() => setMobileMenuOpen(false)}>
+                          <Link
+                            href="/contact"
+                            onClick={() => setMobileMenuOpen(false)}
+                          >
                             Get Quote
                           </Link>
                         </Button>
@@ -250,7 +261,11 @@ export default function HeaderNavigation() {
             </div>
 
             {/* Logo - Desktop only */}
-            <Link href="/" className="hidden lg:block flex-shrink-0" aria-label="UCRS Home">
+            <Link
+              href="/"
+              className="hidden lg:block flex-shrink-0"
+              aria-label="UCRS Home"
+            >
               <div className="relative h-8 w-[139px]">
                 <Image
                   src="/images/logo.png"
@@ -267,7 +282,7 @@ export default function HeaderNavigation() {
             <NavigationMenu className="hidden lg:flex">
               <NavigationMenuList className="gap-1">
                 {navigationLinks.map((link) => {
-                  const isActive = pathname === link.href
+                  const isActive = pathname === link.href;
                   return (
                     <NavigationMenuItem key={link.href}>
                       <NavigationMenuLink asChild>
@@ -275,15 +290,15 @@ export default function HeaderNavigation() {
                           href={link.href}
                           className={`text-xs font-semibold transition-all duration-200 rounded-lg px-2.5 py-2 whitespace-nowrap ${
                             isActive
-                              ? 'bg-red-100 text-red-700 hover:bg-red-200 hover:text-red-800'
-                              : 'hover:bg-red-100 hover:text-red-700 text-[rgb(71,74,81)]'
+                              ? "bg-red-100 text-red-700 hover:bg-red-200 hover:text-red-800"
+                              : "hover:bg-red-100 hover:text-red-700 text-[rgb(71,74,81)]"
                           }`}
                         >
                           {link.label}
                         </Link>
                       </NavigationMenuLink>
                     </NavigationMenuItem>
-                  )
+                  );
                 })}
               </NavigationMenuList>
             </NavigationMenu>
@@ -324,5 +339,5 @@ export default function HeaderNavigation() {
         </nav>
       </div>
     </header>
-  )
+  );
 }

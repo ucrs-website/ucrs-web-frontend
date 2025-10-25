@@ -235,3 +235,38 @@ export async function fetchSubcategoryById(
     return null
   }
 }
+
+/**
+ * Search products across all categories
+ * GET /api/Products/search
+ */
+export async function searchProducts(
+  query: string,
+  params: { page?: number; pageSize?: number; categoryId?: number } = {}
+): Promise<ProductsResponse> {
+  try {
+    const { page = 1, pageSize = DEFAULT_PAGE_SIZE, categoryId } = params
+
+    const url = new URL(`${API_BASE_URL}${API_ENDPOINTS.search}`)
+
+    // Add query parameters
+    url.searchParams.set('q', query)
+    url.searchParams.set('page', page.toString())
+    url.searchParams.set('pageSize', pageSize.toString())
+    if (categoryId !== undefined)
+      url.searchParams.set('categoryId', categoryId.toString())
+
+    const response = await fetchWithTimeout(url.toString(), {
+      next: { revalidate: 1800 }, // ISR: 30 minutes
+    })
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`)
+    }
+
+    const data: ProductsResponse = await response.json()
+    return data
+  } catch (error) {
+    return handleApiError(error, `searchProducts("${query}")`)
+  }
+}
