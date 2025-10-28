@@ -19,12 +19,6 @@ import {
   SheetTrigger,
   SheetTitle,
 } from "@/components/ui/sheet";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 // Navigation links from Figma design
@@ -34,47 +28,6 @@ const navigationLinks = [
   { href: "/services", label: "Services" },
   { href: "/export", label: "Export & Global Presence" },
   { href: "/about", label: "About Us" },
-];
-
-// Mobile menu items with dropdowns
-const mobileMenuItems = [
-  {
-    label: "Products",
-    hasDropdown: true,
-    items: [
-      { href: "/products/locomotives", label: "Locomotives" },
-      { href: "/products/parts", label: "Railway Parts" },
-      { href: "/products/equipment", label: "Equipment" },
-    ],
-  },
-  {
-    label: "Services",
-    hasDropdown: true,
-    items: [
-      { href: "/services/maintenance", label: "Maintenance" },
-      { href: "/services/repair", label: "Repair" },
-      { href: "/services/consulting", label: "Consulting" },
-    ],
-  },
-  {
-    label: "Pricing",
-    href: "/pricing",
-    hasDropdown: false,
-  },
-  {
-    label: "Resources",
-    hasDropdown: true,
-    items: [
-      { href: "/resources/blog", label: "Blog" },
-      { href: "/resources/guides", label: "Guides" },
-      { href: "/resources/documentation", label: "Documentation" },
-    ],
-  },
-  {
-    label: "About",
-    href: "/about",
-    hasDropdown: false,
-  },
 ];
 
 // Footer links for mobile menu (two columns)
@@ -151,50 +104,25 @@ export default function HeaderNavigation() {
                   <div className="flex flex-col h-[calc(100vh-64px)]">
                     {/* Main Menu Items - Scrollable */}
                     <div className="flex-1 overflow-y-auto px-4 py-6">
-                      <Accordion
-                        type="single"
-                        collapsible
-                        className="w-full space-y-1"
-                      >
-                        {mobileMenuItems.map((item, index) =>
-                          item.hasDropdown ? (
-                            <AccordionItem
-                              key={index}
-                              value={`item-${index}`}
-                              className="border-0"
-                            >
-                              <AccordionTrigger className="px-4 py-3 hover:no-underline hover:bg-transparent rounded-lg">
-                                <span className="text-base font-semibold text-[rgb(24,29,39)]">
-                                  {item.label}
-                                </span>
-                              </AccordionTrigger>
-                              <AccordionContent className="px-4 pb-0 pt-1">
-                                <div className="space-y-1">
-                                  {item.items?.map((subItem) => (
-                                    <Link
-                                      key={subItem.href}
-                                      href={subItem.href}
-                                      onClick={() => setMobileMenuOpen(false)}
-                                      className="block px-4 py-2 text-sm text-[rgb(71,74,81)] hover:bg-gray-50 rounded-md"
-                                    >
-                                      {subItem.label}
-                                    </Link>
-                                  ))}
-                                </div>
-                              </AccordionContent>
-                            </AccordionItem>
-                          ) : (
+                      <nav className="space-y-1">
+                        {navigationLinks.map((link) => {
+                          const isActive = pathname === link.href;
+                          return (
                             <Link
-                              key={index}
-                              href={item.href || "#"}
+                              key={link.href}
+                              href={link.href}
                               onClick={() => setMobileMenuOpen(false)}
-                              className="block px-4 py-3 text-base font-semibold text-[rgb(24,29,39)] hover:bg-gray-50 rounded-lg"
+                              className={`block px-4 py-3 text-base font-semibold rounded-lg transition-colors ${
+                                isActive
+                                  ? "bg-red-200 text-red-800"
+                                  : "text-[rgb(24,29,39)] hover:bg-gray-50"
+                              }`}
                             >
-                              {item.label}
+                              {link.label}
                             </Link>
-                          ),
-                        )}
-                      </Accordion>
+                          );
+                        })}
+                      </nav>
                     </div>
 
                     {/* Footer Section - Sticky to Bottom */}
