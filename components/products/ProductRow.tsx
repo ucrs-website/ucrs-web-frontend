@@ -24,9 +24,12 @@ export function ProductRow({
   className,
 }: ProductRowProps) {
   const [imageError, setImageError] = useState(false);
-  const { addToQuote, isInQuote, getQuantity, incrementQuantity, decrementQuantity } = useQuoteCart();
-  const inCart = isInQuote(product.oemSku);
-  const quantity = getQuantity(product.oemSku);
+  const { addToQuote, items, incrementQuantity, decrementQuantity } = useQuoteCart();
+
+  // Derive reactive values from items array
+  const cartItem = items.find(item => item.oemSku === product.oemSku);
+  const inCart = !!cartItem;
+  const quantity = cartItem?.quantity || 0;
 
   const handleAddToQuote = () => {
     addToQuote(product);
