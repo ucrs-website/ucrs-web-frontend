@@ -68,155 +68,106 @@ const COUNTRIES = [
 
 export function UserInfoFields({ formData, onChange, errors }: UserInfoFieldsProps) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      {/* Full Name */}
-      <div className="relative">
-        <label htmlFor="fullName" className="sr-only">
-          Full Name
-        </label>
+    <>
+      {/* First row: Full Name + Company Name */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Full Name */}
         <div className="relative">
-          <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
-          <input
-            type="text"
-            id="fullName"
-            placeholder="Full Name"
-            value={formData.fullName}
-            onChange={(e) => onChange("fullName", e.target.value)}
-            className={cn(
-              "w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors",
-              errors?.fullName && "border-red-500 focus:ring-red-500/20 focus:border-red-500"
-            )}
-            required
-          />
-        </div>
-        {errors?.fullName && (
-          <p className="mt-1 text-sm text-red-500">{errors.fullName}</p>
-        )}
-      </div>
-
-      {/* Company Name */}
-      <div className="relative">
-        <label htmlFor="companyName" className="sr-only">
-          Company Name
-        </label>
-        <div className="relative">
-          <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
-          <input
-            type="text"
-            id="companyName"
-            placeholder="Company Name"
-            value={formData.companyName}
-            onChange={(e) => onChange("companyName", e.target.value)}
-            className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
-          />
-        </div>
-      </div>
-
-      {/* Email */}
-      <div className="relative">
-        <label htmlFor="email" className="sr-only">
-          Email
-        </label>
-        <div className="relative">
-          <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
-          <input
-            type="email"
-            id="email"
-            placeholder="Email"
-            value={formData.email}
-            onChange={(e) => onChange("email", e.target.value)}
-            className={cn(
-              "w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors",
-              errors?.email && "border-red-500 focus:ring-red-500/20 focus:border-red-500"
-            )}
-            required
-          />
-        </div>
-        {errors?.email && (
-          <p className="mt-1 text-sm text-red-500">{errors.email}</p>
-        )}
-      </div>
-
-      {/* Country */}
-      <div className="relative">
-        <label htmlFor="country" className="sr-only">
-          Country
-        </label>
-        <select
-          id="country"
-          value={formData.country}
-          onChange={(e) => onChange("country", e.target.value)}
-          className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors appearance-none cursor-pointer"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")`,
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "right 1rem center",
-            backgroundSize: "1.25rem",
-          }}
-        >
-          <option value="">Select Country</option>
-          {COUNTRIES.map((country) => (
-            <option key={country} value={country}>
-              {country}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {/* Phone Number with Country Code */}
-      <div className="relative md:col-span-1">
-        <label htmlFor="phone" className="sr-only">
-          Phone Number
-        </label>
-        <div className="flex gap-2">
-          {/* Country Code Dropdown */}
-          <select
-            value={formData.phoneCountryCode}
-            onChange={(e) => onChange("phoneCountryCode", e.target.value)}
-            className="w-24 pl-3 pr-8 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors appearance-none cursor-pointer"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")`,
-              backgroundRepeat: "no-repeat",
-              backgroundPosition: "right 0.5rem center",
-              backgroundSize: "1rem",
-            }}
-          >
-            {COUNTRY_CODES.map((country, index) => (
-              <option key={`${country.code}-${index}`} value={country.code}>
-                {country.code}
-              </option>
-            ))}
-          </select>
-
-          {/* Phone Input */}
-          <div className="relative flex-1">
+          <label htmlFor="fullName" className="sr-only">
+            Full Name
+          </label>
+          <div className="relative">
+            <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
             <input
-              type="tel"
-              id="phone"
-              placeholder="(555) 000-0000"
-              value={formData.phone}
-              onChange={(e) => onChange("phone", e.target.value)}
+              type="text"
+              id="fullName"
+              placeholder="Full Name"
+              value={formData.fullName}
+              onChange={(e) => onChange("fullName", e.target.value)}
               className={cn(
-                "w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors",
-                errors?.phone && "border-red-500 focus:ring-red-500/20 focus:border-red-500"
+                "w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors",
+                errors?.fullName && "border-red-500 focus:ring-red-500/20 focus:border-red-500"
               )}
               required
             />
-            {formData.phone && (
-              <button
-                type="button"
-                onClick={() => onChange("phone", "")}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            )}
+          </div>
+          {errors?.fullName && (
+            <p className="mt-1 text-sm text-red-500">{errors.fullName}</p>
+          )}
+        </div>
+
+        {/* Company Name */}
+        <div className="relative">
+          <label htmlFor="companyName" className="sr-only">
+            Company Name
+          </label>
+          <div className="relative">
+            <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
+            <input
+              type="text"
+              id="companyName"
+              placeholder="Company Name"
+              value={formData.companyName}
+              onChange={(e) => onChange("companyName", e.target.value)}
+              className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
+            />
           </div>
         </div>
-        {errors?.phone && (
-          <p className="mt-1 text-sm text-red-500">{errors.phone}</p>
-        )}
       </div>
-    </div>
+
+      {/* Second row: Email + Country */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Email */}
+        <div className="relative">
+          <label htmlFor="email" className="sr-only">
+            Email
+          </label>
+          <div className="relative">
+            <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
+            <input
+              type="email"
+              id="email"
+              placeholder="Email"
+              value={formData.email}
+              onChange={(e) => onChange("email", e.target.value)}
+              className={cn(
+                "w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors",
+                errors?.email && "border-red-500 focus:ring-red-500/20 focus:border-red-500"
+              )}
+              required
+            />
+          </div>
+          {errors?.email && (
+            <p className="mt-1 text-sm text-red-500">{errors.email}</p>
+          )}
+        </div>
+
+        {/* Country */}
+        <div className="relative">
+          <label htmlFor="country" className="sr-only">
+            Country
+          </label>
+          <select
+            id="country"
+            value={formData.country}
+            onChange={(e) => onChange("country", e.target.value)}
+            className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors appearance-none cursor-pointer"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")`,
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "right 1rem center",
+              backgroundSize: "1.25rem",
+            }}
+          >
+            <option value="">Select Country</option>
+            {COUNTRIES.map((country) => (
+              <option key={country} value={country}>
+                {country}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+    </>
   );
 }

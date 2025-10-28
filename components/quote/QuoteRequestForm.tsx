@@ -12,6 +12,7 @@ import { QuoteTypeTabs } from "./QuoteTypeTabs";
 import { ProductsQuoteView } from "./ProductsQuoteView";
 import { ServicesQuoteView } from "./ServicesQuoteView";
 import { useQuoteCart } from "@/lib/hooks/useQuoteCart";
+import { COUNTRY_CODES } from "@/lib/data/country-codes";
 import type { QuoteFormData, QuoteFormErrors } from "@/lib/types/quote";
 
 interface QuoteRequestFormProps {
@@ -166,8 +167,8 @@ export function QuoteRequestForm({ onSuccess, onError }: QuoteRequestFormProps) 
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8">
-      {/* User Information Fields */}
+    <form onSubmit={handleSubmit} className="space-y-6">
+      {/* User Information Fields (Name, Company, Email, Country) */}
       <UserInfoFields
         formData={{
           fullName: formData.fullName,
@@ -181,12 +182,60 @@ export function QuoteRequestForm({ onSuccess, onError }: QuoteRequestFormProps) 
         errors={errors}
       />
 
-      {/* File Upload */}
-      <div className="md:col-span-1">
-        <FileUploadField
-          files={formData.attachments || []}
-          onFilesChange={handleFilesChange}
-        />
+      {/* Third row: Phone + File Upload */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Phone Number with Country Code */}
+        <div className="relative">
+          <label htmlFor="phone" className="sr-only">
+            Phone Number
+          </label>
+          <div className="flex gap-2">
+            {/* Country Code Dropdown */}
+            <select
+              value={formData.phoneCountryCode}
+              onChange={(e) => handleFieldChange("phoneCountryCode", e.target.value)}
+              className="w-28 pl-3 pr-8 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors appearance-none cursor-pointer"
+              style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")`,
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "right 0.5rem center",
+                backgroundSize: "1rem",
+              }}
+            >
+              {COUNTRY_CODES.map((country) => (
+                <option key={`${country.code}-${country.dialCode}`} value={country.dialCode}>
+                  {country.dialCode}
+                </option>
+              ))}
+            </select>
+
+            {/* Phone Input */}
+            <div className="relative flex-1">
+              <input
+                type="tel"
+                id="phone"
+                placeholder="(555) 000-0000"
+                value={formData.phone}
+                onChange={(e) => handleFieldChange("phone", e.target.value)}
+                className={`w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors ${
+                  errors?.phone && "border-red-500 focus:ring-red-500/20 focus:border-red-500"
+                }`}
+                required
+              />
+            </div>
+          </div>
+          {errors?.phone && (
+            <p className="mt-1 text-sm text-red-500">{errors.phone}</p>
+          )}
+        </div>
+
+        {/* File Upload */}
+        <div className="relative">
+          <FileUploadField
+            files={formData.attachments || []}
+            onFilesChange={handleFilesChange}
+          />
+        </div>
       </div>
 
       {/* Quote Type Tabs */}

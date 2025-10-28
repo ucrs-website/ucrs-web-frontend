@@ -11,6 +11,8 @@ import { CircleMinus, CirclePlus } from "lucide-react";
 import { useQuoteCart } from "@/lib/hooks/useQuoteCart";
 import type { QuoteItem } from "@/lib/types/products";
 
+const DEFAULT_PRODUCT_IMAGE = "/images/products/default-product.avif";
+
 interface QuoteProductsTableProps {
   products: QuoteItem[];
 }
@@ -18,9 +20,14 @@ interface QuoteProductsTableProps {
 export function QuoteProductsTable({ products }: QuoteProductsTableProps) {
   const { incrementQuantity, decrementQuantity } = useQuoteCart();
   const [descriptions, setDescriptions] = useState<Record<string, string>>({});
+  const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});
 
   const handleDescriptionChange = (oemSku: string, value: string) => {
     setDescriptions((prev) => ({ ...prev, [oemSku]: value }));
+  };
+
+  const handleImageError = (oemSku: string) => {
+    setImageErrors((prev) => ({ ...prev, [oemSku]: true }));
   };
 
   return (
@@ -82,11 +89,12 @@ export function QuoteProductsTable({ products }: QuoteProductsTableProps) {
                     {/* Product Image */}
                     <div className="relative w-10 h-10 flex-shrink-0 rounded-md overflow-hidden bg-gray-100">
                       <Image
-                        src={product.imageUrl}
+                        src={imageErrors[product.oemSku] ? DEFAULT_PRODUCT_IMAGE : product.imageUrl}
                         alt={product.name}
                         fill
                         sizes="40px"
                         className="object-contain"
+                        onError={() => handleImageError(product.oemSku)}
                       />
                     </div>
 
@@ -128,11 +136,12 @@ export function QuoteProductsTable({ products }: QuoteProductsTableProps) {
             {/* Product Image */}
             <div className="relative w-12 h-12 flex-shrink-0 rounded-md overflow-hidden bg-gray-100">
               <Image
-                src={product.imageUrl}
+                src={imageErrors[product.oemSku] ? DEFAULT_PRODUCT_IMAGE : product.imageUrl}
                 alt={product.name}
                 fill
                 sizes="48px"
                 className="object-contain"
+                onError={() => handleImageError(product.oemSku)}
               />
             </div>
 
