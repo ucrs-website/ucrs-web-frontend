@@ -16,7 +16,11 @@ import {
 } from "@/lib/api/products";
 import { slugify } from "@/lib/utils/url-helpers";
 import { getProductImage } from "@/lib/utils/image-helpers";
-import { generateSEO, generateBreadcrumbSchema, generateProductSchema } from "@/lib/seo";
+import {
+  generateSEO,
+  generateBreadcrumbSchema,
+  generateProductSchema,
+} from "@/lib/seo";
 import type { ProductWithImage } from "@/lib/types/products";
 import { Breadcrumbs, type BreadcrumbItem } from "@/components/seo/Breadcrumbs";
 import { StructuredData } from "@/components/seo/StructuredData";
@@ -48,11 +52,13 @@ export async function generateStaticParams() {
     for (const category of categories) {
       try {
         const subcategories = await fetchSubcategories(category.id);
-        const categorySlug = slugify(category.name || `category-${category.id}`);
+        const categorySlug = slugify(
+          category.name || `category-${category.id}`,
+        );
 
         for (const subcategory of subcategories) {
           const subcategorySlug = slugify(
-            subcategory.name || `subcategory-${subcategory.id}`
+            subcategory.name || `subcategory-${subcategory.id}`,
           );
 
           params.push({
@@ -63,7 +69,10 @@ export async function generateStaticParams() {
           });
         }
       } catch (err) {
-        console.error(`Error fetching subcategories for category ${category.id}:`, err);
+        console.error(
+          `Error fetching subcategories for category ${category.id}:`,
+          err,
+        );
       }
     }
 
@@ -174,7 +183,13 @@ export default async function ProductsPage({
       err instanceof Error
         ? err.message
         : "Failed to load products. Please try again later.";
-    productsData = { items: [], page: 1, pageSize: 20, total: 0, hasNext: false };
+    productsData = {
+      items: [],
+      page: 1,
+      pageSize: 20,
+      total: 0,
+      hasNext: false,
+    };
     productGroups = [];
   }
 
@@ -191,10 +206,12 @@ export default async function ProductsPage({
   const categorySlug = slugify(category?.name || "");
 
   // Enrich products with images
-  const productsWithImages: ProductWithImage[] = productsData.items.map((product) => ({
-    ...product,
-    imageUrl: getProductImage(product.oemSku),
-  }));
+  const productsWithImages: ProductWithImage[] = productsData.items.map(
+    (product) => ({
+      ...product,
+      imageUrl: getProductImage(product.oemSku),
+    }),
+  );
 
   // Generate structured data schemas
   const breadcrumbSchemaData = generateBreadcrumbSchema([
@@ -240,7 +257,7 @@ export default async function ProductsPage({
       image: product.imageUrl,
       sku: product.oemSku,
       brand: "UCRS",
-    })
+    }),
   );
 
   return (
@@ -253,7 +270,7 @@ export default async function ProductsPage({
       ))}
 
       {/* Breadcrumbs */}
-      <div className="container mx-auto px-4 py-4">
+      <div className="container mx-auto px-4 py-4 mt-24 lg:mt-28">
         <Breadcrumbs items={breadcrumbs} />
       </div>
 
@@ -293,7 +310,9 @@ export default async function ProductsPage({
                 productGroups={productGroups}
                 activeGroupId={groupId ? parseInt(groupId, 10) : undefined}
                 currentPage={productsData.page}
-                totalPages={Math.ceil(productsData.total / productsData.pageSize)}
+                totalPages={Math.ceil(
+                  productsData.total / productsData.pageSize,
+                )}
                 totalCount={productsData.total}
                 initialSearch={search}
               />

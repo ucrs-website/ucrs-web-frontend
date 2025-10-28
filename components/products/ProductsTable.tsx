@@ -57,7 +57,8 @@ export function ProductsTable({
             No Products Found
           </h3>
           <p className="text-gray-600">
-            Try adjusting your search or filters to find what you're looking for.
+            Try adjusting your search or filters to find what you're looking
+            for.
           </p>
         </div>
       </div>
@@ -67,11 +68,10 @@ export function ProductsTable({
   return (
     <div className={cn("space-y-2", className)}>
       {/* Desktop Table Header */}
-      <div className="hidden md:grid md:grid-cols-12 gap-4 px-4 py-3 bg-gray-50 rounded-lg font-semibold text-sm text-gray-700">
-        <div className="col-span-5">Product Name</div>
-        <div className="col-span-2">Part Number</div>
-        <div className="col-span-3">Description</div>
-        <div className="col-span-2 text-center">Actions</div>
+      <div className="hidden md:grid md:grid-cols-12 gap-4 px-6 py-3 bg-gray-50 rounded-lg font-semibold text-sm text-gray-700">
+        <div className="col-span-3">Actions</div>
+        <div className="col-span-7">Product Name</div>
+        <div className="col-span-2 text-right">Details</div>
       </div>
 
       {/* Products List */}

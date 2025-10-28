@@ -135,7 +135,7 @@ export default async function SubcategoriesPage({
   return (
     <>
       {/* Breadcrumbs */}
-      <div className="container mx-auto px-4 py-4">
+      <div className="container mx-auto px-4 py-4 mt-24 lg:mt-28">
         <Breadcrumbs items={breadcrumbs} />
       </div>
 

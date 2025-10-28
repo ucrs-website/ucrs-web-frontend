@@ -55,7 +55,7 @@ export function ProductModal({ product, isOpen, onClose }: ProductModalProps) {
   useEffect(() => {
     if (isOpen) {
       const focusableElements = document.querySelectorAll(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
       );
       const firstElement = focusableElements[0] as HTMLElement;
       const lastElement = focusableElements[
@@ -110,10 +110,10 @@ export function ProductModal({ product, isOpen, onClose }: ProductModalProps) {
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors z-10"
+          className="absolute top-1 right-1 p-1 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors z-10"
           aria-label="Close modal"
         >
-          <X className="w-6 h-6" />
+          <X className="w-4 h-4" />
         </button>
 
         {/* Modal Body */}
@@ -122,7 +122,11 @@ export function ProductModal({ product, isOpen, onClose }: ProductModalProps) {
             {/* Product Image */}
             <div className="relative aspect-square bg-gray-100 rounded-lg overflow-hidden">
               <Image
-                src={imageError ? "/images/products/default-product.jpg" : product.imageUrl}
+                src={
+                  imageError
+                    ? "/images/products/default-product.avif"
+                    : product.imageUrl
+                }
                 alt={product.name}
                 fill
                 className="object-contain"
@@ -144,7 +148,8 @@ export function ProductModal({ product, isOpen, onClose }: ProductModalProps) {
 
               {/* SKU */}
               <p className="text-sm font-mono text-gray-600 mb-6">
-                Part Number: <span className="font-semibold">{product.oemSku}</span>
+                Part Number:{" "}
+                <span className="font-semibold">{product.oemSku}</span>
               </p>
 
               {/* Description */}
@@ -195,7 +200,7 @@ export function ProductModal({ product, isOpen, onClose }: ProductModalProps) {
                     "flex-1 px-6 py-3 font-semibold rounded-lg transition-colors",
                     inCart
                       ? "bg-green-100 text-green-700 cursor-not-allowed"
-                      : "bg-primary text-white hover:bg-primary/90"
+                      : "bg-primary text-white hover:bg-primary/90",
                   )}
                 >
                   {inCart ? "Added to Quote" : "Request a Quote"}
