@@ -290,8 +290,8 @@ export default function HeaderNavigation() {
                           href={link.href}
                           className={`text-xs font-semibold transition-all duration-200 rounded-lg px-2.5 py-2 whitespace-nowrap ${
                             isActive
-                              ? "bg-red-100 text-red-700 hover:bg-red-200 hover:text-red-800"
-                              : "hover:bg-red-100 hover:text-red-700 text-[rgb(71,74,81)]"
+                              ? "!bg-red-200 !text-red-800 hover:!bg-red-300 hover:!text-red-900"
+                              : "hover:!bg-red-100 hover:!text-red-700 text-[rgb(71,74,81)]"
                           }`}
                         >
                           {link.label}
