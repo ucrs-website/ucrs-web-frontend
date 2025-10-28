@@ -9,6 +9,7 @@ import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 import type { Product, QuoteItem } from '@/lib/types/products'
 import { getProductImage } from '@/lib/utils/image-helpers'
+import { useToastStore } from './toast-store'
 
 interface QuoteCartState {
   // State
@@ -18,11 +19,16 @@ interface QuoteCartState {
   // Actions
   addToQuote: (product: Product) => void
   removeFromQuote: (oemSku: string) => void
+  incrementQuantity: (oemSku: string) => void
+  decrementQuantity: (oemSku: string) => void
+  updateQuantity: (oemSku: string, quantity: number) => void
+  getQuantity: (oemSku: string) => number
   clearQuote: () => void
   toggleExpanded: () => void
   setExpanded: (expanded: boolean) => void
   isInQuote: (oemSku: string) => boolean
   getItemCount: () => number
+  getTotalQuantity: () => number
 }
 
 export const useQuoteCartStore = create<QuoteCartState>()(
@@ -37,17 +43,19 @@ export const useQuoteCartStore = create<QuoteCartState>()(
         const currentItems = get().items
 
         // Check if product already exists
-        const exists = currentItems.some(
+        const existingItem = currentItems.find(
           (item) => item.oemSku === product.oemSku
         )
 
-        if (exists) {
-          // Product already in quote, do nothing or show notification
-          console.log('Product already in quote:', product.oemSku)
+        if (existingItem) {
+          // Product already in quote, increment quantity
+          get().incrementQuantity(product.oemSku)
+          // Show toast notification
+          useToastStore.getState().addToast(`${product.name} quantity increased`, 'success', 3000)
           return
         }
 
-        // Create quote item
+        // Create quote item with initial quantity of 1
         const quoteItem: QuoteItem = {
           oemSku: product.oemSku,
           name: product.name,
@@ -55,6 +63,7 @@ export const useQuoteCartStore = create<QuoteCartState>()(
           imageUrl: getProductImage(product.oemSku),
           catId: product.catId,
           groupId: product.groupId,
+          quantity: 1,
           addedAt: new Date().toISOString(),
         }
 
@@ -63,6 +72,9 @@ export const useQuoteCartStore = create<QuoteCartState>()(
           items: [...currentItems, quoteItem],
           isExpanded: true, // Auto-expand when adding
         })
+
+        // Show toast notification
+        useToastStore.getState().addToast(`${product.name} added to quote`, 'success', 3000)
       },
 
       // Remove product from quote
@@ -70,6 +82,50 @@ export const useQuoteCartStore = create<QuoteCartState>()(
         set((state) => ({
           items: state.items.filter((item) => item.oemSku !== oemSku),
         }))
+      },
+
+      // Increment quantity
+      incrementQuantity: (oemSku: string) => {
+        set((state) => ({
+          items: state.items.map((item) =>
+            item.oemSku === oemSku
+              ? { ...item, quantity: item.quantity + 1 }
+              : item
+          ),
+        }))
+      },
+
+      // Decrement quantity (remove if quantity becomes 0)
+      decrementQuantity: (oemSku: string) => {
+        set((state) => ({
+          items: state.items
+            .map((item) =>
+              item.oemSku === oemSku
+                ? { ...item, quantity: item.quantity - 1 }
+                : item
+            )
+            .filter((item) => item.quantity > 0),
+        }))
+      },
+
+      // Update quantity directly
+      updateQuantity: (oemSku: string, quantity: number) => {
+        if (quantity <= 0) {
+          get().removeFromQuote(oemSku)
+          return
+        }
+
+        set((state) => ({
+          items: state.items.map((item) =>
+            item.oemSku === oemSku ? { ...item, quantity } : item
+          ),
+        }))
+      },
+
+      // Get quantity for a specific product
+      getQuantity: (oemSku: string) => {
+        const item = get().items.find((item) => item.oemSku === oemSku)
+        return item?.quantity || 0
       },
 
       // Clear entire quote
@@ -97,9 +153,14 @@ export const useQuoteCartStore = create<QuoteCartState>()(
         return get().items.some((item) => item.oemSku === oemSku)
       },
 
-      // Get total item count
+      // Get total item count (number of unique products)
       getItemCount: () => {
         return get().items.length
+      },
+
+      // Get total quantity (sum of all quantities)
+      getTotalQuantity: () => {
+        return get().items.reduce((sum, item) => sum + item.quantity, 0)
       },
     }),
     {
@@ -109,6 +170,17 @@ export const useQuoteCartStore = create<QuoteCartState>()(
         // Only persist items, not isExpanded
         items: state.items,
       }),
+      // Migration to handle legacy items without quantity field
+      migrate: (persistedState: any, version: number) => {
+        if (persistedState && persistedState.items) {
+          persistedState.items = persistedState.items.map((item: any) => ({
+            ...item,
+            quantity: item.quantity || 1, // Add quantity if missing
+          }))
+        }
+        return persistedState as QuoteCartState
+      },
+      version: 1,
     }
   )
 )

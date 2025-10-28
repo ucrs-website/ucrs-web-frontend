@@ -12,7 +12,7 @@ import { QuoteCartDropdown } from "./QuoteCartDropdown";
 import { useEffect, useState } from "react";
 
 export function QuoteCartBar() {
-  const { itemCount, isExpanded, toggleExpanded, hasItems } = useQuoteCart();
+  const { totalQuantity, isExpanded, toggleExpanded, hasItems } = useQuoteCart();
   const [isVisible, setIsVisible] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
 
@@ -72,8 +72,8 @@ export function QuoteCartBar() {
           >
             <div className="flex items-center gap-3">
               <span className="text-sm md:text-base font-medium text-gray-900">
-                <span className="font-bold text-primary">{itemCount}</span>{" "}
-                {itemCount === 1 ? "Product" : "Products"} added to your quote
+                <span className="font-bold text-primary">{totalQuantity}</span>{" "}
+                {totalQuantity === 1 ? "Product" : "Products"} added to your quote
                 list
               </span>
             </div>

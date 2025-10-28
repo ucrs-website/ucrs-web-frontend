@@ -24,11 +24,20 @@ export function ProductRow({
   className,
 }: ProductRowProps) {
   const [imageError, setImageError] = useState(false);
-  const { addToQuote, isInQuote } = useQuoteCart();
+  const { addToQuote, isInQuote, getQuantity, incrementQuantity, decrementQuantity } = useQuoteCart();
   const inCart = isInQuote(product.oemSku);
+  const quantity = getQuantity(product.oemSku);
 
   const handleAddToQuote = () => {
     addToQuote(product);
+  };
+
+  const handleIncrement = () => {
+    incrementQuantity(product.oemSku);
+  };
+
+  const handleDecrement = () => {
+    decrementQuantity(product.oemSku);
   };
 
   const handleViewDetails = () => {
@@ -52,24 +61,67 @@ export function ProductRow({
           className,
         )}
       >
-        {/* Add to Quote Button */}
+        {/* Add to Quote Button or Quantity Controls */}
         <div className="col-span-3 flex items-center justify-start">
-          <button
-            onClick={handleAddToQuote}
-            disabled={inCart}
-            className={cn(
-              "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors border",
-              inCart
-                ? "bg-green-50 text-green-700 border-green-300 cursor-not-allowed"
-                : "bg-white text-primary border-primary hover:bg-primary/5",
-            )}
-            aria-label={inCart ? "Added to quote" : "Add to quote"}
-          >
-            <Plus className="w-4 h-4" />
-            <span className="hidden lg:inline">
-              {inCart ? "Added" : "Add to quote"}
-            </span>
-          </button>
+          {inCart ? (
+            // Quantity Controls
+            <div className="flex items-center gap-2 px-2 py-1.5 bg-white border border-gray-300 rounded-lg">
+              <button
+                onClick={handleDecrement}
+                className="p-1 text-gray-600 hover:text-primary hover:bg-gray-100 rounded transition-colors"
+                aria-label="Decrease quantity"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M8 12h8" />
+                </svg>
+              </button>
+              <span className="text-sm font-semibold text-gray-900 min-w-[2ch] text-center">
+                {quantity}
+              </span>
+              <button
+                onClick={handleIncrement}
+                className="p-1 text-gray-600 hover:text-primary hover:bg-gray-100 rounded transition-colors"
+                aria-label="Increase quantity"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M12 8v8" />
+                  <path d="M8 12h8" />
+                </svg>
+              </button>
+            </div>
+          ) : (
+            // Add to Quote Button
+            <button
+              onClick={handleAddToQuote}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors border bg-white text-primary border-primary hover:bg-primary/5"
+              aria-label="Add to quote"
+            >
+              <Plus className="w-4 h-4" />
+              <span className="hidden lg:inline">Add to quote</span>
+            </button>
+          )}
         </div>
 
         {/* Product Name with Image and Part Number */}
@@ -152,19 +204,64 @@ export function ProductRow({
           </div>
         </div>
         <div className="flex-col justify-center items-center px-1">
-          <button
-            onClick={handleAddToQuote}
-            disabled={inCart}
-            className={cn(
-              "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors border",
-              inCart
-                ? "bg-green-50 text-green-700 border-green-300 cursor-not-allowed"
-                : "bg-white text-primary border-primary hover:bg-primary/5",
-            )}
-          >
-            <Plus className="w-4 h-4" />
-            {inCart ? "Added" : "Add to quote"}
-          </button>
+          {inCart ? (
+            // Quantity Controls
+            <div className="flex items-center gap-1.5 px-2 py-1.5 bg-white border border-gray-300 rounded-lg">
+              <button
+                onClick={handleDecrement}
+                className="p-1 text-gray-600 hover:text-primary hover:bg-gray-100 rounded transition-colors"
+                aria-label="Decrease quantity"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M8 12h8" />
+                </svg>
+              </button>
+              <span className="text-sm font-semibold text-gray-900 min-w-[2ch] text-center">
+                {quantity}
+              </span>
+              <button
+                onClick={handleIncrement}
+                className="p-1 text-gray-600 hover:text-primary hover:bg-gray-100 rounded transition-colors"
+                aria-label="Increase quantity"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M12 8v8" />
+                  <path d="M8 12h8" />
+                </svg>
+              </button>
+            </div>
+          ) : (
+            // Add to Quote Button
+            <button
+              onClick={handleAddToQuote}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors border bg-white text-primary border-primary hover:bg-primary/5"
+            >
+              <Plus className="w-4 h-4" />
+              Add to quote
+            </button>
+          )}
         </div>
       </div>
     </>

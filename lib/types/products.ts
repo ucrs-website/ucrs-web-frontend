@@ -79,6 +79,7 @@ export interface QuoteItem {
   imageUrl: string
   catId: number
   groupId: number
+  quantity: number
   addedAt: string // ISO timestamp
 }
 

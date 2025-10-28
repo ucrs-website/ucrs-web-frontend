@@ -17,21 +17,35 @@ export function useQuoteCart() {
   const isExpanded = useQuoteCartStore((state) => state.isExpanded)
   const addToQuote = useQuoteCartStore((state) => state.addToQuote)
   const removeFromQuote = useQuoteCartStore((state) => state.removeFromQuote)
+  const incrementQuantity = useQuoteCartStore((state) => state.incrementQuantity)
+  const decrementQuantity = useQuoteCartStore((state) => state.decrementQuantity)
+  const updateQuantity = useQuoteCartStore((state) => state.updateQuantity)
+  const getQuantity = useQuoteCartStore((state) => state.getQuantity)
   const clearQuote = useQuoteCartStore((state) => state.clearQuote)
   const toggleExpanded = useQuoteCartStore((state) => state.toggleExpanded)
   const setExpanded = useQuoteCartStore((state) => state.setExpanded)
   const isInQuote = useQuoteCartStore((state) => state.isInQuote)
-  const getItemCount = useQuoteCartStore((state) => state.getItemCount)
+
+  // Use selectors directly for reactive values
+  const itemCount = useQuoteCartStore((state) => state.items.length)
+  const totalQuantity = useQuoteCartStore((state) =>
+    state.items.reduce((sum, item) => sum + (item.quantity || 1), 0)
+  )
 
   return {
     // State
     items,
     isExpanded,
-    itemCount: getItemCount(),
+    itemCount,
+    totalQuantity,
 
     // Actions
     addToQuote,
     removeFromQuote,
+    incrementQuantity,
+    decrementQuantity,
+    updateQuantity,
+    getQuantity,
     clearQuote,
     toggleExpanded,
     setExpanded,

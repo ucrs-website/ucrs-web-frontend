@@ -10,6 +10,7 @@ import { Trash2 } from 'lucide-react'
 import type { QuoteItem } from '@/lib/types/products'
 import { getProductImageFallback } from '@/lib/utils/image-helpers'
 import { useState } from 'react'
+import { useQuoteCart } from '@/lib/hooks/useQuoteCart'
 
 interface QuoteCartItemProps {
   item: QuoteItem
@@ -18,6 +19,15 @@ interface QuoteCartItemProps {
 
 export function QuoteCartItem({ item, onRemove }: QuoteCartItemProps) {
   const [imageError, setImageError] = useState(false)
+  const { incrementQuantity, decrementQuantity } = useQuoteCart()
+
+  const handleIncrement = () => {
+    incrementQuantity(item.oemSku)
+  }
+
+  const handleDecrement = () => {
+    decrementQuantity(item.oemSku)
+  }
 
   return (
     <div className="flex items-start gap-3 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
@@ -44,6 +54,54 @@ export function QuoteCartItem({ item, onRemove }: QuoteCartItemProps) {
             {item.description}
           </p>
         )}
+      </div>
+
+      {/* Quantity Controls */}
+      <div className="flex items-center gap-2 px-2 py-1 bg-gray-50 border border-gray-200 rounded-lg">
+        <button
+          onClick={handleDecrement}
+          className="p-1 text-gray-600 hover:text-primary hover:bg-white rounded transition-colors"
+          aria-label="Decrease quantity"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <circle cx="12" cy="12" r="10" />
+            <path d="M8 12h8" />
+          </svg>
+        </button>
+        <span className="text-sm font-semibold text-gray-900 min-w-[2ch] text-center">
+          {item.quantity}
+        </span>
+        <button
+          onClick={handleIncrement}
+          className="p-1 text-gray-600 hover:text-primary hover:bg-white rounded transition-colors"
+          aria-label="Increase quantity"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <circle cx="12" cy="12" r="10" />
+            <path d="M12 8v8" />
+            <path d="M8 12h8" />
+          </svg>
+        </button>
       </div>
 
       {/* Delete Button */}
