@@ -39,7 +39,9 @@ export function QuoteCartDropdown({ isOpen }: QuoteCartDropdownProps) {
         isOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0",
       )}
     >
-      <div className="container mx-auto px-4 py-4 border-[1px] shadow-sm border-gray-100 bg-white rounded-2xl max-w-[1170px] mt-2">
+      {/* Container matching QuoteCartBar width */}
+      <div className="mx-auto w-full max-w-[var(--container-max-width,1200px)] px-2 md:px-4">
+        <div className="px-4 md:px-6 py-4 border-[1px] shadow-sm border-gray-100 bg-white rounded-2xl mt-2">
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-semibold text-gray-900">
@@ -90,6 +92,7 @@ export function QuoteCartDropdown({ isOpen }: QuoteCartDropdownProps) {
             </a>
           </div>
         )}
+        </div>
       </div>
     </div>
   );
