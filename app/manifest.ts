@@ -9,32 +9,7 @@ export default function manifest(): MetadataRoute.Manifest {
     display: 'standalone',
     background_color: '#FFFFFF',
     theme_color: '#E53E3E',
-    icons: [
-      {
-        src: '/icon-192x192.png',
-        sizes: '192x192',
-        type: 'image/png',
-        purpose: 'maskable',
-      },
-      {
-        src: '/icon-512x512.png',
-        sizes: '512x512',
-        type: 'image/png',
-        purpose: 'maskable',
-      },
-      {
-        src: '/icon-192x192.png',
-        sizes: '192x192',
-        type: 'image/png',
-        purpose: 'any',
-      },
-      {
-        src: '/icon-512x512.png',
-        sizes: '512x512',
-        type: 'image/png',
-        purpose: 'any',
-      },
-    ],
+    icons: [],
     categories: ['business', 'industrial', 'railway', 'transportation'],
     lang: 'en',
     dir: 'ltr',

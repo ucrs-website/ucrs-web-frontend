@@ -13,7 +13,7 @@ import { ProductsQuoteView } from "./ProductsQuoteView";
 import { ServicesQuoteView } from "./ServicesQuoteView";
 import { useQuoteCart } from "@/lib/hooks/useQuoteCart";
 import { COUNTRY_CODES } from "@/lib/data/country-codes";
-import type { QuoteFormData, QuoteFormErrors } from "@/lib/types/quote";
+import type { QuoteFormData, QuoteFormErrors, QuoteService } from "@/lib/types/quote";
 
 interface QuoteRequestFormProps {
   onSuccess?: () => void;
@@ -59,7 +59,7 @@ export function QuoteRequestForm({ onSuccess, onError }: QuoteRequestFormProps) 
   };
 
   const handleServiceTypeChange = (
-    service: keyof QuoteFormData["services"]["serviceTypes"],
+    service: keyof QuoteService["serviceTypes"],
     checked: boolean
   ) => {
     setFormData((prev) => ({

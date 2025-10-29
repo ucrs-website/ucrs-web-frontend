@@ -9,6 +9,11 @@ import { useState } from "react";
 import type { Metadata } from "next";
 import { HeroQuotePage } from "@/components/quote/HeroQuotePage";
 import { QuoteRequestForm } from "@/components/quote/QuoteRequestForm";
+import { WhatHappensNextSection } from "@/components/quote/WhatHappensNextSection";
+import { PriorityBanner } from "@/components/quote/PriorityBanner";
+import { ContactSection } from "@/components/quote/ContactSection";
+import { NewsletterSection } from "@/components/quote/NewsletterSection";
+import { OurLocations } from "@/components/sections/OurLocations";
 
 export default function QuotePage() {
   const [showSuccess, setShowSuccess] = useState(false);
@@ -169,6 +174,21 @@ export default function QuotePage() {
           </div>
         </div>
       </section>
+
+      {/* What Happens Next Section */}
+      <WhatHappensNextSection />
+
+      {/* Priority Banner */}
+      <PriorityBanner />
+
+      {/* Contact Section */}
+      <ContactSection />
+
+      {/* Our Locations Section */}
+      <OurLocations />
+
+      {/* Newsletter Section */}
+      <NewsletterSection />
     </>
   );
 }

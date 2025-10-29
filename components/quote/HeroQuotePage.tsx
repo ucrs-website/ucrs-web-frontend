@@ -26,7 +26,6 @@ export function HeroQuotePage() {
           priority
           sizes="100vw"
           className="object-cover"
-          quality={90}
         />
         {/* Dark overlay for better text readability */}
         <div className="absolute inset-0 bg-black/40" />
