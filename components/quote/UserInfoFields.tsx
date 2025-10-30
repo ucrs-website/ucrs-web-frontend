@@ -11,9 +11,9 @@ import { cn } from "@/lib/utils";
 interface UserInfoFieldsProps {
   formData: {
     fullName: string;
-    companyName: string;
+    companyName?: string;
     email: string;
-    country: string;
+    country?: string;
     phone: string;
     phoneCountryCode: string;
   };
@@ -107,7 +107,7 @@ export function UserInfoFields({ formData, onChange, errors }: UserInfoFieldsPro
               type="text"
               id="companyName"
               placeholder="Company Name"
-              value={formData.companyName}
+              value={formData.companyName || ""}
               onChange={(e) => onChange("companyName", e.target.value)}
               className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
             />
@@ -149,7 +149,7 @@ export function UserInfoFields({ formData, onChange, errors }: UserInfoFieldsPro
           </label>
           <select
             id="country"
-            value={formData.country}
+            value={formData.country || ""}
             onChange={(e) => onChange("country", e.target.value)}
             className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors appearance-none cursor-pointer"
             style={{

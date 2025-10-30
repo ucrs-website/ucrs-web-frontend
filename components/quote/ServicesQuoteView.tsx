@@ -15,7 +15,7 @@ interface ServicesQuoteViewProps {
     rebuild: boolean;
   };
   description: string;
-  onServiceTypeChange: (service: keyof typeof serviceTypes, checked: boolean) => void;
+  onServiceTypeChange: (service: "repair" | "consulting" | "reverseEngineering" | "rebuild", checked: boolean) => void;
   onDescriptionChange: (description: string) => void;
   error?: string;
 }
