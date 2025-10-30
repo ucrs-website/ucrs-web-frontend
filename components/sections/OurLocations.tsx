@@ -1,7 +1,36 @@
-import React from 'react'
+'use client'
+
+import React, { useState } from 'react'
 import { MapPin } from 'lucide-react'
+import { cn } from '@/lib/utils'
+
+interface Location {
+  id: string
+  name: string
+  address: string
+  mapUrl: string
+}
+
+const locations: Location[] = [
+  {
+    id: 'richmond-hill',
+    name: 'Richmond Hill, ON',
+    address: '15 Wertheim Crt., Unit 212, Richmond Hill, ON, Canada L4B 3H7',
+    mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2876.5876884947246!2d-79.42244!3d43.8451!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDPCsDUwJzQyLjQiTiA3OcKwMjUnMjAuOCJX!5e0!3m2!1sen!2sca!4v1234567890123',
+  },
+  {
+    id: 'welland',
+    name: 'Welland, ON',
+    address: '361 Enterprise Drive, Welland, ON, Canada L3B 6H8',
+    mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2914.123456789!2d-79.2345!3d42.9876!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDLCsDU5JzE1LjQiTiA3OcKwMTQnMDQuMiJX!5e0!3m2!1sen!2sca!4v1234567890124',
+  },
+]
 
 export function OurLocations() {
+  const [selectedLocation, setSelectedLocation] = useState<string>(locations[0].id)
+
+  const activeLocation = locations.find((loc) => loc.id === selectedLocation) || locations[0]
+
   return (
     <section className="w-full bg-white">
       {/* Top Section with Content */}
@@ -25,25 +54,44 @@ export function OurLocations() {
               </div>
             </div>
 
-            {/* Right Column - Address */}
+            {/* Right Column - Addresses */}
             <div className="flex-1 max-w-[560px]">
-              <div className="flex gap-4">
-                {/* Icon */}
-                <div className="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 bg-primary rounded-lg md:rounded-[10px] flex items-center justify-center border-2 border-white/12 shadow-[0px_0px_0px_1px_inset_rgba(10,13,18,0.18),0px_-2px_0px_0px_inset_rgba(10,13,18,0.05)]">
-                  <MapPin className="w-5 h-5 md:w-6 md:h-6 text-white" />
-                </div>
+              <div className="flex flex-col gap-4">
+                {locations.map((location) => (
+                  <button
+                    key={location.id}
+                    onClick={() => setSelectedLocation(location.id)}
+                    className={cn(
+                      'flex gap-4 p-4 rounded-xl transition-all duration-200 text-left',
+                      'hover:bg-white/60 focus:outline-none focus:ring-2 focus:ring-primary/20',
+                      selectedLocation === location.id
+                        ? 'bg-white shadow-[0px_1px_3px_rgba(16,24,40,0.1),0px_1px_2px_rgba(16,24,40,0.06)]'
+                        : 'bg-transparent'
+                    )}
+                  >
+                    {/* Icon */}
+                    <div
+                      className={cn(
+                        'flex-shrink-0 w-10 h-10 md:w-12 md:h-12 rounded-lg md:rounded-[10px] flex items-center justify-center border-2 border-white/12 shadow-[0px_0px_0px_1px_inset_rgba(10,13,18,0.18),0px_-2px_0px_0px_inset_rgba(10,13,18,0.05)] transition-colors duration-200',
+                        selectedLocation === location.id ? 'bg-primary' : 'bg-primary/70'
+                      )}
+                    >
+                      <MapPin className="w-5 h-5 md:w-6 md:h-6 text-white" />
+                    </div>
 
-                {/* Address Content */}
-                <div className="flex-1 pt-1.5 md:pt-2.5">
-                  <div className="flex flex-col gap-1 md:gap-2">
-                    <h3 className="text-lg md:text-xl font-semibold text-[#181d27] leading-7 md:leading-[30px]">
-                      Richmond Hill
-                    </h3>
-                    <p className="text-base font-normal text-[#535862] leading-6">
-                      212-15 Werthheim Crt., Richmond Hill, ON L4B 3H7, Canada
-                    </p>
-                  </div>
-                </div>
+                    {/* Address Content */}
+                    <div className="flex-1 pt-1.5 md:pt-2.5">
+                      <div className="flex flex-col gap-1 md:gap-2">
+                        <h3 className="text-lg md:text-xl font-semibold text-[#181d27] leading-7 md:leading-[30px]">
+                          {location.name}
+                        </h3>
+                        <p className="text-base font-normal text-[#535862] leading-6">
+                          {location.address}
+                        </p>
+                      </div>
+                    </div>
+                  </button>
+                ))}
               </div>
             </div>
           </div>
@@ -55,14 +103,15 @@ export function OurLocations() {
         <div className="w-full h-60 md:h-[516px] bg-white overflow-hidden">
           {/* Google Maps Embed Container */}
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2876.5876884947246!2d-79.42244!3d43.8451!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDPCsDUwJzQyLjQiTiA3OcKwMjUnMjAuOCJX!5e0!3m2!1sen!2sca!4v1234567890123"
+            key={selectedLocation}
+            src={activeLocation.mapUrl}
             width="100%"
             height="100%"
             style={{ border: 0 }}
             allowFullScreen
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
-            title="UCRS Location - Richmond Hill, Ontario"
+            title={`UCRS Location - ${activeLocation.name}`}
             className="w-full h-full"
           />
         </div>

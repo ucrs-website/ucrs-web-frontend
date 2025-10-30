@@ -144,17 +144,14 @@ export default function QuotePage() {
       <section id="quote-form" className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div
-            className="max-w-5xl mx-auto bg-[#3d4f5c] rounded-2xl p-6 md:p-12 relative overflow-hidden"
+            className="mx-auto bg-[#3d4f5c] rounded-2xl p-6 md:p-12 relative overflow-hidden"
             style={{
-              backgroundImage: "url(/images/quote/get-quote-bg-desktop.avif)",
-              backgroundSize: "cover",
-              backgroundPosition: "top right",
-              backgroundBlendMode: "overlay",
+              backgroundImage: "url(/images/quote/quote-form-bg.avif)",
+              backgroundSize: "80%",
+              backgroundPosition: "130% 0",
+              backgroundRepeat: "no-repeat",
             }}
           >
-            {/* Dark overlay for form readability */}
-            <div className="absolute inset-0 bg-[#3d4f5c]/95 rounded-2xl" />
-
             {/* Form Content */}
             <div className="relative z-10">
               <div className="text-center text-white mb-12">

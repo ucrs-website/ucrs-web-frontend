@@ -54,11 +54,11 @@ export function NewsletterSection() {
   };
 
   return (
-    <section className="py-16 md:py-24 bg-gray-50">
-      <div className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto">
+    <section className="py-16 md:py-24 ">
+      <div className="container mx-auto px-4 bg-gray-50 md:rounded-2xl py-12">
+        <div className="max-w-4xl mx-auto ">
           {/* Heading */}
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-4xl font-bold text-gray-900 mb-4">
             Join 2,000+ subscribers
           </h2>
 
@@ -68,7 +68,10 @@ export function NewsletterSection() {
           </p>
 
           {/* Newsletter Form */}
-          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col sm:flex-row gap-3"
+          >
             {/* Email Input */}
             <div className="relative flex-1">
               <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />

@@ -34,7 +34,7 @@ const STEPS: Step[] = [
 
 export function WhatHappensNextSection() {
   return (
-    <section className="py-16 md:py-24 bg-gray-50">
+    <section className="py-16 md:py-12 bg-gray-50">
       <div className="container mx-auto px-4">
         {/* Section Heading */}
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center text-gray-900 mb-12 md:mb-16">
@@ -49,7 +49,8 @@ export function WhatHappensNextSection() {
             style={{
               backgroundImage: "url(/images/quote/what-happens-bg.avif)",
               backgroundSize: "cover",
-              backgroundPosition: "center",
+              backgroundPosition: "0 75%",
+              maskRepeat: "no-repeat",
             }}
           >
             {/* Pink Overlay */}
@@ -68,17 +69,17 @@ export function WhatHappensNextSection() {
                   className="relative backdrop-blur-md bg-white/20 rounded-2xl p-6 md:p-8 border border-white/30 shadow-lg"
                 >
                   {/* Step Number */}
-                  <div className="text-6xl md:text-7xl font-bold text-white/90 mb-4">
+                  <div className="text-6xl md:text-7xl font-bold text-white/90 mb-4 text-center">
                     {step.number}
                   </div>
 
                   {/* Step Title */}
-                  <h3 className="text-xl md:text-2xl font-bold text-white mb-3">
+                  <h3 className="text-xl md:text-2xl font-bold text-white mb-3 text-center">
                     {step.title}
                   </h3>
 
                   {/* Step Description */}
-                  <p className="text-white/90 text-sm md:text-base leading-relaxed">
+                  <p className="text-white/90 text-sm md:text-base leading-relaxed text-center">
                     {step.description}
                   </p>
                 </div>

@@ -16,7 +16,7 @@ export function HeroQuotePage() {
   };
 
   return (
-    <section className="relative w-full h-[500px] md:h-[600px] flex items-center justify-center overflow-hidden">
+    <section className="relative w-full h-[500px] md:h-[85vh] flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
