@@ -69,7 +69,7 @@ export function FactoryTourFeatures() {
   ];
 
   return (
-    <section className="bg-[#f9fafb] py-16 lg:py-24">
+    <section className="bg-[#E2E2E2] py-16 lg:py-24">
       <div className="container mx-auto px-4 sm:px-8">
         <div className="max-w-[1280px] mx-auto">
           {/* Header */}

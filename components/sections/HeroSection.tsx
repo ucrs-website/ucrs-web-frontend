@@ -1,28 +1,30 @@
-import React from 'react'
-import { Button } from '@/components/ui/button'
-import Image from 'next/image'
-import Link from 'next/link'
+import React from "react";
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
+import Link from "next/link";
 
 interface HeroSectionProps {
-  heading?: React.ReactNode
-  supportingText?: string
-  subtitle?: string
-  checkItems?: string[]
+  heading?: React.ReactNode;
+  supportingText?: string;
+  subtitle?: string;
+  checkItems?: string[];
 }
 
 export function HeroSection({
   heading = (
     <>
-      Precision <span className="text-[#24466b]">Rolling Stock Parts & Services</span> On Global Scale
+      Precision{" "}
+      <span className="text-[#24466b]">Rolling Stock Parts & Services</span> On
+      Global Scale
     </>
   ),
-  supportingText = 'Upper Canada Railway Services (UCRS) delivers high-quality parts and assemblies for railway rolling stock.',
-  subtitle = 'Trusted worldwide for precision manufacturing and dependable solutions. Backed by exceptional customer service and after-sales support.',
+  supportingText = "Upper Canada Railway Services (UCRS) delivers high-quality parts and assemblies for railway rolling stock.",
+  subtitle = "Trusted worldwide for precision manufacturing and dependable solutions. Backed by exceptional customer service and after-sales support.",
   checkItems = [
-    '5000+ OEM-Compatible Parts',
-    'AAR-M1003 Certified',
-    '57+ Countries Served',
-    '60+ Years Combined Experience',
+    "5000+ OEM-Compatible Parts",
+    "AAR-M1003 Certified",
+    "57+ Countries Served",
+    "60+ Years Combined Experience",
   ],
 }: HeroSectionProps) {
   return (
@@ -96,37 +98,22 @@ export function HeroSection({
 
           {/* Video player */}
           <div className="relative w-full max-w-[1216px] mx-auto">
-            <div className="relative h-[480px] rounded-2xl overflow-hidden">
-              <Image
-                src="/images/hero-video-poster.png"
-                alt="Train on railroad"
-                fill
-                className="object-cover"
-                priority
+            <div className="relative aspect-video rounded-2xl overflow-hidden">
+              <iframe
+                width="100%"
+                height="100%"
+                src="https://www.youtube.com/embed/P8THUmuHGiY?si=1lcJzraRvCVDOKyt"
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+                className="absolute inset-0 w-full h-full"
               />
-              <div className="absolute inset-0 bg-black/30" />
-              <button
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full backdrop-blur-sm bg-white/20 border-2 border-white/30 flex items-center justify-center hover:bg-white/30 transition-colors"
-                aria-label="Play video"
-              >
-                <svg
-                  width="32"
-                  height="32"
-                  viewBox="0 0 32 32"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="ml-1"
-                >
-                  <path
-                    d="M10 8L24 16L10 24V8Z"
-                    fill="white"
-                  />
-                </svg>
-              </button>
             </div>
           </div>
         </div>
       </div>
     </section>
-  )
+  );
 }

@@ -1,44 +1,44 @@
-'use client'
+"use client";
 
-import React, { useState } from 'react'
-import Image from 'next/image'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import Link from 'next/link'
+import React, { useState } from "react";
+import Image from "next/image";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export function PrecisionGallery() {
-  const [currentIndex, setCurrentIndex] = useState(0)
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const slides = [
     {
-      number: '1',
-      title: 'Quality Inspection',
-      image: '/images/factory-tour/material-inspection.avif',
+      number: "1",
+      title: "Material Inspection",
+      image: "/images/factory-tour/material-inspection.avif",
     },
     {
-      number: '2',
-      title: 'CNC Machining',
-      image: '/images/factory-tour/cnc-machin.avif',
+      number: "2",
+      title: "CNC Machining",
+      image: "/images/factory-tour/cnc-machin.avif",
     },
     {
-      number: '3',
-      title: 'Final Verification',
-      image: '/images/factory-tour/cmm-verification.webp',
+      number: "3",
+      title: "CMM Verification",
+      image: "/images/factory-tour/cmm-verification.webp",
     },
     {
-      number: '4',
-      title: 'Assembly Line',
-      image: '/images/factory-tour/material-inspection.avif',
+      number: "4",
+      title: "Assembly Line",
+      image: "/images/factory-tour/material-inspection.avif",
     },
-  ]
+  ];
 
   const handlePrev = () => {
-    setCurrentIndex((prev) => (prev === 0 ? slides.length - 1 : prev - 1))
-  }
+    setCurrentIndex((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
+  };
 
   const handleNext = () => {
-    setCurrentIndex((prev) => (prev === slides.length - 1 ? 0 : prev + 1))
-  }
+    setCurrentIndex((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+  };
 
   return (
     <section className="bg-white py-16 lg:py-24">
@@ -92,9 +92,12 @@ export function PrecisionGallery() {
                     key={index}
                     className="flex-shrink-0 w-full sm:w-[calc(50%-8px)] lg:w-[calc(33.333%-21.333px)]"
                   >
-                    <div className="relative h-[200px] lg:h-[504px] rounded-2xl overflow-hidden bg-gray-100">
+                    <div className="relative h-[200px] lg:h-[504px] overflow-hidden bg-gray-100">
                       {/* Placeholder image with gradient */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-gray-200 via-gray-300 to-gray-400" style={{ backgroundImage: `url('${slide.image}')` }} />
+                      <div
+                        className="absolute inset-0 bg-gradient-to-br from-gray-200 via-gray-300 to-gray-400"
+                        style={{ backgroundImage: `url('${slide.image}')` }}
+                      />
 
                       {/* Number badge */}
                       <div className="absolute top-4 lg:top-8 left-4 lg:left-8 w-8 h-8 lg:w-10 lg:h-10 rounded-xl bg-white/90 flex items-center justify-center shadow-md">
@@ -103,11 +106,13 @@ export function PrecisionGallery() {
                         </span>
                       </div>
 
-                      {/* Title overlay */}
-                      <div className="absolute bottom-0 left-0 right-0 p-4 lg:p-6 bg-gradient-to-t from-black/60 to-transparent">
-                        <h3 className="text-lg lg:text-[26px] font-semibold text-white lg:leading-[38px]">
-                          {slide.title}
-                        </h3>
+                      {/* Title overlay with glassmorphism */}
+                      <div className="absolute bottom-4 lg:bottom-8 left-4 lg:left-8 right-4 lg:right-8">
+                        <div className="backdrop-blur-md bg-white/20 border border-white/30 p-4 lg:p-6 shadow-lg">
+                          <h3 className="text-lg lg:text-[26px] font-semibold text-white lg:leading-[38px]">
+                            {slide.title}
+                          </h3>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -153,5 +158,5 @@ export function PrecisionGallery() {
         </div>
       </div>
     </section>
-  )
+  );
 }

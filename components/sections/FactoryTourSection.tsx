@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { TrendingDown, Zap, Users } from 'lucide-react'
-import { VideoPlayerBlock } from '@/components/ui/video-player-block'
+import Image from 'next/image'
 
 interface Feature {
   icon: React.ElementType
@@ -14,8 +14,6 @@ interface FactoryTourSectionProps {
   heading?: string
   description?: string
   features?: Feature[]
-  videoUrl?: string
-  videoPoster?: string
 }
 
 const defaultFeatures: Feature[] = [
@@ -38,8 +36,6 @@ export function FactoryTourSection({
   heading = 'Inside Factory Tour',
   description = 'State of art facility on 3.5 acre land dedicated to manufacturing and service of rolling stock parts and assemblies.',
   features = defaultFeatures,
-  videoUrl = '/videos/factory-tour.mp4',
-  videoPoster = '/images/factory-tour-poster.png',
 }: FactoryTourSectionProps) {
   return (
     <section className="bg-gray-50 py-16 md:py-24">
@@ -89,12 +85,17 @@ export function FactoryTourSection({
             </div>
           </div>
 
-          {/* Bottom Row: Full-width Video Player */}
-          <VideoPlayerBlock
-            videoUrl={videoUrl}
-            videoPoster={videoPoster}
-            className="w-full max-w-[800px] mx-auto"
-          />
+          {/* Bottom Row: Full-width Image */}
+          <div className="w-full max-w-[800px] mx-auto">
+            <Image
+              src="/images/inside-factory-tour.avif"
+              alt="Inside Factory Tour"
+              width={800}
+              height={450}
+              className="w-full h-auto rounded-xl shadow-lg"
+              priority
+            />
+          </div>
         </div>
       </div>
     </section>

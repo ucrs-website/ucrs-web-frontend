@@ -2,7 +2,6 @@
 
 import React from 'react'
 import { Button } from '@/components/ui/button'
-import { VideoPlayerBlock } from '@/components/ui/video-player-block'
 import Link from 'next/link'
 
 export function CuttingEdgeTools() {
@@ -214,11 +213,19 @@ export function CuttingEdgeTools() {
 
             {/* Right Column - Video Player */}
             <div className="order-1 lg:order-2">
-              <VideoPlayerBlock
-                videoUrl="/videos/factory-tour.mp4"
-                videoPoster="/images/factory-tour-poster.png"
-                className="w-full"
-              />
+              <div className="relative aspect-video rounded-xl overflow-hidden">
+                <iframe
+                  width="100%"
+                  height="100%"
+                  src="https://www.youtube.com/embed/ea8pWpDRzZM?si=jbmaBxhuylPX4WNV"
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                  className="absolute inset-0 w-full h-full"
+                />
+              </div>
             </div>
           </div>
         </div>

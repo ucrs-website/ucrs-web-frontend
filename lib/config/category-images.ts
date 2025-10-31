@@ -20,6 +20,7 @@ export const categoryImageMap: Record<number, string> = {
   2100: "filters.avif",
   2200: "miscellaneous.avif",
   2400: "carbody.avif",
+  2500: "freight-cars.avif",
 };
 
 /**

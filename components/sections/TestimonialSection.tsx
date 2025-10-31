@@ -1,9 +1,9 @@
-'use client'
+"use client";
 
-import React, { useCallback, useEffect, useState } from 'react'
-import Image from 'next/image'
-import useEmblaCarousel from 'embla-carousel-react'
-import { ArrowLeft, ArrowRight, Star } from 'lucide-react'
+import React, { useCallback, useEffect, useState } from "react";
+import Image from "next/image";
+import useEmblaCarousel from "embla-carousel-react";
+import { ArrowLeft, ArrowRight, Star } from "lucide-react";
 
 /**
  * Testimonial Interface
@@ -26,50 +26,50 @@ import { ArrowLeft, ArrowRight, Star } from 'lucide-react'
  * ```
  */
 export interface Testimonial {
-  quote: string
+  quote: string;
   author: {
-    name: string
-    role: string
-  }
+    name: string;
+    role: string;
+  };
   company: {
-    name: string
-    location: string // e.g., "USA, California"
-  }
-  image: string // Path to the testimonial background image
-  rating?: number // Optional rating out of 5
+    name: string;
+    location: string; // e.g., "USA, California"
+  };
+  image: string; // Path to the testimonial background image
+  rating?: number; // Optional rating out of 5
 }
 
 interface TestimonialSectionProps {
-  testimonials: Testimonial[]
+  testimonials: Testimonial[];
 }
 
 export function TestimonialSection({ testimonials }: TestimonialSectionProps) {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true })
-  const [selectedIndex, setSelectedIndex] = useState(0)
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
   const scrollPrev = useCallback(() => {
-    if (emblaApi) emblaApi.scrollPrev()
-  }, [emblaApi])
+    if (emblaApi) emblaApi.scrollPrev();
+  }, [emblaApi]);
 
   const scrollNext = useCallback(() => {
-    if (emblaApi) emblaApi.scrollNext()
-  }, [emblaApi])
+    if (emblaApi) emblaApi.scrollNext();
+  }, [emblaApi]);
 
   const onSelect = useCallback(() => {
-    if (!emblaApi) return
-    setSelectedIndex(emblaApi.selectedScrollSnap())
-  }, [emblaApi])
+    if (!emblaApi) return;
+    setSelectedIndex(emblaApi.selectedScrollSnap());
+  }, [emblaApi]);
 
   useEffect(() => {
-    if (!emblaApi) return
-    onSelect()
-    emblaApi.on('select', onSelect)
+    if (!emblaApi) return;
+    onSelect();
+    emblaApi.on("select", onSelect);
     return () => {
-      emblaApi.off('select', onSelect)
-    }
-  }, [emblaApi, onSelect])
+      emblaApi.off("select", onSelect);
+    };
+  }, [emblaApi, onSelect]);
 
-  const currentTestimonial = testimonials[selectedIndex] || testimonials[0]
+  const currentTestimonial = testimonials[selectedIndex] || testimonials[0];
 
   return (
     <section className="bg-background">
@@ -79,20 +79,20 @@ export function TestimonialSection({ testimonials }: TestimonialSectionProps) {
           <div className="w-full max-w-[640px] lg:pr-8 py-16 lg:py-0">
             <div className="flex flex-col gap-10 px-4 lg:px-8">
               {/* Quote */}
-              <blockquote className="text-3xl lg:text-[48px] font-medium text-foreground lg:leading-[60px] tracking-tight">
+              <blockquote className="text-3xl lg:text-[28px] font-medium text-foreground lg:leading-[60px] tracking-tight">
                 &ldquo;{currentTestimonial.quote}&rdquo;
               </blockquote>
 
               {/* Attribution and Controls */}
               <div className="flex items-start justify-between gap-3">
-                <div className="flex flex-col gap-1">
+                {/*<div className="flex flex-col gap-1">
                   <p className="text-lg font-semibold text-foreground leading-7">
                     {currentTestimonial.author.name}
                   </p>
                   <p className="text-base text-muted-foreground leading-6">
                     {currentTestimonial.author.role}
                   </p>
-                </div>
+                </div>*/}
 
                 {/* Navigation Arrows */}
                 <div className="flex gap-8 shrink-0">
@@ -101,14 +101,20 @@ export function TestimonialSection({ testimonials }: TestimonialSectionProps) {
                     className="w-14 h-14 rounded-full border border-border flex items-center justify-center hover:bg-accent transition-colors"
                     aria-label="Previous testimonial"
                   >
-                    <ArrowLeft className="w-6 h-6 text-muted-foreground" strokeWidth={2} />
+                    <ArrowLeft
+                      className="w-6 h-6 text-muted-foreground"
+                      strokeWidth={2}
+                    />
                   </button>
                   <button
                     onClick={scrollNext}
                     className="w-14 h-14 rounded-full border border-border flex items-center justify-center hover:bg-accent transition-colors"
                     aria-label="Next testimonial"
                   >
-                    <ArrowRight className="w-6 h-6 text-muted-foreground" strokeWidth={2} />
+                    <ArrowRight
+                      className="w-6 h-6 text-muted-foreground"
+                      strokeWidth={2}
+                    />
                   </button>
                 </div>
               </div>
@@ -121,7 +127,10 @@ export function TestimonialSection({ testimonials }: TestimonialSectionProps) {
           <div className="overflow-hidden h-full" ref={emblaRef}>
             <div className="flex h-full">
               {testimonials.map((testimonial, index) => (
-                <div key={index} className="flex-[0_0_100%] min-w-0 relative h-full">
+                <div
+                  key={index}
+                  className="flex-[0_0_100%] min-w-0 relative h-full"
+                >
                   {/* Background Image */}
                   <Image
                     src={testimonial.image}
@@ -151,8 +160,8 @@ export function TestimonialSection({ testimonials }: TestimonialSectionProps) {
                                 key={i}
                                 className={`w-5 h-5 ${
                                   i < testimonial.rating!
-                                    ? 'fill-white text-white'
-                                    : 'fill-white/30 text-white/30'
+                                    ? "fill-white text-white"
+                                    : "fill-white/30 text-white/30"
                                 }`}
                               />
                             ))}
@@ -178,5 +187,5 @@ export function TestimonialSection({ testimonials }: TestimonialSectionProps) {
         </div>
       </div>
     </section>
-  )
+  );
 }

@@ -1,25 +1,25 @@
-'use client'
+"use client";
 
-import React from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
-import { Download } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import React from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { Download } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface ServicesHeroProps {
-  heading?: string
-  supportingText?: string
-  ctaText?: string
-  ctaHref?: string
-  backgroundImage?: string
+  heading?: string;
+  supportingText?: string;
+  ctaText?: string;
+  ctaHref?: string;
+  backgroundImage?: string;
 }
 
 export function ServicesHero({
-  heading = 'Expert Solutions for Railway Maintenance & Repair',
-  supportingText = 'Maximize Uptime with OEM-Compliant Repairs, Rebuilds, and Custom Engineering',
-  ctaText = 'Download Compliance Guide',
-  ctaHref = '#',
-  backgroundImage = '/images/services/hero-bg.avif',
+  heading = "Expert Solutions for Railway Maintenance & Repair",
+  supportingText = "Maximize Uptime with OEM-Compliant Repairs, Rebuilds, and Custom Engineering",
+  ctaText = "Download Compliance Guide",
+  ctaHref = "#",
+  backgroundImage = "/images/services/ServiceLandScape.avif",
 }: ServicesHeroProps) {
   return (
     <section className="relative w-full lg:pt-40 pt-[100px] min-h-[434px] lg:min-h-[720px] overflow-hidden">
@@ -70,5 +70,5 @@ export function ServicesHero({
         </div>
       </div>
     </section>
-  )
+  );
 }

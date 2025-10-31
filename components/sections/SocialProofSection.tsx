@@ -1,37 +1,33 @@
-import React from 'react'
-import Image from 'next/image'
+import React from "react";
+import Image from "next/image";
 
 interface Company {
-  name: string
-  logoMark: string
-  logoText: string
+  name: string;
+  src: string;
 }
 
 interface SocialProofSectionProps {
-  heading?: string
-  companies?: Company[]
+  heading?: string;
+  companies?: Company[];
 }
 
 const defaultCompanies: Company[] = [
   {
-    name: 'OdeaoLabs',
-    logoMark: '',
-    logoText: '/images/companies/odeaolabs-text.svg',
+    name: "OdeaoLabs",
+    src: "/images/companies/social1.avif",
   },
   {
-    name: 'Kintsugi',
-    logoMark: '/images/companies/kintsugi-mark.svg',
-    logoText: '/images/companies/kintsugi-text.svg',
+    name: "Kintsugi",
+    src: "/images/companies/social2.avif",
   },
   {
-    name: 'Magnolia',
-    logoMark: '/images/companies/magnolia-mark.svg',
-    logoText: '/images/companies/magnolia-text.svg',
-  }
-]
+    name: "Magnolia",
+    src: "/images/companies/social3.avif",
+  },
+];
 
 export function SocialProofSection({
-  heading = 'Well engaged in railway community',
+  heading = "Well engaged in railway community",
   companies = defaultCompanies,
 }: SocialProofSectionProps) {
   return (
@@ -44,35 +40,24 @@ export function SocialProofSection({
           </p>
 
           {/* Company logos - 3 brands side by side */}
-          <div className="flex items-center justify-center gap-12 py-4">
+          <div className="flex items-center justify-center gap-8 lg:gap-12 py-4 flex-nowrap">
             {companies.map((company, index) => (
-              <div
-                key={index}
-                className="flex items-center gap-2 h-12"
-              >
-                {company.logoMark && (
-                  <div className="relative h-12 w-10 flex-shrink-0">
+              <div key={index}>
+                {company.src && (
+                  <div className="relative md:h-20 h-10 w-20 md:w-40 flex-shrink-0">
                     <Image
-                      src={company.logoMark}
+                      src={company.src}
                       alt=""
                       fill
                       className="object-contain"
                     />
                   </div>
                 )}
-                <div className="relative h-12 flex-shrink-0" style={{ width: company.name === 'OdeaoLabs' ? '140px' : company.name === 'Kintsugi' ? '99px' : company.name === 'StackedLab' ? '149px' : company.name === 'Magnolia' ? '125px' : company.name === 'Warpspeed' ? '143px' : '115px' }}>
-                  <Image
-                    src={company.logoText}
-                    alt={company.name}
-                    fill
-                    className="object-contain"
-                  />
-                </div>
               </div>
             ))}
           </div>
         </div>
       </div>
     </section>
-  )
+  );
 }
