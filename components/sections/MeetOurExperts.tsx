@@ -31,6 +31,18 @@ const teamMembers: TeamMember[] = [
     brief: "Innovation and quality leader",
     image: "/images/about/team/daniel-ahmady.avif",
   },
+  {
+    name: "Alireza Moradian",
+    role: "Software Engineer",
+    brief: "Build & Improves Technology Systems",
+    image: "/images/about/team/alireza-moradian.avif",
+  },
+  {
+    name: "James Winkler",
+    role: "Quality Technician",
+    brief: "Product and Process Quality Assurance",
+    image: "/images/about/team/james-winkler.avif",
+  },
 ];
 
 export function MeetOurExperts() {

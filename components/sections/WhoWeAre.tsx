@@ -1,29 +1,29 @@
-import React from 'react'
-import Image from 'next/image'
+import React from "react";
+import Image from "next/image";
 
 interface Card {
-  label: string
-  title: string
-  image: string
+  label: string;
+  title: string;
+  image: string;
 }
 
 const cards: Card[] = [
   {
-    label: 'Mission',
-    title: 'Deliver OEM-quality parts at competitive costs.',
-    image: '/images/about/a8febb3a1b498a4a3f08ff809f5f8cac1eeeba2c.png',
+    label: "Mission",
+    title: "Deliver OEM-quality parts at competitive costs.",
+    image: "/images/about/mission.avif",
   },
   {
-    label: 'Vision',
-    title: 'Be the global leader in sustainable rail solutions',
-    image: '/images/about/bdd5a2601a65a16a87ba6ff17a667534554824d4.png',
+    label: "Vision",
+    title: "Be the global leader in sustainable rail solutions",
+    image: "/images/about/vision.avif",
   },
   {
-    label: 'Values',
-    title: 'Quality, Integrity, Innovation',
-    image: '/images/about/5eb56ac0ea894d8452d8bf8094a025322a3a9e54.png',
+    label: "Values",
+    title: "Quality, Integrity, Innovation",
+    image: "/images/about/values.avif",
   },
-]
+];
 
 export function WhoWeAre() {
   return (
@@ -77,5 +77,5 @@ export function WhoWeAre() {
         </div>
       </div>
     </section>
-  )
+  );
 }

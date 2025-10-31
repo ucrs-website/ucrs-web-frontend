@@ -1,6 +1,6 @@
-import { Download } from 'lucide-react'
-import Image from 'next/image'
-import { Button } from '@/components/ui/button'
+import { Download } from "lucide-react";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
 
 export function ExportHero() {
   return (
@@ -16,38 +16,66 @@ export function ExportHero() {
           sizes="100vw"
         />
         <div className="absolute inset-0 bg-black/20" />
+        <div className="absolute inset-0 bg-black/10" />
       </div>
 
       {/* Background Grid Pattern */}
       <div className="absolute inset-0 opacity-20 pointer-events-none overflow-hidden">
         <div className="absolute left-1/2 top-0 w-[1920px] h-[1440px] -translate-x-1/2 md:block hidden">
           {/* Gradient Mask */}
-          <div className="absolute inset-0 left-1/2 -translate-x-1/2 w-[1440px] h-[1440px]">
-            <div
-              className="absolute inset-0"
-              style={{
-                background: 'radial-gradient(circle at center top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 95.313%)'
-              }}
-            />
-          </div>
+          <div className="absolute inset-0 left-1/2 -translate-x-1/2 w-[1440px] h-[1440px]"></div>
 
           {/* Grid Lines */}
           <div className="absolute inset-0 left-1/2 -translate-x-1/2 w-[1920px] h-[1440px]">
             {/* Vertical lines */}
-            <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <svg
+              className="absolute inset-0 w-full h-full"
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <defs>
-                <pattern id="vertical-lines" x="0" y="0" width="120" height="1440" patternUnits="userSpaceOnUse">
-                  <line x1="0" y1="0" x2="0" y2="1440" stroke="white" strokeWidth="1" />
+                <pattern
+                  id="vertical-lines"
+                  x="0"
+                  y="0"
+                  width="120"
+                  height="1440"
+                  patternUnits="userSpaceOnUse"
+                >
+                  <line
+                    x1="0"
+                    y1="0"
+                    x2="0"
+                    y2="1440"
+                    stroke="white"
+                    strokeWidth="1"
+                  />
                 </pattern>
               </defs>
               <rect width="100%" height="100%" fill="url(#vertical-lines)" />
             </svg>
 
             {/* Horizontal lines */}
-            <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <svg
+              className="absolute inset-0 w-full h-full"
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <defs>
-                <pattern id="horizontal-lines" x="0" y="0" width="1920" height="120" patternUnits="userSpaceOnUse">
-                  <line x1="0" y1="0" x2="1920" y2="0" stroke="white" strokeWidth="1" />
+                <pattern
+                  id="horizontal-lines"
+                  x="0"
+                  y="0"
+                  width="1920"
+                  height="120"
+                  patternUnits="userSpaceOnUse"
+                >
+                  <line
+                    x1="0"
+                    y1="0"
+                    x2="1920"
+                    y2="0"
+                    stroke="white"
+                    strokeWidth="1"
+                  />
                 </pattern>
               </defs>
               <rect width="100%" height="100%" fill="url(#horizontal-lines)" />
@@ -61,23 +89,63 @@ export function ExportHero() {
             <div
               className="absolute inset-0"
               style={{
-                background: 'radial-gradient(circle at center top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 95.313%)'
+                background:
+                  "radial-gradient(circle at center top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 95.313%)",
               }}
             />
           </div>
 
           <div className="absolute left-1/2 -translate-x-1/2 w-[960px] h-[960px] top-0">
-            <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <svg
+              className="absolute inset-0 w-full h-full"
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <defs>
-                <pattern id="vertical-lines-mobile" x="0" y="0" width="80" height="960" patternUnits="userSpaceOnUse">
-                  <line x1="0" y1="0" x2="0" y2="960" stroke="white" strokeWidth="1" />
+                <pattern
+                  id="vertical-lines-mobile"
+                  x="0"
+                  y="0"
+                  width="80"
+                  height="960"
+                  patternUnits="userSpaceOnUse"
+                >
+                  <line
+                    x1="0"
+                    y1="0"
+                    x2="0"
+                    y2="960"
+                    stroke="white"
+                    strokeWidth="1"
+                  />
                 </pattern>
-                <pattern id="horizontal-lines-mobile" x="0" y="0" width="960" height="80" patternUnits="userSpaceOnUse">
-                  <line x1="0" y1="0" x2="960" y2="0" stroke="white" strokeWidth="1" />
+                <pattern
+                  id="horizontal-lines-mobile"
+                  x="0"
+                  y="0"
+                  width="960"
+                  height="80"
+                  patternUnits="userSpaceOnUse"
+                >
+                  <line
+                    x1="0"
+                    y1="0"
+                    x2="960"
+                    y2="0"
+                    stroke="white"
+                    strokeWidth="1"
+                  />
                 </pattern>
               </defs>
-              <rect width="100%" height="100%" fill="url(#vertical-lines-mobile)" />
-              <rect width="100%" height="100%" fill="url(#horizontal-lines-mobile)" />
+              <rect
+                width="100%"
+                height="100%"
+                fill="url(#vertical-lines-mobile)"
+              />
+              <rect
+                width="100%"
+                height="100%"
+                fill="url(#horizontal-lines-mobile)"
+              />
             </svg>
           </div>
         </div>
@@ -111,5 +179,5 @@ export function ExportHero() {
         </div>
       </div>
     </section>
-  )
+  );
 }

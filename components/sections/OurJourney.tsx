@@ -1,53 +1,53 @@
-'use client'
+"use client";
 
-import React, { useState, useEffect } from 'react'
-import Image from 'next/image'
+import React, { useState, useEffect } from "react";
+import Image from "next/image";
 
 interface JourneyItem {
-  year: string
-  description: string
-  image: string
+  year: string;
+  description: string;
+  image: string;
 }
 
 const journeyData: JourneyItem[] = [
   {
-    year: '2001',
+    year: "2001",
     description:
-      'Journey to Excellence started: Company restructured with focus on manufacturing',
-    image: '/images/about/459f635cf9869865b5dfd76db94e357bfc1c499d.png',
+      "Journey to Excellence started: Company restructured with focus on manufacturing",
+    image: "/images/about/year2001.avif",
   },
   {
-    year: '2018',
-    description: 'Manufacturing Startup Allanburg, ON',
-    image: '/images/about/459f635cf9869865b5dfd76db94e357bfc1c499d.png',
+    year: "2018",
+    description: "Manufacturing Startup Allanburg, ON",
+    image: "/images/about/year2018.avif",
   },
   {
-    year: '2019',
-    description: 'Construction started in Welland, ON',
-    image: '/images/about/459f635cf9869865b5dfd76db94e357bfc1c499d.png',
+    year: "2019",
+    description: "Construction started in Welland, ON",
+    image: "/images/about/year2019.avif",
   },
   {
-    year: '2021',
-    description: 'AAR-M1003 Certification',
-    image: '/images/about/459f635cf9869865b5dfd76db94e357bfc1c499d.png',
+    year: "2021",
+    description: "AAR-M1003 Certification",
+    image: "/images/about/year2021.avif",
   },
   {
-    year: '2022',
-    description: 'Operation moved to Welland, ON',
-    image: '/images/about/459f635cf9869865b5dfd76db94e357bfc1c499d.png',
+    year: "2022",
+    description: "Operation moved to Welland, ON",
+    image: "/images/about/459f635cf9869865b5dfd76db94e357bfc1c499d.png",
   },
-]
+];
 
 export function OurJourney() {
-  const [selectedIndex, setSelectedIndex] = useState(0)
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setSelectedIndex((prev) => (prev + 1) % journeyData.length)
-    }, 5000)
+      setSelectedIndex((prev) => (prev + 1) % journeyData.length);
+    }, 5000);
 
-    return () => clearInterval(interval)
-  }, [])
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <section className="bg-white w-full pt-12 lg:pt-24 pb-12 lg:pb-12">
@@ -73,8 +73,8 @@ export function OurJourney() {
                     border-l-4 transition-colors
                     ${
                       selectedIndex === index
-                        ? 'border-[#0052ff]'
-                        : 'border-[#f5f5f5]'
+                        ? "border-[#0052ff]"
+                        : "border-[#f5f5f5]"
                     }
                   `}
                 >
@@ -104,5 +104,5 @@ export function OurJourney() {
         </div>
       </div>
     </section>
-  )
+  );
 }
