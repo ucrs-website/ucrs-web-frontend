@@ -1,9 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Enable React Compiler for better performance
+  // Disable React Compiler to fix malloc errors with Zustand state updates
   experimental: {
-    reactCompiler: true,
+    reactCompiler: false,
   },
 
   // Image optimization

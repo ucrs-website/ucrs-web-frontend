@@ -20,13 +20,17 @@ export function QuoteCartBar() {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
-      // Hide at top (0px) or when scrolling up
-      if (currentScrollY === 0 || currentScrollY < lastScrollY) {
+      // Hide when in the 0-120px range
+      if (currentScrollY <= 120) {
         setIsVisible(false);
       }
-      // Show when scrolling down past 120px
-      else if (currentScrollY > 120 && currentScrollY > lastScrollY) {
+      // Show when scrolling up beyond 120px
+      else if (currentScrollY > 120 && currentScrollY < lastScrollY) {
         setIsVisible(true);
+      }
+      // Hide when scrolling down
+      else if (currentScrollY > lastScrollY) {
+        setIsVisible(false);
       }
 
       setLastScrollY(currentScrollY);
