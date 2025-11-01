@@ -128,7 +128,10 @@ export default function HomePage() {
   ];
 
   return (
-    <main>
+    <main
+      className="relative bg-cover bg-top bg-no-repeat"
+      style={{ backgroundImage: "url('/images/home-page-bg.png')" }}
+    >
       {/* Hero Section */}
       <HeroSection />
 

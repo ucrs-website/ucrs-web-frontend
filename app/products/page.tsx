@@ -65,7 +65,9 @@ export default async function ProductsPage() {
   let error: string | null = null
 
   try {
-    categories = await fetchCategories()
+    const allCategories = await fetchCategories()
+    // Exclude categories with IDs 2200 and 2600
+    categories = allCategories.filter((cat) => cat.id !== 2200 && cat.id !== 2600)
   } catch (err) {
     error = err instanceof Error ? err.message : 'Failed to load categories'
     console.error('Error fetching categories:', err)

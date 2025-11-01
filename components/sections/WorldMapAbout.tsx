@@ -176,7 +176,7 @@ export function WorldMapAbout() {
                 }
               </Geographies>
 
-              {/* Markers for capitals with ripple pulse animation */}
+              {/* Markers for capitals with conditional ripple pulse animation */}
               {capitalCoordinates.map((capital) => (
                 <Marker
                   key={capital.iso2}
@@ -186,28 +186,32 @@ export function WorldMapAbout() {
                   onMouseLeave={handleMarkerMouseLeave}
                 >
                   <g className="marker-group">
-                    {/* Pulsing Ring 1 - starts from small and expands */}
-                    <circle
-                      r={4}
-                      fill="none"
-                      stroke="#0052FF"
-                      strokeWidth={2}
-                      className="animate-ripple-pulse"
-                      style={{
-                        animationDelay: "0s",
-                      }}
-                    />
-                    {/* Pulsing Ring 2 - delayed for continuous effect */}
-                    <circle
-                      r={4}
-                      fill="none"
-                      stroke="#0052FF"
-                      strokeWidth={2}
-                      className="animate-ripple-pulse"
-                      style={{
-                        animationDelay: "1s",
-                      }}
-                    />
+                    {/* Pulsing Ring 1 - only shows on hover */}
+                    {hoveredMarker === capital.iso2 && (
+                      <>
+                        <circle
+                          r={4}
+                          fill="none"
+                          stroke="#0052FF"
+                          strokeWidth={2}
+                          className="animate-ripple-pulse"
+                          style={{
+                            animationDelay: "0s",
+                          }}
+                        />
+                        {/* Pulsing Ring 2 - delayed for continuous effect */}
+                        <circle
+                          r={4}
+                          fill="none"
+                          stroke="#0052FF"
+                          strokeWidth={2}
+                          className="animate-ripple-pulse"
+                          style={{
+                            animationDelay: "1s",
+                          }}
+                        />
+                      </>
+                    )}
                     {/* Inner Circle (solid dot) */}
                     <circle r={4} fill="#0052FF" className="cursor-pointer" />
                   </g>
@@ -220,7 +224,7 @@ export function WorldMapAbout() {
           {tooltip && (
             <div
               className={cn(
-                "pointer-events-none fixed z-50 rounded-lg bg-white px-4 py-3 shadow-xl",
+                "pointer-events-auto fixed z-50 rounded-lg bg-white px-4 py-3 shadow-xl",
                 "border border-gray-200",
                 "transform -translate-x-1/2 -translate-y-full",
                 "transition-opacity duration-200",
@@ -229,6 +233,8 @@ export function WorldMapAbout() {
                 left: tooltip.x,
                 top: tooltip.y - 10,
               }}
+              onMouseEnter={() => setHoveredMarker(tooltip.iso2)}
+              onMouseLeave={handleMarkerMouseLeave}
             >
               <div className="flex items-center gap-3">
                 {/* Flag Icon */}
