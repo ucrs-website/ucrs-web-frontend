@@ -16,21 +16,29 @@ jobs:
     if: github.event_name != 'pull_request' || github.event.action != 'closed'
     runs-on: ubuntu-latest
     env:
-      NODE_VERSION: 18
-      NPM_CONFIG_LEGACY_PEER_DEPS: true
+      NODE_VERSION: 20
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
 
       - name: Install dependencies and build Next.js app
         run: |
-          npm install --legacy-peer-deps
-          npm run build
+          pnpm install --frozen-lockfile
+          pnpm run build
+        env:
+          NEXT_PUBLIC_SITE_URL: https://ucrs.com
+          NEXT_PUBLIC_SITE_NAME: "UCRS - Railway Parts & Locomotive Services"
 
       - name: Deploy to Azure Static Web Apps
         uses: Azure/static-web-apps-deploy@v1
@@ -40,7 +48,7 @@ jobs:
           action: "upload"
           app_location: "/"           # root of your project
           api_location: ""            # no backend here
-          output_location: ".next"    # ✅ correct build folder for Next.js 15
+          output_location: ".next"    # ⚠️ WARNING: Azure Static Web Apps may not fully support Next.js 15 SSR features
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
