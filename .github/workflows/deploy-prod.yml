@@ -1,49 +1,60 @@
-name: Deploy Frontend to Azure App Service (prod)
+name: Build & Deploy (prod)
 
 on:
   push:
     branches: [ main ]
   workflow_dispatch:
 
-jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
+env:
+  APP_DIR: ./   # <— If your Next.js code is in a subfolder (e.g. ./website), set it here
 
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ env.APP_DIR }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Use Node 22
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: '22.x'
           cache: 'npm'
+          cache-dependency-path: ${{ env.APP_DIR }}/package-lock.json
 
-      - name: Install deps
+      - name: Install deps (clean)
         run: npm ci
 
-      - name: Build Next.js (Turbopack)
+      - name: Build
         run: npm run build
 
-      # Keep only runtime deps so "next start" can run on App Service
-      - name: Prune dev deps
-        run: npm ci --omit=dev
+      - name: Archive artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app
+          path: |
+            ${{ env.APP_DIR }}/
+            !${{ env.APP_DIR }}/.git/**
+            !${{ env.APP_DIR }}/.github/**
+            !${{ env.APP_DIR }}/**/node_modules/.cache/**
 
-      - name: Prepare deploy folder
-        run: |
-          rm -rf deploy
-          mkdir deploy
-          cp -r .next public package.json package-lock.json next.config.* deploy/ 2>/dev/null || true
-          cp -r node_modules deploy/
-
-      - name: Zip artifact
-        run: |
-          cd deploy
-          zip -r ../artifact.zip .
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: app
+          path: .
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: ucrs-frontend-prod
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISH_PROFILE }}
-          package: artifact.zip
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
+          package: .
