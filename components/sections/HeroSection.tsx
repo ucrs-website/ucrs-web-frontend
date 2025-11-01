@@ -98,18 +98,19 @@ export function HeroSection({
 
           {/* Video player */}
           <div className="relative w-full max-w-[1216px] mx-auto">
-            <div className="relative aspect-video rounded-2xl overflow-hidden">
-              <iframe
-                width="100%"
-                height="100%"
-                src="https://www.youtube.com/embed/P8THUmuHGiY?si=1lcJzraRvCVDOKyt"
-                title="YouTube video player"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-                className="absolute inset-0 w-full h-full"
-              />
+            <div className="relative aspect-video rounded-2xl overflow-hidden bg-gray-100">
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                disablePictureInPicture
+                controlsList="nodownload nofullscreen noremoteplayback"
+                className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+              >
+                <source src="/videos/hero-video.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
             </div>
           </div>
         </div>

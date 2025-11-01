@@ -1,40 +1,40 @@
-'use client'
+"use client";
 
-import React from 'react'
-import { TrendingDown, Zap, Users } from 'lucide-react'
-import Image from 'next/image'
+import React from "react";
+import { TrendingDown, Zap, Users } from "lucide-react";
+import Image from "next/image";
 
 interface Feature {
-  icon: React.ElementType
-  title: string
+  icon: React.ElementType;
+  title: string;
 }
 
 interface FactoryTourSectionProps {
-  subheading?: string
-  heading?: string
-  description?: string
-  features?: Feature[]
+  subheading?: string;
+  heading?: string;
+  description?: string;
+  features?: Feature[];
 }
 
 const defaultFeatures: Feature[] = [
   {
     icon: TrendingDown,
-    title: 'OEM quality at competitive cost',
+    title: "OEM quality at competitive cost",
   },
   {
     icon: Zap,
-    title: 'Excellent technical and after sales support',
+    title: "Excellent technical and after sales support",
   },
   {
     icon: Users,
-    title: 'Backed by Industry-Leading Warranty',
+    title: "Backed by Industry-Leading Warranty",
   },
-]
+];
 
 export function FactoryTourSection({
-  subheading = 'We are the best at what we do',
-  heading = 'Inside Factory Tour',
-  description = 'State of art facility on 3.5 acre land dedicated to manufacturing and service of rolling stock parts and assemblies.',
+  subheading = "We are the best at what we do",
+  heading = "Inside Factory Tour",
+  description = "State of art facility on 3.5 acre land dedicated to manufacturing and service of rolling stock parts and assemblies.",
   features = defaultFeatures,
 }: FactoryTourSectionProps) {
   return (
@@ -64,7 +64,7 @@ export function FactoryTourSection({
             {/* Right: Features List */}
             <div className="space-y-6">
               {features.map((feature, index) => {
-                const Icon = feature.icon
+                const Icon = feature.icon;
                 return (
                   <div
                     key={index}
@@ -72,7 +72,10 @@ export function FactoryTourSection({
                   >
                     {/* Icon Container */}
                     <div className="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 rounded-lg md:rounded-[10px] bg-white border border-[rgb(233,234,235)] shadow-sm flex items-center justify-center">
-                      <Icon className="w-5 h-5 md:w-6 md:h-6 text-[rgb(65,70,81)]" strokeWidth={2} />
+                      <Icon
+                        className="w-5 h-5 md:w-6 md:h-6 text-[rgb(65,70,81)]"
+                        strokeWidth={2}
+                      />
                     </div>
 
                     {/* Feature Title */}
@@ -80,7 +83,7 @@ export function FactoryTourSection({
                       {feature.title}
                     </h3>
                   </div>
-                )
+                );
               })}
             </div>
           </div>
@@ -88,7 +91,7 @@ export function FactoryTourSection({
           {/* Bottom Row: Full-width Image */}
           <div className="w-full max-w-[800px] mx-auto">
             <Image
-              src="/images/inside-factory-tour.avif"
+              src="/images/inside-factory-tour.webp"
               alt="Inside Factory Tour"
               width={800}
               height={450}
@@ -99,5 +102,5 @@ export function FactoryTourSection({
         </div>
       </div>
     </section>
-  )
+  );
 }

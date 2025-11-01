@@ -27,32 +27,27 @@ const defaultFaqs: FAQItem[] = [
   {
     question: "What is your warranty term?",
     answer:
-      "All parts supplies is backed up with 12 months in service and 18 months from the date of shipment EXW, whichever comes first. This warranty is exclusive of items that are considered as wear and tear parts",
+      "All parts supplies is backed up with 12 months in service and 18 months from the date of shipment EXW, whichever comes first. This warranty is exclusive of items that are considered as wear and tear parts.",
+  },
+  {
+    question: "Are you shipping Worldwide?",
+    answer:
+      "Yes. Over 80% of our business is export related and we ship orders to international customer on daily basis.",
   },
   {
     question: "Is there a minimum order policy?",
     answer:
-      "We strive to accommodate orders of all sizes. While we don't have a strict minimum order policy, certain shipping and handling requirements may apply to smaller orders. Please contact our sales team for specific details.",
+      "Yes. We have a policy of the minimum order of USD 500 for domestic orders and USD 1000 for international orders. Admin fees of USD 200 will be applied for any international order below USD 1000 or domestic order below USD 500.",
   },
   {
-    question: "What is your cancellation policy?",
+    question: "What is your payment term?",
     answer:
-      "Orders can be cancelled within 24 hours of placement without any charges. After this period, cancellation fees may apply depending on the production stage. Please contact our team immediately if you need to cancel an order.",
+      "Payment should be made via wire transfer, ACH, or EFT. We accept Letters of Credit (LC) for orders with a minimum value of USD 10,000. For LC payments below USD 10,000, a non-refundable fee of USD 500 will apply to cover LC documentation and bank negotiation charges.",
   },
   {
-    question: "Can other info be added to an invoice?",
+    question: "What is the shipping terms offered by UCRS?",
     answer:
-      "Yes, we can customize invoices with additional information such as purchase order numbers, project codes, or specific billing references. Please provide these details when placing your order or contact our billing department.",
-  },
-  {
-    question: "How does billing work?",
-    answer:
-      "We accept various payment methods including wire transfers, letters of credit, and corporate accounts. Payment terms are typically net 30 days for established customers. New customers may require payment in advance or upon delivery.",
-  },
-  {
-    question: "How do I change my account email?",
-    answer:
-      "To change your account email, please contact our customer service team with your current email address and the new email you'd like to use. We'll verify your identity and update your account information promptly.",
+      "We ship on EXW, FOB, C&F and CIF based on Incoterms® 2020.",
   },
 ];
 

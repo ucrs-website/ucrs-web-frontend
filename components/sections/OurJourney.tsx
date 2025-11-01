@@ -17,6 +17,11 @@ const journeyData: JourneyItem[] = [
     image: "/images/about/year2001.avif",
   },
   {
+    year: "2014",
+    description: "Corporate Reorganization",
+    image: "/images/about/year2014.avif",
+  },
+  {
     year: "2018",
     description: "Manufacturing Startup Allanburg, ON",
     image: "/images/about/year2018.avif",
@@ -34,7 +39,7 @@ const journeyData: JourneyItem[] = [
   {
     year: "2022",
     description: "Operation moved to Welland, ON",
-    image: "/images/about/459f635cf9869865b5dfd76db94e357bfc1c499d.png",
+    image: "/images/about/year2022.avif",
   },
 ];
 

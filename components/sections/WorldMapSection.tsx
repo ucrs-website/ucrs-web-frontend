@@ -159,14 +159,14 @@ export function WorldMapSection() {
                         onMouseLeave={handleMouseLeave}
                         style={{
                           default: {
-                            fill: isCustomerCountry ? "#3BC9DB" : "#E5E7EB",
+                            fill: isCustomerCountry ? "gray" : "#E5E7EB",
                             fillOpacity: isCustomerCountry ? 0.7 : 0.9,
                             stroke: "#FFFFFF",
                             strokeWidth: 0.5,
                             outline: "none",
                           },
                           hover: {
-                            fill: isCustomerCountry ? "#3BC9DB" : "#E5E7EB",
+                            fill: isCustomerCountry ? "gray" : "#E5E7EB",
                             fillOpacity: isCustomerCountry ? 1 : 0.5,
                             stroke: "#FFFFFF",
                             strokeWidth: 0.75,
@@ -174,7 +174,7 @@ export function WorldMapSection() {
                             cursor: isCustomerCountry ? "pointer" : "default",
                           },
                           pressed: {
-                            fill: isCustomerCountry ? "#3BC9DB" : "#E5E7EB",
+                            fill: isCustomerCountry ? "gray" : "#E5E7EB",
                             fillOpacity: isCustomerCountry ? 1 : 0.5,
                             stroke: "#FFFFFF",
                             strokeWidth: 0.75,
