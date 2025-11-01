@@ -3,21 +3,24 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import Image from "next/image";
 
 export function FactoryTourHero() {
   return (
     <section className="relative w-full mt-[-110px] lg:pt-40 pt-[200px] overflow-hidden">
-      {/* Background Image */}
+      {/* Background Video */}
       <div className="absolute inset-0 z-0">
-        <Image
-          src="/images/factory-tour/factory-tour-bg.png"
-          alt=""
-          fill
-          className="object-cover"
-          priority
-          quality={100}
-        />
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          disablePictureInPicture
+          controlsList="nodownload nofullscreen noremoteplayback"
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+        >
+          <source src="/videos/factory-tour.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
         {/* Dark overlay for better text readability */}
         <div className="absolute inset-0 bg-black/40" />
       </div>
@@ -46,7 +49,7 @@ export function FactoryTourHero() {
                 variant="outline"
                 className="w-full sm:w-auto h-9 lg:h-[60px] px-4 lg:px-6 rounded-lg bg-white hover:bg-gray-50 text-[#5A5A5A] border-0 text-sm lg:text-lg font-semibold shadow-sm gap-2"
               >
-                <Link href="#" className="flex items-center gap-2">
+                <Link href="/factory-tour#virtual-tour" className="flex items-center gap-2">
                   <svg
                     width="24"
                     height="24"
@@ -69,7 +72,7 @@ export function FactoryTourHero() {
                 asChild
                 className="w-full sm:w-auto h-9 lg:h-[60px] px-4 lg:px-6 rounded-lg bg-[#e4342d] hover:bg-[#d32821] active:bg-[#bb2f27] text-white text-sm lg:text-lg font-semibold shadow-sm"
               >
-                <Link href="/quote">Contact Us</Link>
+                <Link href="/about#contact-us">Contact Us</Link>
               </Button>
             </div>
           </div>

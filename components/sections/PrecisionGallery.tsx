@@ -64,14 +64,14 @@ export function PrecisionGallery() {
                   size="lg"
                   className="h-12 px-6 rounded-lg text-[#181d27] border-gray-300 hover:bg-gray-50 text-base font-semibold"
                 >
-                  <Link href="/products">Start Virtual Tour</Link>
+                  <Link href="/factory-tour#virtual-tour">Start Virtual Tour</Link>
                 </Button>
                 <Button
                   asChild
                   size="lg"
                   className="h-12 px-6 rounded-lg bg-[#e4342d] hover:bg-[#bb2f27] text-white text-base font-semibold shadow-sm"
                 >
-                  <Link href="/contact">Contact Us</Link>
+                  <Link href="/about#contact-us">Contact Us</Link>
                 </Button>
               </div>
             </div>
