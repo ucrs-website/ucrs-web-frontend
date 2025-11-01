@@ -100,7 +100,7 @@ export function WorldMapAbout() {
       <div className="container mx-auto px-8 max-w-[1280px]">
         {/* Header */}
         <div className="flex items-center justify-center p-2.5 overflow-hidden mb-8 md:mb-16">
-          <h2 className="text-4xl lg:text-5xl font-bold text-[#252b42] text-center leading-tight">
+          <h2 className="text-3xl lg:text-5xl font-bold text-[#252b42] text-center leading-tight">
             Serving Railroad World Wide
           </h2>
         </div>
@@ -298,23 +298,6 @@ export function WorldMapAbout() {
           ))}
         </div>*/}
       </div>
-
-      <style jsx>{`
-        @keyframes ripple-pulse {
-          0% {
-            r: 4px;
-            opacity: 1;
-          }
-          100% {
-            r: 20px;
-            opacity: 0;
-          }
-        }
-
-        :global(.animate-ripple-pulse) {
-          animation: ripple-pulse 2s ease-out infinite;
-        }
-      `}</style>
     </section>
   );
 }

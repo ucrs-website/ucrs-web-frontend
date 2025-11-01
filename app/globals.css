@@ -514,3 +514,19 @@ a {
     background: hsl(var(--muted-foreground) / 0.3);
   }
 }
+
+/* Map Marker Ripple Animation */
+@keyframes ripple-pulse {
+  0% {
+    r: 4px;
+    opacity: 1;
+  }
+  100% {
+    r: 20px;
+    opacity: 0;
+  }
+}
+
+.animate-ripple-pulse {
+  animation: ripple-pulse 2s ease-out infinite;
+}

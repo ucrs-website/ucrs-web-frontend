@@ -1,25 +1,25 @@
-import { Check, Phone, MapPin, Truck } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { VideoPlayerBlock } from '@/components/ui/video-player-block'
+import { Check, Phone, MapPin, Truck } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 const features = [
   {
     icon: Check,
-    title: 'Order Confirmation',
+    title: "Order Confirmation",
   },
   {
     icon: Phone,
-    title: 'Customs Clearance',
+    title: "Customs Clearance",
   },
   {
     icon: MapPin,
-    title: 'Real-Time Tracking',
+    title: "Real-Time Tracking",
   },
   {
     icon: Truck,
-    title: 'Delivery & Support',
+    title: "Delivery & Support",
   },
-]
+];
 
 export function GlobalTradeFeatures() {
   return (
@@ -42,7 +42,7 @@ export function GlobalTradeFeatures() {
             {/* Features */}
             <div className="space-y-6 mb-8">
               {features.map((feature, index) => {
-                const Icon = feature.icon
+                const Icon = feature.icon;
                 return (
                   <div key={index} className="flex items-start gap-4">
                     <div className="flex-shrink-0 w-10 h-10 bg-white border border-border rounded-lg flex items-center justify-center shadow-sm">
@@ -54,7 +54,7 @@ export function GlobalTradeFeatures() {
                       </p>
                     </div>
                   </div>
-                )
+                );
               })}
             </div>
 
@@ -68,20 +68,25 @@ export function GlobalTradeFeatures() {
           </div>
         </div>
 
-        {/* Right Side: Video Player */}
-        <div className="lg:w-1/2 lg:pr-8 mb-[-96px]">
-          <VideoPlayerBlock
-            videoUrl="/videos/global-trade.mp4"
-            videoPoster="/images/export/video-poster.png"
-            className="w-full max-w-[800px] rounded-lg overflow-hidden"
-          />
+        {/* Right Side: Image */}
+        <div className="lg:w-1/2 lg:pr-8 mb-[-96px] md:ml-[-150px]">
+          <div className="relative w-full max-w-[800px] aspect-video rounded-lg overflow-hidden">
+            <Image
+              src="/images/export/global-trade2.webp"
+              alt="Global Trade"
+              fill
+              className="object-cover"
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              priority
+            />
+          </div>
         </div>
       </div>
 
       {/* Mobile: Vertical Stack */}
       <div className="lg:hidden">
         {/* Features Section (Top) */}
-        <div className="bg-muted rounded-br-xl rounded-tr-xl py-12 px-4 mb-12">
+        <div className="bg-muted rounded-br-xl rounded-tr-xl py-12 px-4 mb-12 px-10">
           <div className="max-w-[1280px] mx-auto">
             {/* Heading */}
             <div className="mb-6">
@@ -96,7 +101,7 @@ export function GlobalTradeFeatures() {
             {/* Features */}
             <div className="space-y-6 mb-8">
               {features.map((feature, index) => {
-                const Icon = feature.icon
+                const Icon = feature.icon;
                 return (
                   <div key={index} className="flex items-start gap-4">
                     <div className="flex-shrink-0 w-10 h-10 bg-white border border-border rounded-lg flex items-center justify-center shadow-sm">
@@ -108,7 +113,7 @@ export function GlobalTradeFeatures() {
                       </p>
                     </div>
                   </div>
-                )
+                );
               })}
             </div>
 
@@ -122,15 +127,20 @@ export function GlobalTradeFeatures() {
           </div>
         </div>
 
-        {/* Video Section (Bottom) */}
+        {/* Image Section (Bottom) */}
         <div className="px-4">
-          <VideoPlayerBlock
-            videoUrl="/videos/global-trade.mp4"
-            videoPoster="/images/export/video-poster.png"
-            className="w-full rounded-lg overflow-hidden"
-          />
+          <div className="relative w-full aspect-video rounded-lg overflow-hidden">
+            <Image
+              src="/images/export/global-trade2.webp"
+              alt="Global Trade"
+              fill
+              className="object-cover"
+              sizes="100vw"
+              priority
+            />
+          </div>
         </div>
       </div>
     </section>
-  )
+  );
 }

@@ -79,7 +79,7 @@ export function TestimonialSection({ testimonials }: TestimonialSectionProps) {
           <div className="w-full max-w-[640px] lg:pr-8 py-16 lg:py-0">
             <div className="flex flex-col gap-10 px-4 lg:px-8 h-full lg:justify-center">
               {/* Quote - Fixed height container */}
-              <blockquote className="text-3xl lg:text-[28px] font-medium text-foreground lg:leading-[44px] tracking-tight h-[400px] lg:h-[480px] flex items-start overflow-y-auto">
+              <blockquote className="text-2xl lg:text-[28px] font-medium text-foreground lg:leading-[44px] tracking-tight h-[400px] lg:h-[480px] flex items-start overflow-y-auto">
                 <span>&ldquo;{currentTestimonial.quote}&rdquo;</span>
               </blockquote>
 

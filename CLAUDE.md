@@ -18,6 +18,17 @@ pnpm start
 pnpm install
 ```
 
+### Build & Testing Rules
+
+**IMPORTANT**: When working on bug fixes or refining sections/components:
+- **DO NOT** run `pnpm build` or `pnpm dev` automatically after making changes
+- Only run builds when:
+  1. Explicitly prompted by the user
+  2. Preparing to push changes to the remote repository
+  3. Installing new packages that require verification
+- This saves time and resources during iterative development
+- Trust TypeScript and the Next.js compiler to catch errors at build time when needed
+
 ## Architecture Overview
 
 This is a **Next.js 15 App Router** website for Upper Canada Railway Services (UCRS) with **SEO optimization** as a core feature. The project uses **React 19**, **TypeScript**, **Tailwind CSS**, and **Turbopack** for fast builds.

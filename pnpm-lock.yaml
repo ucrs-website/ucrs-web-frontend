@@ -39,8 +39,8 @@ importers:
         specifier: ^0.546.0
         version: 0.546.0(react@19.1.0)
       media-chrome:
-        specifier: ^4.14.0
-        version: 4.14.0(react@19.1.0)
+        specifier: ^4.15.1
+        version: 4.15.1(react@19.1.0)
       motion:
         specifier: ^12.23.24
         version: 12.23.24(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -71,6 +71,9 @@ importers:
       react-simple-maps:
         specifier: ^3.0.0
         version: 3.0.0(prop-types@15.8.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      swiper:
+        specifier: ^12.0.3
+        version: 12.0.3
       zustand:
         specifier: ^5.0.8
         version: 5.0.8(@types/react@19.2.2)(react@19.1.0)(use-sync-external-store@1.6.0(react@19.1.0))
@@ -1838,8 +1841,8 @@ packages:
     resolution: {integrity: sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==}
     engines: {node: '>= 0.4'}
 
-  media-chrome@4.14.0:
-    resolution: {integrity: sha512-IEdFb4blyF15vLvQzLIn6USJBv7Kf2ne+TfLQKBYI5Z0f9VEBVZz5MKy4Uhi0iA9lStl2S9ENIujJRuJIa5OiA==}
+  media-chrome@4.15.1:
+    resolution: {integrity: sha512-Hxqr0qQ67ewmRaLJBqe5ayu53txFX+DODb9xBSHgTbw7j+gITGZ4llbPPEmqMlDnatw7IsF+AUh9rJYbpnn4ZQ==}
 
   merge2@1.4.1:
     resolution: {integrity: sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==}
@@ -2223,6 +2226,10 @@ packages:
   supports-preserve-symlinks-flag@1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
+
+  swiper@12.0.3:
+    resolution: {integrity: sha512-BHd6U1VPEIksrXlyXjMmRWO0onmdNPaTAFduzqR3pgjvi7KfmUCAm/0cj49u2D7B0zNjMw02TSeXfinC1hDCXg==}
+    engines: {node: '>= 4.7.0'}
 
   tailwind-merge@3.3.1:
     resolution: {integrity: sha512-gBXpgUm/3rp1lMZZrM/w7D8GKqshif0zAymAhbCyIt8KMe+0v9DQ7cdYLR4FHH/cKpdTXb+A/tKKU3eolfsI+g==}
@@ -4429,7 +4436,7 @@ snapshots:
 
   math-intrinsics@1.1.0: {}
 
-  media-chrome@4.14.0(react@19.1.0):
+  media-chrome@4.15.1(react@19.1.0):
     dependencies:
       ce-la-react: 0.3.1(react@19.1.0)
     transitivePeerDependencies:
@@ -4853,6 +4860,8 @@ snapshots:
       ts-interface-checker: 0.1.13
 
   supports-preserve-symlinks-flag@1.0.0: {}
+
+  swiper@12.0.3: {}
 
   tailwind-merge@3.3.1: {}
 
