@@ -270,3 +270,45 @@ export async function searchProducts(
     return handleApiError(error, `searchProducts("${query}")`)
   }
 }
+
+/**
+ * Product suggestion type (from suggest endpoint)
+ */
+export interface ProductSuggestion {
+  oemSku: string | null
+  name: string | null
+}
+
+/**
+ * Get product suggestions for search autocomplete
+ * Uses Next.js API route to avoid CORS issues
+ */
+export async function suggestProducts(
+  query: string,
+  limit: number = 10
+): Promise<ProductSuggestion[]> {
+  try {
+    if (!query || query.trim().length === 0) {
+      return []
+    }
+
+    // Use Next.js API route to proxy the request
+    const url = new URL('/api/products/suggest', window.location.origin)
+    url.searchParams.set('q', query.trim())
+    url.searchParams.set('limit', limit.toString())
+
+    const response = await fetch(url.toString(), {
+      cache: 'no-store', // Don't cache search suggestions
+    })
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`)
+    }
+
+    const data: ProductSuggestion[] = await response.json()
+    return data
+  } catch (error) {
+    console.error('Error fetching product suggestions:', error)
+    return [] // Return empty array on error for better UX
+  }
+}

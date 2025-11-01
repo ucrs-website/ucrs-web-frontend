@@ -24,22 +24,29 @@ export function ProductRow({
   className,
 }: ProductRowProps) {
   const [imageError, setImageError] = useState(false);
-  const { addToQuote, items, incrementQuantity, decrementQuantity, updateQuantity, setExpanded } = useQuoteCart();
-  const [localQuantity, setLocalQuantity] = useState('');
+  const {
+    addToQuote,
+    items,
+    incrementQuantity,
+    decrementQuantity,
+    updateQuantity,
+    setExpanded,
+  } = useQuoteCart();
+  const [localQuantity, setLocalQuantity] = useState("");
 
   // Derive reactive values from items array
-  const cartItem = items.find(item => item.oemSku === product.oemSku);
+  const cartItem = items.find((item) => item.oemSku === product.oemSku);
   const inCart = !!cartItem;
   const quantity = cartItem?.quantity || 0;
 
   // Sync local quantity when item quantity changes
-  if (inCart && localQuantity === '') {
+  if (inCart && localQuantity === "") {
     setLocalQuantity(quantity.toString());
   }
 
   const handleAddToQuote = () => {
     addToQuote(product);
-    setLocalQuantity('1');
+    setLocalQuantity("1");
     // Show the cart bar when adding a product
     setExpanded(true);
   };
@@ -59,8 +66,8 @@ export function ProductRow({
   const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     // Allow empty input for better UX when typing
-    if (value === '') {
-      setLocalQuantity('');
+    if (value === "") {
+      setLocalQuantity("");
       return;
     }
     // Only allow positive integers
@@ -75,7 +82,7 @@ export function ProductRow({
 
   const handleQuantityBlur = () => {
     // If empty or invalid, reset to current quantity
-    if (localQuantity === '' || parseInt(localQuantity, 10) < 1) {
+    if (localQuantity === "" || parseInt(localQuantity, 10) < 1) {
       setLocalQuantity(quantity.toString());
     }
   };
@@ -219,7 +226,7 @@ export function ProductRow({
         <div className="flex-col gap-3 bg-gray-50 col-span-2">
           <div className="flex items-center gap-2 p-2">
             {/* Product Image */}
-            <div className="relative w-10 h-10 flex-shrink-0 bg-gray-100 rounded-full border-gray-200 border-[1px] overflow-hidden">
+            {/*<div className="relative w-10 h-10 flex-shrink-0 bg-gray-100 rounded-full border-gray-200 border-[1px] overflow-hidden">
               <Image
                 src={
                   imageError
@@ -232,7 +239,7 @@ export function ProductRow({
                 sizes="40px"
                 onError={() => setImageError(true)}
               />
-            </div>
+            </div>*/}
 
             {/* Product Info */}
             <div className="flex-1">
@@ -251,7 +258,7 @@ export function ProductRow({
         <div className="flex-col justify-center items-center px-1">
           {inCart ? (
             // Quantity Controls
-            <div className="flex items-center gap-1.5 px-2 py-1.5 bg-white border border-gray-300 rounded-lg">
+            <div className="flex items-center gap-1.5 px-1 py-1.5 bg-white border border-gray-300 rounded-lg w-fit">
               <button
                 onClick={handleDecrement}
                 className="p-1 text-gray-600 hover:text-primary hover:bg-gray-100 rounded transition-colors"
@@ -277,7 +284,7 @@ export function ProductRow({
                 value={localQuantity}
                 onChange={handleQuantityChange}
                 onBlur={handleQuantityBlur}
-                className="text-sm font-semibold text-gray-900 w-12 text-center bg-transparent border-0 focus:outline-none focus:ring-0 p-0"
+                className="text-sm font-semibold text-gray-900 w-6 lg:w-12 text-center bg-transparent border-0 focus:outline-none focus:ring-0 p-0"
                 aria-label="Quantity"
               />
               <button
@@ -309,7 +316,7 @@ export function ProductRow({
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors border bg-white text-primary border-primary hover:bg-primary/5"
             >
               <Plus className="w-4 h-4" />
-              Add to quote
+              Add
             </button>
           )}
         </div>

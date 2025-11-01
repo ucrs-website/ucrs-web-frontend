@@ -21,6 +21,9 @@ import {
 } from "@/components/ui/sheet";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { useQuoteCart } from "@/lib/hooks/useQuoteCart";
+import { SearchModal } from "@/components/SearchModal";
+import { SearchDropdown } from "@/components/SearchDropdown";
+import useDevice from "@/lib/hooks/useDevice";
 
 // Navigation links from Figma design
 const navigationLinks = [
@@ -49,9 +52,11 @@ const mobileFooterLinks = {
 
 export default function HeaderNavigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [searchModalOpen, setSearchModalOpen] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
   const { itemCount, hasItems, toggleExpanded, setExpanded } = useQuoteCart();
+  const { isMobile } = useDevice();
 
   // Handle Request a Quote button click
   const handleQuoteClick = (e: React.MouseEvent) => {
@@ -66,9 +71,15 @@ export default function HeaderNavigation() {
   };
 
   return (
-    <header className="fixed top-0 z-50 w-full">
-      {/* Container with max-width */}
-      <div className="mx-auto w-full max-w-[var(--container-max-width,1200px)] px-2 md:px-4">
+    <>
+      {/* Search Modal - Mobile Only */}
+      {isMobile && (
+        <SearchModal open={searchModalOpen} onOpenChange={setSearchModalOpen} />
+      )}
+
+      <header className="fixed top-0 z-50 w-full">
+        {/* Container with max-width */}
+        <div className="mx-auto w-full max-w-[var(--container-max-width,1200px)] px-2 md:px-4">
         {/* Nav wrapper with rounded background */}
         <nav
           className="my-3 md:my-4 rounded-2xl bg-white shadow-sm border-[1px] border-gray-100"
@@ -254,19 +265,14 @@ export default function HeaderNavigation() {
                 size="icon"
                 className="lg:hidden h-7 w-7 p-1.5"
                 aria-label="Search"
+                onClick={() => setSearchModalOpen(true)}
               >
                 <Search className="h-4 w-4 text-primary" strokeWidth={1.67} />
               </Button>
 
-              {/* Search Input - Desktop */}
-              <div className="relative hidden lg:block">
-                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                <Input
-                  type="search"
-                  placeholder="Search in products"
-                  className="w-[200px] pl-9 h-9 text-sm"
-                  aria-label="Search products"
-                />
+              {/* Search Dropdown - Desktop */}
+              <div className="hidden lg:block">
+                <SearchDropdown />
               </div>
 
               {/* Request a Quote Button */}
@@ -285,7 +291,8 @@ export default function HeaderNavigation() {
             </div>
           </div>
         </nav>
-      </div>
-    </header>
+        </div>
+      </header>
+    </>
   );
 }

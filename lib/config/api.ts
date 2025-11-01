@@ -22,6 +22,7 @@ export const API_ENDPOINTS = {
     `/api/Categories/${subcategoryId}/products`,
   groups: (subcategoryId: number) => `/api/Categories/${subcategoryId}/groups`,
   search: '/api/Products/search',
+  suggest: '/api/Products/suggest',
 } as const
 
 // Products per page default
