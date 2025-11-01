@@ -8,12 +8,13 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import { X } from "lucide-react";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ProductRow } from "@/components/products/ProductRow";
 import { suggestProducts, type ProductSuggestion } from "@/lib/api/products";
 import type { ProductWithImage } from "@/lib/types/products";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 interface SearchModalProps {
   open: boolean;
@@ -119,6 +120,11 @@ export function SearchModal({ open, onOpenChange }: SearchModalProps) {
         onEscapeKeyDown={handleClose}
         onPointerDownOutside={handleClose}
       >
+        {/* Accessible Dialog Title (Hidden) */}
+        <VisuallyHidden>
+          <DialogTitle>Product Search</DialogTitle>
+        </VisuallyHidden>
+
         {/* Search Header */}
         <div className="sticky top-0 bg-white px-4 py-4 flex flex-col gap-3">
           <div className="lg:hidden text-sm text-gray-400 flex-shrink-0">
