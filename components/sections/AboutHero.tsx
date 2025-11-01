@@ -1,20 +1,29 @@
-'use client'
+"use client";
 
-import React from 'react'
-import { Button } from '@/components/ui/button'
-import Link from 'next/link'
+import React from "react";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export function AboutHero() {
   return (
     <section className="relative w-full lg:py-40 pt-[100px] flex items-center justify-center overflow-hidden">
-      {/* Background Image */}
-      <div
-        className="absolute inset-0 w-full h-full bg-cover bg-center"
-        style={{ backgroundImage: 'url(/images/about/about-hero.avif)' }}
-      />
-
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-black/20" />
+      {/* Background Video */}
+      <div className="absolute inset-0 z-0">
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          disablePictureInPicture
+          controlsList="nodownload nofullscreen noremoteplayback"
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+        >
+          <source src="/videos/about/about-hero.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        {/* Dark overlay for better text readability */}
+        <div className="absolute inset-0 bg-black/40" />
+      </div>
 
       {/* Content */}
       <div className="relative z-10 container mx-auto px-8 max-w-[1280px]">
@@ -27,31 +36,23 @@ export function AboutHero() {
               </h1>
             </div>
             <p className="text-[20px] text-[#feeaea] leading-[1.5] max-w-[470px]">
-              Maximize Uptime with OEM-Compliant Repairs, Rebuilds, and Custom Engineering
+              Maximize Uptime with OEM-Compliant Repairs, Rebuilds, and Custom
+              Engineering
             </p>
           </div>
 
           {/* CTA Button */}
           <div className="flex items-start gap-3">
-            <Link
-              href="/products"
-              className="inline-flex items-center justify-center !bg-[#ed2c24] hover:!bg-[#d32821] active:!bg-[#c12419] text-white !h-[56px] !min-h-[56px] px-[26px] !rounded-[10px] !text-[18px] font-semibold !leading-[28px] shadow-[0px_0px_0px_1px_inset_rgba(10,13,18,0.18),0px_-2px_0px_0px_inset_rgba(10,13,18,0.05)] !border-2 !border-[rgba(255,255,255,0.12)] transition-colors no-underline"
-              style={{
-                backgroundColor: '#ed2c24',
-                height: '56px',
-                minHeight: '56px',
-                borderRadius: '10px',
-                fontSize: '18px',
-                lineHeight: '28px',
-                padding: '0 26px',
-                border: '2px solid rgba(255,255,255,0.12)',
-              }}
+            <Button
+              asChild
+              size="lg"
+              className="h-10 px-3.5 gap-1 text-sm font-semibold lg:h-[60px] lg:px-[22px] lg:gap-2 lg:text-lg rounded-lg lg:rounded-[10px]"
             >
-              Explore Our Products
-            </Link>
+              <Link href="/products">Explore Products</Link>
+            </Button>
           </div>
         </div>
       </div>
     </section>
-  )
+  );
 }
