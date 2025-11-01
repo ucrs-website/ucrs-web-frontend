@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -20,6 +20,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { useQuoteCart } from "@/lib/hooks/useQuoteCart";
 
 // Navigation links from Figma design
 const navigationLinks = [
@@ -49,6 +50,20 @@ const mobileFooterLinks = {
 export default function HeaderNavigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
+  const { itemCount, hasItems, toggleExpanded, setExpanded } = useQuoteCart();
+
+  // Handle Request a Quote button click
+  const handleQuoteClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (hasItems) {
+      // If there are items, toggle the cart bar
+      setExpanded(true);
+    } else {
+      // If no items, redirect to quote page
+      router.push("/quote");
+    }
+  };
 
   return (
     <header className="fixed top-0 z-50 w-full">
@@ -256,11 +271,16 @@ export default function HeaderNavigation() {
 
               {/* Request a Quote Button */}
               <Button
-                asChild
+                onClick={handleQuoteClick}
                 size="sm"
-                className="h-7 px-2 text-xs font-semibold lg:h-9 lg:px-4 lg:text-sm"
+                className="h-7 px-2 text-xs font-semibold lg:h-9 lg:px-4 lg:text-sm relative"
               >
-                <Link href="/quote">Request a Quote</Link>
+                {hasItems && (
+                  <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-white text-[10px] font-bold text-primary border border-primary">
+                    {itemCount}
+                  </span>
+                )}
+                Request a Quote
               </Button>
             </div>
           </div>

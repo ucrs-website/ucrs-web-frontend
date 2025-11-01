@@ -9,42 +9,12 @@ import { useQuoteCart } from "@/lib/hooks/useQuoteCart";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { QuoteCartDropdown } from "./QuoteCartDropdown";
-import { useEffect, useState } from "react";
 
 export function QuoteCartBar() {
   const { totalQuantity, isExpanded, toggleExpanded, hasItems } = useQuoteCart();
-  const [isVisible, setIsVisible] = useState(false);
-  const [lastScrollY, setLastScrollY] = useState(0);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-
-      // Hide when in the 0-120px range
-      if (currentScrollY <= 120) {
-        setIsVisible(false);
-      }
-      // Show when scrolling up beyond 120px
-      else if (currentScrollY > 120 && currentScrollY < lastScrollY) {
-        setIsVisible(true);
-      }
-      // Hide when scrolling down
-      else if (currentScrollY > lastScrollY) {
-        setIsVisible(false);
-      }
-
-      setLastScrollY(currentScrollY);
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [lastScrollY]);
-
-  // Don't render if cart is empty
-  if (!hasItems) {
+  // Don't render if cart is empty or not expanded
+  if (!hasItems || !isExpanded) {
     return null;
   }
 
@@ -53,7 +23,7 @@ export function QuoteCartBar() {
   return (
     <>
       {/* Backdrop Overlay */}
-      {isExpanded && isVisible && (
+      {isExpanded && (
         <div
           className="fixed inset-0 bg-black/20 backdrop-blur-sm z-30 transition-opacity duration-300"
           onClick={toggleExpanded}
@@ -61,12 +31,7 @@ export function QuoteCartBar() {
         />
       )}
 
-      <div
-        className={cn(
-          "fixed top-[93px] left-0 right-0 z-40 transition-transform duration-300",
-          isVisible ? "translate-y-0" : "-translate-y-[calc(100%+93px)]",
-        )}
-      >
+      <div className="fixed top-[93px] left-0 right-0 z-40 transition-transform duration-300 translate-y-0">
         {/* Container matching header width */}
         <div className="mx-auto w-full max-w-[var(--container-max-width,1200px)] px-2 md:px-4">
           {/* Notification Bar */}

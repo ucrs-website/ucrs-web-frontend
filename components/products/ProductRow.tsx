@@ -24,7 +24,7 @@ export function ProductRow({
   className,
 }: ProductRowProps) {
   const [imageError, setImageError] = useState(false);
-  const { addToQuote, items, incrementQuantity, decrementQuantity, updateQuantity } = useQuoteCart();
+  const { addToQuote, items, incrementQuantity, decrementQuantity, updateQuantity, setExpanded } = useQuoteCart();
   const [localQuantity, setLocalQuantity] = useState('');
 
   // Derive reactive values from items array
@@ -40,6 +40,8 @@ export function ProductRow({
   const handleAddToQuote = () => {
     addToQuote(product);
     setLocalQuantity('1');
+    // Show the cart bar when adding a product
+    setExpanded(true);
   };
 
   const handleIncrement = () => {
