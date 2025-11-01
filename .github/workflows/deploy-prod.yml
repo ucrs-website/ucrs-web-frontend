@@ -6,16 +6,44 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Zip the repo and push it to Azure; Oryx on App Service will build and run it
+      - name: Use Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Build Next.js (Turbopack)
+        run: npm run build
+
+      # Keep only runtime deps so "next start" can run on App Service
+      - name: Prune dev deps
+        run: npm ci --omit=dev
+
+      - name: Prepare deploy folder
+        run: |
+          rm -rf deploy
+          mkdir deploy
+          cp -r .next public package.json package-lock.json next.config.* deploy/ 2>/dev/null || true
+          cp -r node_modules deploy/
+
+      - name: Zip artifact
+        run: |
+          cd deploy
+          zip -r ../artifact.zip .
+
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: ucrs-frontend-prod
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISH_PROFILE }}
-          package: .
+          package: artifact.zip
