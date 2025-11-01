@@ -117,14 +117,12 @@ export function SearchDropdown() {
     suggestion: ProductSuggestion,
   ): ProductWithImage => {
     return {
-      id: 0,
       name: suggestion.name || "Unknown Product",
       oemSku: suggestion.oemSku || "",
       imageUrl: "/images/products/default-product.avif",
       description: "",
-      categoryId: 0,
-      subcategoryId: 0,
-      groupId: null,
+      catId: 0,
+      groupId: 0,
     };
   };
 

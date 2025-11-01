@@ -102,14 +102,12 @@ export function SearchModal({ open, onOpenChange }: SearchModalProps) {
     suggestion: ProductSuggestion,
   ): ProductWithImage => {
     return {
-      id: 0, // Not used for display
       name: suggestion.name || "Unknown Product",
       oemSku: suggestion.oemSku || "",
       imageUrl: "/images/products/default-product.avif",
       description: "",
-      categoryId: 0,
-      subcategoryId: 0,
-      groupId: null,
+      catId: 0,
+      groupId: 0,
     };
   };
 
