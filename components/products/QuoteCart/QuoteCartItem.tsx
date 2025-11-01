@@ -19,14 +19,48 @@ interface QuoteCartItemProps {
 
 export function QuoteCartItem({ item, onRemove }: QuoteCartItemProps) {
   const [imageError, setImageError] = useState(false)
-  const { incrementQuantity, decrementQuantity } = useQuoteCart()
+  const { incrementQuantity, decrementQuantity, updateQuantity } = useQuoteCart()
+  const [localQuantity, setLocalQuantity] = useState(item.quantity.toString())
 
   const handleIncrement = () => {
     incrementQuantity(item.oemSku)
+    setLocalQuantity((item.quantity + 1).toString())
   }
 
   const handleDecrement = () => {
-    decrementQuantity(item.oemSku)
+    if (item.quantity > 1) {
+      decrementQuantity(item.oemSku)
+      setLocalQuantity((item.quantity - 1).toString())
+    }
+  }
+
+  const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    // Allow empty input for better UX when typing
+    if (value === '') {
+      setLocalQuantity('')
+      return
+    }
+    // Only allow positive integers
+    if (/^\d+$/.test(value)) {
+      setLocalQuantity(value)
+      const numValue = parseInt(value, 10)
+      if (numValue > 0) {
+        updateQuantity(item.oemSku, numValue)
+      }
+    }
+  }
+
+  const handleQuantityBlur = () => {
+    // If empty or invalid, reset to current quantity
+    if (localQuantity === '' || parseInt(localQuantity, 10) < 1) {
+      setLocalQuantity(item.quantity.toString())
+    }
+  }
+
+  // Sync local quantity with item quantity when it changes
+  if (item.quantity.toString() !== localQuantity && localQuantity !== '') {
+    setLocalQuantity(item.quantity.toString())
   }
 
   return (
@@ -78,9 +112,14 @@ export function QuoteCartItem({ item, onRemove }: QuoteCartItemProps) {
             <path d="M8 12h8" />
           </svg>
         </button>
-        <span className="text-sm font-semibold text-gray-900 min-w-[2ch] text-center">
-          {item.quantity}
-        </span>
+        <input
+          type="text"
+          value={localQuantity}
+          onChange={handleQuantityChange}
+          onBlur={handleQuantityBlur}
+          className="text-sm font-semibold text-gray-900 w-12 text-center bg-transparent border-0 focus:outline-none focus:ring-0 p-0"
+          aria-label="Quantity"
+        />
         <button
           onClick={handleIncrement}
           className="p-1 text-gray-600 hover:text-primary hover:bg-white rounded transition-colors"

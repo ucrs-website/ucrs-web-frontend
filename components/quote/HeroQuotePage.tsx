@@ -20,7 +20,7 @@ export function HeroQuotePage() {
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/images/quote/get-quote-bg-desktop.avif"
+          src="/images/quote/office-bg.webp"
           alt="Railway manufacturing facility"
           fill
           priority

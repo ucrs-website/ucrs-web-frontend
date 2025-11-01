@@ -18,9 +18,10 @@ interface QuoteProductsTableProps {
 }
 
 export function QuoteProductsTable({ products }: QuoteProductsTableProps) {
-  const { incrementQuantity, decrementQuantity } = useQuoteCart();
+  const { incrementQuantity, decrementQuantity, updateQuantity } = useQuoteCart();
   const [descriptions, setDescriptions] = useState<Record<string, string>>({});
   const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});
+  const [localQuantities, setLocalQuantities] = useState<Record<string, string>>({});
 
   const handleDescriptionChange = (oemSku: string, value: string) => {
     setDescriptions((prev) => ({ ...prev, [oemSku]: value }));
@@ -28,6 +29,34 @@ export function QuoteProductsTable({ products }: QuoteProductsTableProps) {
 
   const handleImageError = (oemSku: string) => {
     setImageErrors((prev) => ({ ...prev, [oemSku]: true }));
+  };
+
+  const handleQuantityChange = (oemSku: string, value: string) => {
+    // Allow empty input for better UX when typing
+    if (value === '') {
+      setLocalQuantities((prev) => ({ ...prev, [oemSku]: '' }));
+      return;
+    }
+    // Only allow positive integers
+    if (/^\d+$/.test(value)) {
+      setLocalQuantities((prev) => ({ ...prev, [oemSku]: value }));
+      const numValue = parseInt(value, 10);
+      if (numValue > 0) {
+        updateQuantity(oemSku, numValue);
+      }
+    }
+  };
+
+  const handleQuantityBlur = (oemSku: string, currentQuantity: number) => {
+    const localQty = localQuantities[oemSku];
+    // If empty or invalid, reset to current quantity
+    if (localQty === '' || parseInt(localQty, 10) < 1) {
+      setLocalQuantities((prev) => ({ ...prev, [oemSku]: currentQuantity.toString() }));
+    }
+  };
+
+  const getDisplayQuantity = (oemSku: string, quantity: number) => {
+    return localQuantities[oemSku] !== undefined ? localQuantities[oemSku] : quantity.toString();
   };
 
   return (
@@ -74,9 +103,14 @@ export function QuoteProductsTable({ products }: QuoteProductsTableProps) {
                       >
                         <CircleMinus className="w-6 h-6" />
                       </button>
-                      <span className="text-sm font-semibold text-gray-900 w-8 text-center">
-                        {product.quantity}
-                      </span>
+                      <input
+                        type="text"
+                        value={getDisplayQuantity(product.oemSku, product.quantity)}
+                        onChange={(e) => handleQuantityChange(product.oemSku, e.target.value)}
+                        onBlur={() => handleQuantityBlur(product.oemSku, product.quantity)}
+                        className="text-sm font-semibold text-gray-900 w-12 text-center bg-white border border-gray-200 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                        aria-label="Quantity"
+                      />
                       <button
                         type="button"
                         onClick={() => incrementQuantity(product.oemSku)}
@@ -164,9 +198,14 @@ export function QuoteProductsTable({ products }: QuoteProductsTableProps) {
               >
                 <CircleMinus className="w-5 h-5" />
               </button>
-              <span className="text-sm font-semibold text-gray-900 w-6 text-center">
-                {product.quantity}
-              </span>
+              <input
+                type="text"
+                value={getDisplayQuantity(product.oemSku, product.quantity)}
+                onChange={(e) => handleQuantityChange(product.oemSku, e.target.value)}
+                onBlur={() => handleQuantityBlur(product.oemSku, product.quantity)}
+                className="text-sm font-semibold text-gray-900 w-10 text-center bg-white border border-gray-200 rounded px-1 py-1 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                aria-label="Quantity"
+              />
               <button
                 type="button"
                 onClick={() => incrementQuantity(product.oemSku)}

@@ -1,5 +1,5 @@
-import React from 'react'
-import Image from 'next/image'
+import React from "react";
+import Image from "next/image";
 
 export function GlobalStandards() {
   return (
@@ -23,7 +23,7 @@ export function GlobalStandards() {
           {/* Certificate Image */}
           <div className="relative w-full max-w-[800px] aspect-[800/612]">
             <Image
-              src="/images/about/aar-m1003-certificate.png"
+              src="/images/about/certificate.webp"
               alt="AAR-M1003 Quality Assurance Program Certification"
               fill
               className="object-contain"
@@ -31,9 +31,8 @@ export function GlobalStandards() {
               priority
             />
           </div>
-
         </div>
       </div>
     </section>
-  )
+  );
 }

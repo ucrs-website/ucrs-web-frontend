@@ -15,7 +15,7 @@ interface TeamMember {
 const teamMembers: TeamMember[] = [
   {
     name: "Sam Hosseini",
-    role: "CTO",
+    role: "CEO",
     brief: "20+ years in rail engineering",
     image: "/images/about/team/sam-hosseini.avif",
   },

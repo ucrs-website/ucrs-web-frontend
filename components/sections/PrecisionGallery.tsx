@@ -32,12 +32,20 @@ export function PrecisionGallery() {
     },
   ];
 
+  // Scroll by 2 slides on desktop, 1 on mobile
   const handlePrev = () => {
-    setCurrentIndex((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
+    setCurrentIndex((prev) => {
+      const step = window.innerWidth >= 1024 ? 2 : 1;
+      return prev === 0 ? Math.max(0, slides.length - step) : Math.max(0, prev - step);
+    });
   };
 
   const handleNext = () => {
-    setCurrentIndex((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+    setCurrentIndex((prev) => {
+      const step = window.innerWidth >= 1024 ? 2 : 1;
+      const maxIndex = slides.length - 1;
+      return prev >= maxIndex ? 0 : Math.min(maxIndex, prev + step);
+    });
   };
 
   return (
@@ -84,7 +92,7 @@ export function PrecisionGallery() {
               <div
                 className="flex transition-transform duration-500 ease-out gap-4 lg:gap-8"
                 style={{
-                  transform: `translateX(-${currentIndex * (100 / (slides.length > 3 ? 3 : 1))}%)`,
+                  transform: `translateX(-${currentIndex * 100}%)`,
                 }}
               >
                 {slides.map((slide, index) => (

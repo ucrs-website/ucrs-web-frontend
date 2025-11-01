@@ -24,23 +24,58 @@ export function ProductRow({
   className,
 }: ProductRowProps) {
   const [imageError, setImageError] = useState(false);
-  const { addToQuote, items, incrementQuantity, decrementQuantity } = useQuoteCart();
+  const { addToQuote, items, incrementQuantity, decrementQuantity, updateQuantity } = useQuoteCart();
+  const [localQuantity, setLocalQuantity] = useState('');
 
   // Derive reactive values from items array
   const cartItem = items.find(item => item.oemSku === product.oemSku);
   const inCart = !!cartItem;
   const quantity = cartItem?.quantity || 0;
 
+  // Sync local quantity when item quantity changes
+  if (inCart && localQuantity === '') {
+    setLocalQuantity(quantity.toString());
+  }
+
   const handleAddToQuote = () => {
     addToQuote(product);
+    setLocalQuantity('1');
   };
 
   const handleIncrement = () => {
     incrementQuantity(product.oemSku);
+    setLocalQuantity((quantity + 1).toString());
   };
 
   const handleDecrement = () => {
-    decrementQuantity(product.oemSku);
+    if (quantity > 1) {
+      decrementQuantity(product.oemSku);
+      setLocalQuantity((quantity - 1).toString());
+    }
+  };
+
+  const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    // Allow empty input for better UX when typing
+    if (value === '') {
+      setLocalQuantity('');
+      return;
+    }
+    // Only allow positive integers
+    if (/^\d+$/.test(value)) {
+      setLocalQuantity(value);
+      const numValue = parseInt(value, 10);
+      if (numValue > 0) {
+        updateQuantity(product.oemSku, numValue);
+      }
+    }
+  };
+
+  const handleQuantityBlur = () => {
+    // If empty or invalid, reset to current quantity
+    if (localQuantity === '' || parseInt(localQuantity, 10) < 1) {
+      setLocalQuantity(quantity.toString());
+    }
   };
 
   const handleViewDetails = () => {
@@ -89,9 +124,14 @@ export function ProductRow({
                   <path d="M8 12h8" />
                 </svg>
               </button>
-              <span className="text-sm font-semibold text-gray-900 min-w-[2ch] text-center">
-                {quantity}
-              </span>
+              <input
+                type="text"
+                value={localQuantity}
+                onChange={handleQuantityChange}
+                onBlur={handleQuantityBlur}
+                className="text-sm font-semibold text-gray-900 w-12 text-center bg-transparent border-0 focus:outline-none focus:ring-0 p-0"
+                aria-label="Quantity"
+              />
               <button
                 onClick={handleIncrement}
                 className="p-1 text-gray-600 hover:text-primary hover:bg-gray-100 rounded transition-colors"
@@ -230,9 +270,14 @@ export function ProductRow({
                   <path d="M8 12h8" />
                 </svg>
               </button>
-              <span className="text-sm font-semibold text-gray-900 min-w-[2ch] text-center">
-                {quantity}
-              </span>
+              <input
+                type="text"
+                value={localQuantity}
+                onChange={handleQuantityChange}
+                onBlur={handleQuantityBlur}
+                className="text-sm font-semibold text-gray-900 w-12 text-center bg-transparent border-0 focus:outline-none focus:ring-0 p-0"
+                aria-label="Quantity"
+              />
               <button
                 onClick={handleIncrement}
                 className="p-1 text-gray-600 hover:text-primary hover:bg-gray-100 rounded transition-colors"

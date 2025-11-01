@@ -1,8 +1,9 @@
-'use client'
+"use client";
 
-import React from 'react'
-import { Button } from '@/components/ui/button'
-import Link from 'next/link'
+import React from "react";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { VideoPlayerBlock } from "@/components/ui/video-player-block";
 
 export function CuttingEdgeTools() {
   const features = [
@@ -25,7 +26,7 @@ export function CuttingEdgeTools() {
           />
         </svg>
       ),
-      title: '3D modeling for OEM-compatible designs',
+      title: "3D modeling for OEM-compatible designs",
     },
     {
       icon: (
@@ -53,7 +54,7 @@ export function CuttingEdgeTools() {
           />
         </svg>
       ),
-      title: 'Precision CNC Machining',
+      title: "Precision CNC Machining",
     },
     {
       icon: (
@@ -75,9 +76,9 @@ export function CuttingEdgeTools() {
           <circle cx="12" cy="12" r="8" stroke="currentColor" strokeWidth="2" />
         </svg>
       ),
-      title: 'Rigorous quality checks for every part',
+      title: "Rigorous quality checks for every part",
     },
-  ]
+  ];
 
   // Mobile-specific features
   const mobileFeatures = [
@@ -107,7 +108,7 @@ export function CuttingEdgeTools() {
           />
         </svg>
       ),
-      title: 'Robotic welding systems for precision',
+      title: "Robotic welding systems for precision",
     },
     {
       icon: (
@@ -128,7 +129,7 @@ export function CuttingEdgeTools() {
           />
         </svg>
       ),
-      title: '3D modeling for OEM-compatible designs',
+      title: "3D modeling for OEM-compatible designs",
     },
     {
       icon: (
@@ -150,12 +151,12 @@ export function CuttingEdgeTools() {
           <circle cx="12" cy="12" r="8" stroke="currentColor" strokeWidth="2" />
         </svg>
       ),
-      title: 'AI-driven predictive maintenance tools',
+      title: "AI-driven predictive maintenance tools",
     },
-  ]
+  ];
 
   return (
-    <section className="bg-[#f9fafb] py-16 lg:py-24">
+    <section className="bg-[#f9fafb] py-16 lg:py-24" id="virtual-tour">
       <div className="container mx-auto px-4 sm:px-8">
         <div className="max-w-[1280px] mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
@@ -213,23 +214,15 @@ export function CuttingEdgeTools() {
 
             {/* Right Column - Video Player */}
             <div className="order-1 lg:order-2">
-              <div className="relative aspect-video rounded-xl overflow-hidden">
-                <iframe
-                  width="100%"
-                  height="100%"
-                  src="https://www.youtube.com/embed/ea8pWpDRzZM?si=jbmaBxhuylPX4WNV"
-                  title="YouTube video player"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerPolicy="strict-origin-when-cross-origin"
-                  allowFullScreen
-                  className="absolute inset-0 w-full h-full"
-                />
-              </div>
+              <VideoPlayerBlock
+                videoUrl="/videos/factory-tour-full.mp4"
+                videoPoster="/images/about/year2022.avif"
+                className="w-full"
+              />
             </div>
           </div>
         </div>
       </div>
     </section>
-  )
+  );
 }

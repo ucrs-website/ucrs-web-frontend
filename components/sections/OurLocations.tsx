@@ -17,14 +17,14 @@ const locations: Location[] = [
     name: "Richmond Hill, ON",
     address: "15 Wertheim Crt., Unit 212, Richmond Hill, ON, Canada L4B 3H7",
     mapUrl:
-      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2876.5876884947246!2d-79.42244!3d43.8451!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDPCsDUwJzQyLjQiTiA3OcKwMjUnMjAuOCJX!5e0!3m2!1sen!2sca!4v1234567890123",
+      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2877.547707271124!2d-79.38788388686599!3d43.84447527097284!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b2b4be5f10ad7%3A0x62211a19811fc026!2s15%20Wertheim%20Ct%20%23212%2C%20Richmond%20Hill%2C%20ON%20L4B%203H7%2C%20Canada!5e0!3m2!1sen!2s!4v1762004591973!5m2!1sen!2s",
   },
   {
     id: "welland",
     name: "Welland, ON",
     address: "361 Enterprise Drive, Welland, ON, Canada L3B 6H8",
     mapUrl:
-      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2914.123456789!2d-79.2345!3d42.9876!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDLCsDU5JzE1LjQiTiA3OcKwMTQnMDQuMiJX!5e0!3m2!1sen!2sca!4v1234567890124",
+      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2919.063762129952!2d-79.2058194868919!3d42.976930471021866!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d34800d70abfeb%3A0x35779fa868933039!2s361%20Enterprise%20Dr%2C%20Welland%2C%20ON%20L3B%206H8%2C%20Canada!5e0!3m2!1sen!2s!4v1762004714593!5m2!1sen!2s",
   },
 ];
 
@@ -47,7 +47,7 @@ export function OurLocations() {
               <div className="flex flex-col gap-3 md:gap-5">
                 <div className="flex flex-col gap-3">
                   <p className="text-sm md:text-base font-semibold text-[#023fc1] leading-5 md:leading-6">
-                    Contact us
+                    Select to route:
                   </p>
                   <h2 className="text-3xl md:text-4xl font-semibold text-[#181d27] leading-[38px] md:leading-[44px] tracking-[-0.02em]">
                     Our locations
