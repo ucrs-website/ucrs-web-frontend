@@ -5,41 +5,46 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Use Node 20 LTS
+      - name: Use Node 20
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
 
-      - name: Install deps (clean)
+      - name: Install deps
         run: npm ci
 
-      - name: Build (Next.js)
+      - name: Build (standalone)
         run: npm run build
 
-      - name: Verify that Next is installed
+      # Prepare a deployable folder rooted at server.js
+      - name: Assemble deploy folder
         run: |
-          test -f node_modules/next/package.json || (echo "next not installed" && exit 1)
-          ls -la node_modules/.bin | head
+          rm -rf deploy
+          mkdir -p deploy
+          cp -r .next/standalone/* deploy/
+          # standalone needs these two extras:
+          mkdir -p deploy/.next
+          cp -r .next/static deploy/.next/static
+          if [ -d public ]; then cp -r public deploy/public; fi
+          # create a tiny server.js shim at the root if needed
+          if [ ! -f deploy/server.js ]; then
+            echo "require('./.next/standalone/server.js');" > deploy/server.js
+          fi
 
-      - name: Create deployment zip (include node_modules)
-        run: |
-          mkdir deploy
-          rsync -a --delete \
-            --exclude ".git" --exclude ".github" --exclude "tests" \
-            ./ ./deploy/
-          (cd deploy && zip -qr ../site.zip .)
-
-      - name: Deploy to Azure Web App
-        uses: azure/webapps-deploy@v3
+      - name: Deploy to App Service
+        uses: azure/webapps-deploy@v2
         with:
-          app-name: ucrs-frontend-prod
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }} # your secret name
-          package: site.zip
+          app-name: ucrs-frontend-prod       # <-- your App Service name
+          package: ./deploy
