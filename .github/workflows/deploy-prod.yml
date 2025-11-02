@@ -39,23 +39,22 @@ jobs:
           set -e
           rm -rf deploy
           mkdir -p deploy/.next
-          # copy Next's standalone runtime to the expected path
           cp -r .next/standalone deploy/.next/standalone
-          # static assets
           cp -r .next/static deploy/.next/static
-          # public assets (if any)
           if [ -d public ]; then cp -r public deploy/public; fi
-          # tiny shim so "npm start" runs the standalone server
-          printf "require('./.next/standalone/server.js');\n" > deploy/server.js
-          # keep package files so Azure runs `npm start`
           cp package.json deploy/
-          cp package-lock.json deploy/ || true
+          if [ -f package-lock.json ]; then cp package-lock.json deploy/; fi
+          # sanity checks: fail if build output is missing
+          test -d deploy/.next/standalone || (echo "ERROR: .next/standalone missing" && exit 1)
+          test -f deploy/package.json || (echo "ERROR: package.json missing" && exit 1)
+          echo "Deploy tree:" && find deploy -maxdepth 2 -type d -print
 
       - name: Zip deploy folder
         run: |
           cd deploy
-          zip -qr ../release.zip .
+          zip -r ../release.zip .
           cd ..
+          ls -lh release.zip
 
       - name: Deploy to App Service
         uses: azure/webapps-deploy@v3
