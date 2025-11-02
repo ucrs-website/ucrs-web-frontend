@@ -22,18 +22,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Use Node 20
+      - name: Setup Node 20
         uses: actions/setup-node@v4
         with:
-          node-version: "20.x"
-          cache: "npm"
+          node-version: '20.x'
+          cache: 'npm'
 
-      # NOTE: use npm install (not npm ci) so we don't depend on a pristine lockfile
-      - name: Install deps
-        run: npm install --no-audit --no-fund --legacy-peer-deps
+      - name: Install dependencies (include optional)
+        run: |
+          npm ci --include=optional --no-audit --no-fund
+          # defensive: ensure linux-x64 sharp is available
+          npm ls sharp || npm install --os=linux --cpu=x64 sharp --no-save
 
       - name: Build (standalone)
-        run: npm run build
+        run: |
+          npx next telemetry disable || true
+          npm run build
 
       - name: Assemble deploy folder
         run: |
@@ -41,11 +45,11 @@ jobs:
           rm -rf deploy
           mkdir -p deploy/.next
           cp -r .next/standalone deploy/.next/standalone
-          cp -r .next/static deploy/.next/static
+          cp -r .next/static     deploy/.next/static
           if [ -d public ]; then cp -r public deploy/public; fi
-          printf "require('./.next/standalone/server.js');\n" > deploy/server.js
-          if [ -f package.json ]; then cp package.json deploy/; fi
-          if [ -f package-lock.json ]; then cp package-lock.json deploy/; fi
+          echo "require('./.next/standalone/server.js');" > deploy/server.js
+          [ -f package.json ] && cp package.json deploy/
+          [ -f package-lock.json ] && cp package-lock.json deploy/
           echo "---- deploy contents ----"
           ls -la deploy
           ls -la deploy/.next/standalone | head
