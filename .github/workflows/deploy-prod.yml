@@ -5,49 +5,41 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
-permissions:
-  contents: read
-
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    env:
-      NODE_ENV: production
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node 22
+      - name: Use Node 20 LTS
         uses: actions/setup-node@v4
         with:
-          node-version: '22.x'
+          node-version: '20'
           cache: 'npm'
 
-      - name: Install
+      - name: Install deps (clean)
         run: npm ci
 
       - name: Build (Next.js)
         run: npm run build
 
-      # keep only production deps so the ZIP stays smaller
-      - name: Prune dev deps
-        run: npm prune --omit=dev
-
-      - name: Create deploy package
+      - name: Verify that Next is installed
         run: |
-          mkdir package
-          cp -r .next public package/
-          cp package.json package-lock.json package/
-          # include next.config.* if you have it (safe if it doesn't exist)
-          cp -r next.config.* 2>/dev/null || true
-          cp -r node_modules package/
-          cd package
-          zip -r ../release.zip .
+          test -f node_modules/next/package.json || (echo "next not installed" && exit 1)
+          ls -la node_modules/.bin | head
+
+      - name: Create deployment zip (include node_modules)
+        run: |
+          mkdir deploy
+          rsync -a --delete \
+            --exclude ".git" --exclude ".github" --exclude "tests" \
+            ./ ./deploy/
+          (cd deploy && zip -qr ../site.zip .)
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: ucrs-frontend-prod
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISH_PROFILE }}
-          package: release.zip
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }} # your secret name
+          package: site.zip
