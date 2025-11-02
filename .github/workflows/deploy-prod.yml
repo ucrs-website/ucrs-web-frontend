@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NODE_ENV: production
-      NODE_OPTIONS: --max-old-space-size=4096
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -30,15 +30,24 @@ jobs:
       - name: Build (Next.js)
         run: npm run build
 
-      - name: Verify build exists
-        run: test -d .next && ls -la .next
-
-      - name: Prune dev dependencies
+      # keep only production deps so the ZIP stays smaller
+      - name: Prune dev deps
         run: npm prune --omit=dev
+
+      - name: Create deploy package
+        run: |
+          mkdir package
+          cp -r .next public package/
+          cp package.json package-lock.json package/
+          # include next.config.* if you have it (safe if it doesn't exist)
+          cp -r next.config.* 2>/dev/null || true
+          cp -r node_modules package/
+          cd package
+          zip -r ../release.zip .
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: ucrs-frontend-prod
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISH_PROFILE }}
-          package: .
+          package: release.zip
