@@ -8,9 +8,15 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: deploy-frontend-prod
+  cancel-in-progress: false
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    env:
+      NEXT_TELEMETRY_DISABLED: "1"
 
     steps:
       - name: Checkout
@@ -19,8 +25,8 @@ jobs:
       - name: Use Node 20
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: "20.x"
+          cache: "npm"
 
       - name: Install deps
         run: npm ci
@@ -28,23 +34,33 @@ jobs:
       - name: Build (standalone)
         run: npm run build
 
-      # Prepare a deployable folder rooted at server.js
+      # Create the exact structure App Service will run
       - name: Assemble deploy folder
         run: |
+          set -e
           rm -rf deploy
-          mkdir -p deploy
-          cp -r .next/standalone/* deploy/
-          # standalone needs these two extras:
           mkdir -p deploy/.next
+          # Copy Next's standalone runtime (includes node_modules)
+          cp -r .next/standalone deploy/.next/standalone
+          # Static assets
           cp -r .next/static deploy/.next/static
+          # Public folder if present
           if [ -d public ]; then cp -r public deploy/public; fi
-          # create a tiny server.js shim at the root if needed
-          if [ ! -f deploy/server.js ]; then
-            echo "require('./.next/standalone/server.js');" > deploy/server.js
-          fi
+          # Root shim so "node server.js" works too
+          printf "require('./.next/standalone/server.js');\n" > deploy/server.js
+          # Keep package files (not strictly required, but harmless)
+          if [ -f package.json ]; then cp package.json deploy/; fi
+          if [ -f package-lock.json ]; then cp package-lock.json deploy/; fi
+
+      - name: Zip deploy folder
+        run: |
+          cd deploy
+          zip -r ../release.zip .
+          cd ..
 
       - name: Deploy to App Service
-        uses: azure/webapps-deploy@v2
+        uses: azure/webapps-deploy@v3
         with:
-          app-name: ucrs-frontend-prod       # <-- your App Service name
-          package: ./deploy
+          app-name: ucrs-frontend-prod          # <-- your App Service name
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: release.zip
