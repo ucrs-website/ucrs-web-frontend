@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json.schemastore.org/staticwebapp.config.json",
+  "routes": [
+    {
+      "route": "/_next/static/*",
+      "headers": {
+        "cache-control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
+      "route": "/images/*",
+      "headers": {
+        "cache-control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
+      "route": "/videos/*",
+      "headers": {
+        "cache-control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
+      "route": "/*",
+      "headers": {
+        "X-DNS-Prefetch-Control": "on",
+        "Strict-Transport-Security": "max-age=63072000; includeSubDomains; preload",
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-Content-Type-Options": "nosniff",
+        "X-XSS-Protection": "1; mode=block",
+        "Referrer-Policy": "origin-when-cross-origin",
+        "Permissions-Policy": "camera=(), microphone=(), geolocation=()"
+      }
+    }
+  ],
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": [
+      "/api/*",
+      "/_next/*",
+      "/images/*",
+      "/videos/*",
+      "/*.{css,scss,sass}",
+      "/*.{js,jsx}",
+      "/*.{ts,tsx}",
+      "/*.{png,jpg,jpeg,gif,svg,webp,avif,ico}",
+      "/*.{woff,woff2,ttf,otf,eot}",
+      "/*.{mp4,webm}",
+      "/sitemap.xml",
+      "/robots.txt",
+      "/manifest.json",
+      "/favicon.ico"
+    ]
+  },
+  "platform": {
+    "apiRuntime": "node:20"
+  },
+  "trailingSlash": "never",
+  "globalHeaders": {
+    "cache-control": "public, max-age=0, must-revalidate"
+  },
+  "mimeTypes": {
+    ".json": "application/json",
+    ".avif": "image/avif",
+    ".webp": "image/webp"
+  }
+}
