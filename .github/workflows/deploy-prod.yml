@@ -19,42 +19,44 @@ jobs:
       NEXT_TELEMETRY_DISABLED: "1"
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Setup Node 20
+      - name: Use Node 20
         uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
-          cache: 'npm'
+          node-version: "20.x"
+          cache: "npm"
 
-      # bypass peer-deps error from react-simple-maps vs React 19
-      - name: Install deps
-        run: |
-          npm install --include=optional --no-audit --no-fund --legacy-peer-deps
-          # ensure linux sharp binary for Azure Linux
-          npm ls sharp || npm install --os=linux --cpu=x64 sharp --no-save
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund --legacy-peer-deps
 
-      - name: Build (standalone)
-        run: |
-          npx next telemetry disable || true
-          npm run build
+      - name: Build (Next.js standalone)
+        run: npm run build
 
-      - name: Assemble deploy folder
+      # ⬇️ KEY CHANGE: deploy the standalone folder as the app root
+      - name: Assemble deploy folder (standalone as root)
         run: |
           set -e
           rm -rf deploy
+          mkdir -p deploy
+          # copy standalone server files (this includes server.js)
+          cp -r .next/standalone/* deploy/
+          # ensure Next static assets are beside the server
           mkdir -p deploy/.next
-          cp -r .next/standalone deploy/.next/standalone
-          cp -r .next/static     deploy/.next/static
-          [ -d public ] && cp -r public deploy/public
-          echo "require('./.next/standalone/server.js');" > deploy/server.js
-          cp package*.json deploy/ || true
-          ls -la deploy
-          ls -la deploy/.next/standalone | head
-          ls -la deploy/.next/static | head
+          cp -r .next/static deploy/.next/static
+          # public assets (served at /)
+          if [ -d public ]; then cp -r public deploy/public; fi
+          # (optional) include package.json for runtime introspection
+          if [ -f package.json ]; then cp package.json deploy/; fi
+          echo "---- deploy root ----"; ls -la deploy
+          echo "---- deploy/.next ----"; ls -la deploy/.next | head
 
       - name: Zip deploy folder
-        run: (cd deploy && zip -r ../release.zip .)
+        run: |
+          cd deploy
+          zip -r ../release.zip .
+          cd ..
 
       - name: Deploy to App Service
         uses: azure/webapps-deploy@v3
