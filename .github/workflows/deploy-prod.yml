@@ -10,7 +10,7 @@ permissions:
 
 concurrency:
   group: deploy-frontend-prod
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build-and-deploy:
@@ -31,36 +31,32 @@ jobs:
       - name: Install deps
         run: npm ci
 
-      - name: Build (standalone)
+      - name: Build (Next standalone)
         run: npm run build
 
-      # Create the exact structure App Service should run
+      - name: Assert build output (debug)
+        run: |
+          set -eux
+          test -f .next/standalone/server.js
+          ls -la .next/standalone | head
+          ls -la .next/static | head
+
       - name: Assemble deploy folder
         run: |
-          set -e
-          rm -rf deploy
+          set -eux
+          rm -rf deploy release.zip
           mkdir -p deploy/.next
-          # Next standalone runtime (+ node_modules)
           cp -r .next/standalone deploy/.next/standalone
-          # Static assets
           cp -r .next/static deploy/.next/static
-          # Public (if present)
           if [ -d public ]; then cp -r public deploy/public; fi
-          # Root shim so npm start or 'node server.js' both work
-          printf "require('./.next/standalone/server.js');\n" > deploy/server.js
-          # Keep package files so Oryx can detect a Node app
-          cp package.json deploy/
-          if [ -f package-lock.json ]; then cp package-lock.json deploy/; fi
+          printf "require('./.next/standalone/server.js')\n" > deploy/server.js
 
       - name: Zip deploy folder
-        run: |
-          cd deploy
-          zip -r ../release.zip .
-          cd ..
+        run: (cd deploy && zip -r ../release.zip .)
 
       - name: Deploy to App Service
         uses: azure/webapps-deploy@v3
         with:
           app-name: ucrs-frontend-prod
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: release.zip
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
