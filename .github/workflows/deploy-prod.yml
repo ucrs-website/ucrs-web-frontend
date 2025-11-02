@@ -34,23 +34,18 @@ jobs:
       - name: Build (standalone)
         run: npm run build
 
-      # Create the exact structure App Service will run
       - name: Assemble deploy folder
         run: |
           set -e
           rm -rf deploy
           mkdir -p deploy/.next
-          # Copy Next's standalone runtime (includes node_modules)
           cp -r .next/standalone deploy/.next/standalone
-          # Static assets
-          cp -r .next/static deploy/.next/static
-          # Public folder if present
+          cp -r .next/static     deploy/.next/static
           if [ -d public ]; then cp -r public deploy/public; fi
-          # Root shim so "node server.js" works too
           printf "require('./.next/standalone/server.js');\n" > deploy/server.js
-          # Keep package files (not strictly required, but harmless)
-          if [ -f package.json ]; then cp package.json deploy/; fi
-          if [ -f package-lock.json ]; then cp package-lock.json deploy/; fi
+          # keep package files (lets Azure show version, and npm start works if used)
+          test -f package.json && cp package.json deploy/
+          test -f package-lock.json && cp package-lock.json deploy/
 
       - name: Zip deploy folder
         run: |
@@ -61,6 +56,6 @@ jobs:
       - name: Deploy to App Service
         uses: azure/webapps-deploy@v3
         with:
-          app-name: ucrs-frontend-prod          # <-- your App Service name
+          app-name: ucrs-frontend-prod
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: release.zip
