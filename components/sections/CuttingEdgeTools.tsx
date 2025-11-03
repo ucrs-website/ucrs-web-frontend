@@ -207,7 +207,7 @@ export function CuttingEdgeTools() {
                   size="lg"
                   className="w-full sm:w-auto h-10 lg:h-[50px] px-5 lg:px-6 rounded-lg bg-[#e4342d] hover:bg-[#bb2f27] text-white text-sm lg:text-base font-semibold shadow-sm"
                 >
-                  <Link href="/contact">Contact Us</Link>
+                  <Link href="/about#contact-us">Contact Us</Link>
                 </Button>
               </div>
             </div>

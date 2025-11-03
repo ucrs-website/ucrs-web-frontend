@@ -1,53 +1,53 @@
-'use client'
+"use client";
 
-import React from 'react'
-import Link from 'next/link'
-import { Wrench, Target, ArrowRight } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Zap } from 'lucide-react'
+import React from "react";
+import Link from "next/link";
+import { Wrench, Target, ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Zap } from "lucide-react";
 
 interface Service {
-  id: string
-  icon: React.ReactNode
-  title: string
-  description: string
-  link: string
+  id: string;
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+  link: string;
 }
 
 const services: Service[] = [
   {
-    id: 'repair-return',
+    id: "repair-return",
     icon: <Wrench className="h-5 w-5 text-white" />,
-    title: 'Repair & Return of Assemblies',
+    title: "Repair & Return of Assemblies",
     description:
-      'Quick turnaround times for repair projects, including disassembly, parts replacement, and testing systems',
-    link: '#',
+      "Quick turnaround times for repair projects, including disassembly, parts replacement, and testing systems",
+    link: "#quote-form",
   },
   {
-    id: 'obsolescence',
+    id: "obsolescence",
     icon: <Target className="h-5 w-5 text-white" />,
-    title: 'Obsolescence Management',
+    title: "Obsolescence Management",
     description:
-      'Specialized in substitution manufacturing strategies, offering advanced RE subsystemization/product component packaging.',
-    link: '#',
+      "Specialized in substitution manufacturing strategies, offering advanced RE subsystemization/product component packaging.",
+    link: "#quote-form",
   },
   {
-    id: 'rebuild',
+    id: "rebuild",
     icon: <Wrench className="h-5 w-5 text-white" />,
-    title: 'Comprehensive Locomotive Rebuild Programs',
+    title: "Comprehensive Locomotive Rebuild Programs",
     description:
-      'From the ground up to a like-brand-new rating state. All assemblies are reconditioned for maximum operational reliability.',
-    link: '#',
+      "From the ground up to a like-brand-new rating state. All assemblies are reconditioned for maximum operational reliability.",
+    link: "#quote-form",
   },
   {
-    id: 'consulting',
+    id: "consulting",
     icon: <Target className="h-5 w-5 text-white" />,
-    title: 'Consulting for Locomotive Maintenance & Rebuild',
+    title: "Consulting for Locomotive Maintenance & Rebuild",
     description:
-      'Meet budgets and maximize expertise. Professional inspection, planning, and optimization for fleet maintenance.',
-    link: '#',
+      "Meet budgets and maximize expertise. Professional inspection, planning, and optimization for fleet maintenance.",
+    link: "#quote-form",
   },
-]
+];
 
 export function ExpertServicesGrid() {
   return (
@@ -75,8 +75,8 @@ export function ExpertServicesGrid() {
 
               {/* Supporting Text */}
               <p className="text-base text-[#535862] leading-relaxed">
-                Discover innovative solutions tailored to your needs. Our team is dedicated to
-                providing exceptional service and support.
+                Discover innovative solutions tailored to your needs. Our team
+                is dedicated to providing exceptional service and support.
               </p>
 
               {/* CTA Button */}
@@ -85,7 +85,7 @@ export function ExpertServicesGrid() {
                 size="lg"
                 className="h-10 px-3.5 text-sm font-semibold rounded-lg"
               >
-                <Link href="#services">Request For Service</Link>
+                <Link href="#quote-form">Request For Service</Link>
               </Button>
             </div>
 
@@ -148,8 +148,8 @@ export function ExpertServicesGrid() {
 
               {/* Supporting Text */}
               <p className="text-lg text-[#535862] leading-relaxed">
-                Discover innovative solutions tailored to your needs. Our team is dedicated to
-                providing exceptional service and support.
+                Discover innovative solutions tailored to your needs. Our team
+                is dedicated to providing exceptional service and support.
               </p>
 
               {/* CTA Button */}
@@ -158,7 +158,7 @@ export function ExpertServicesGrid() {
                 size="lg"
                 className="h-[60px] px-[22px] text-lg rounded-[10px]"
               >
-                <Link href="#services">Request For Service</Link>
+                <Link href="#quote-form">Request For Service</Link>
               </Button>
             </div>
 
@@ -202,5 +202,5 @@ export function ExpertServicesGrid() {
         </div>
       </div>
     </section>
-  )
+  );
 }

@@ -1,66 +1,86 @@
-'use client'
+"use client";
 
-import React from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
-import { Search, Settings, ClipboardList, Package, Award } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import React from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { Search, Settings, ClipboardList, Package, Award } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   Comparison,
   ComparisonItem,
   ComparisonHandle,
-} from '@/components/kibo-ui/comparison'
+} from "@/components/kibo-ui/comparison";
 
 interface ProcessStep {
-  id: string
-  icon: React.ReactNode
-  label: string
-  labelMobile?: string
+  id: string;
+  icon: React.ReactNode;
+  label: string;
+  labelMobile?: string;
 }
 
 const processSteps: ProcessStep[] = [
   {
-    id: 'diagnostic',
-    icon: <Search className="h-12 w-12 lg:h-12 lg:w-12 text-[#535862]" strokeWidth={1.5} />,
-    label: 'Diagnostic Inspection',
+    id: "diagnostic",
+    icon: (
+      <Search
+        className="h-12 w-12 lg:h-12 lg:w-12 text-[#535862]"
+        strokeWidth={1.5}
+      />
+    ),
+    label: "Diagnostic Inspection",
   },
   {
-    id: 'restoration',
-    icon: <Settings className="h-12 w-12 lg:h-12 lg:w-12 text-[#535862]" strokeWidth={1.5} />,
-    label: 'Full-Scope Restoration',
-    labelMobile: 'OEM-Compliant Repair',
+    id: "restoration",
+    icon: (
+      <Settings
+        className="h-12 w-12 lg:h-12 lg:w-12 text-[#535862]"
+        strokeWidth={1.5}
+      />
+    ),
+    label: "Full-Scope Restoration",
+    labelMobile: "OEM-Compliant Repair",
   },
   {
-    id: 'testing',
-    icon: <ClipboardList className="h-12 w-12 lg:h-12 lg:w-12 text-[#535862]" strokeWidth={1.5} />,
-    label: 'OEM Compliant Testing',
-    labelMobile: 'Quality Assurance Testing',
+    id: "testing",
+    icon: (
+      <ClipboardList
+        className="h-12 w-12 lg:h-12 lg:w-12 text-[#535862]"
+        strokeWidth={1.5}
+      />
+    ),
+    label: "OEM Compliant Testing",
+    labelMobile: "Quality Assurance Testing",
   },
   {
-    id: 'shipping',
-    icon: <Package className="h-12 w-12 lg:h-12 lg:w-12 text-[#535862]" strokeWidth={1.5} />,
-    label: 'Return Shipping',
+    id: "shipping",
+    icon: (
+      <Package
+        className="h-12 w-12 lg:h-12 lg:w-12 text-[#535862]"
+        strokeWidth={1.5}
+      />
+    ),
+    label: "Return Shipping",
   },
-]
+];
 
 interface ComprehensiveRepairsProps {
-  headingDesktop?: string
-  headingMobile?: string
-  warrantyTextDesktop?: string
-  warrantyTextMobile?: string
-  ctaText?: string
-  ctaHref?: string
-  productImage?: string
+  headingDesktop?: string;
+  headingMobile?: string;
+  warrantyTextDesktop?: string;
+  warrantyTextMobile?: string;
+  ctaText?: string;
+  ctaHref?: string;
+  productImage?: string;
 }
 
 export function ComprehensiveRepairs({
-  headingDesktop = 'Comprehensive Repairs, Guaranteed Performance',
-  headingMobile = 'Precision Repairs, Guaranteed Performance',
-  warrantyTextDesktop = 'All repairs backed by a 12-month warranty.',
-  warrantyTextMobile = 'All repairs backed by a 2-year warranty.',
-  ctaText = 'Request For Service',
-  ctaHref = '#',
-  productImage = '/images/services/motor-repair-comparison.png',
+  headingDesktop = "Comprehensive Repairs, Guaranteed Performance",
+  headingMobile = "Precision Repairs, Guaranteed Performance",
+  warrantyTextDesktop = "All repairs backed by a 12-month warranty.",
+  warrantyTextMobile = "All repairs backed by a 2-year warranty.",
+  ctaText = "Request For Service",
+  ctaHref = "#",
+  productImage = "/images/services/motor-repair-comparison.png",
 }: ComprehensiveRepairsProps) {
   return (
     <section className="bg-white py-16 lg:py-24">
@@ -87,16 +107,28 @@ export function ComprehensiveRepairs({
                 <div key={step.id} className="flex flex-col items-center gap-3">
                   <div className="flex items-center justify-center w-10 h-10">
                     {index === 0 && (
-                      <Search className="h-10 w-10 text-[#535862]" strokeWidth={1.5} />
+                      <Search
+                        className="h-10 w-10 text-[#535862]"
+                        strokeWidth={1.5}
+                      />
                     )}
                     {index === 1 && (
-                      <Settings className="h-10 w-10 text-[#535862]" strokeWidth={1.5} />
+                      <Settings
+                        className="h-10 w-10 text-[#535862]"
+                        strokeWidth={1.5}
+                      />
                     )}
                     {index === 2 && (
-                      <ClipboardList className="h-10 w-10 text-[#535862]" strokeWidth={1.5} />
+                      <ClipboardList
+                        className="h-10 w-10 text-[#535862]"
+                        strokeWidth={1.5}
+                      />
                     )}
                     {index === 3 && (
-                      <Package className="h-10 w-10 text-[#535862]" strokeWidth={1.5} />
+                      <Package
+                        className="h-10 w-10 text-[#535862]"
+                        strokeWidth={1.5}
+                      />
                     )}
                   </div>
                   <p className="text-sm font-semibold text-[#181D27] text-center">
@@ -112,7 +144,7 @@ export function ComprehensiveRepairs({
                 {/* Before Image (Left) */}
                 <ComparisonItem position="left">
                   <Image
-                    src="/images/services/before.avif"
+                    src="/images/services/before.webp"
                     alt="Damaged locomotive motor before repair"
                     fill
                     className="object-cover"
@@ -124,7 +156,7 @@ export function ComprehensiveRepairs({
                 {/* After Image (Right) */}
                 <ComparisonItem position="right">
                   <Image
-                    src="/images/services/after.avif"
+                    src="/images/services/after.webp"
                     alt="Restored locomotive motor after repair"
                     fill
                     className="object-cover"
@@ -170,11 +202,14 @@ export function ComprehensiveRepairs({
             {/* Process Steps Row */}
             <div className="flex items-start justify-center gap-16">
               {processSteps.map((step) => (
-                <div key={step.id} className="flex flex-col items-center gap-4 max-w-[160px]">
+                <div
+                  key={step.id}
+                  className="flex flex-col items-center gap-4 max-w-[160px]"
+                >
                   <div className="flex items-center justify-center w-12 h-12">
                     {step.icon}
                   </div>
-                  <p className="text-base font-semibold text-[#181D27] text-center leading-tight">
+                  <p className="text-sm font-semibold text-[#181D27] text-center leading-tight">
                     {step.label}
                   </p>
                 </div>
@@ -187,7 +222,7 @@ export function ComprehensiveRepairs({
                 {/* Before Image (Left) */}
                 <ComparisonItem position="left">
                   <Image
-                    src="/images/services/before.avif"
+                    src="/images/services/before.webp"
                     alt="Damaged locomotive motor before repair"
                     fill
                     className="object-cover"
@@ -199,7 +234,7 @@ export function ComprehensiveRepairs({
                 {/* After Image (Right) */}
                 <ComparisonItem position="right">
                   <Image
-                    src="/images/services/after.avif"
+                    src="/images/services/after.webp"
                     alt="Restored locomotive motor after repair"
                     fill
                     className="object-cover"
@@ -227,5 +262,5 @@ export function ComprehensiveRepairs({
         </div>
       </div>
     </section>
-  )
+  );
 }

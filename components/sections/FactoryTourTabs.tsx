@@ -17,27 +17,27 @@ export function FactoryTourTabs() {
   const tabs = [
     {
       title: "Factory",
-      image: "/images/factory-tour/tabs/factory-panorama.webp",
+      image: "/images/factory-tour/tabs/factory-panorama1.webp",
     },
     {
       title: "Manufacturing Site",
-      image: "/images/factory-tour/tabs/manufacturing-site.webp",
+      image: "/images/factory-tour/tabs/manufacturing-site1.webp",
     },
     {
       title: "Inspection Room",
-      image: "/images/factory-tour/tabs/inspection-room.webp",
+      image: "/images/factory-tour/tabs/inspection-room1.webp",
     },
     {
       title: "Logistics",
-      image: "/images/factory-tour/tabs/logistics.webp",
+      image: "/images/factory-tour/tabs/logistics1.webp",
     },
     {
       title: "Warehouse",
-      image: "/images/factory-tour/tabs/warehouse.webp",
+      image: "/images/factory-tour/tabs/warehouse1.webp",
     },
     {
       title: "Office",
-      image: "/images/factory-tour/tabs/office.webp",
+      image: "/images/factory-tour/tabs/office1.webp",
     },
   ];
 
