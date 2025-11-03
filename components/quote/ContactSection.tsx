@@ -51,11 +51,11 @@ export function ContactSection() {
         <div className="max-w-6xl mx-auto">
           {/* Section Header */}
           <div className="mb-12 md:mb-16">
-            <p className="text-primary text-sm md:text-base font-semibold mb-2">
-              Contact us
-            </p>
+            <div className="text-primary text-sm md:text-base font-semibold mb-2">
+              We'd love to hear from you
+            </div>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-              We'd <span className="text-primary">love</span> to hear from you
+              Contact Us
             </h2>
             <p className="text-gray-600 text-base md:text-lg">
               Our friendly team is always here to chat.

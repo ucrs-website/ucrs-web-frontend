@@ -14,22 +14,22 @@ const journeyData: JourneyItem[] = [
     year: "2001",
     description:
       "Journey to Excellence started: Company restructured with focus on manufacturing",
-    image: "/images/about/year2001.avif",
+    image: "/images/about/year2001.jpg",
   },
   {
     year: "2014",
     description: "Corporate Reorganization",
-    image: "/images/about/year2014.avif",
+    image: "/images/about/year2014.jpg",
   },
   {
     year: "2018",
     description: "Manufacturing Startup Allanburg, ON",
-    image: "/images/about/year2018.avif",
+    image: "/images/about/year2018.jpg",
   },
   {
     year: "2019",
     description: "Construction started in Welland, ON",
-    image: "/images/about/year2019.avif",
+    image: "/images/about/year2019.jpg",
   },
   {
     year: "2021",
@@ -39,7 +39,7 @@ const journeyData: JourneyItem[] = [
   {
     year: "2022",
     description: "Operation moved to Welland, ON",
-    image: "/images/about/year2022.avif",
+    image: "/images/about/year2022.jpg",
   },
 ];
 
