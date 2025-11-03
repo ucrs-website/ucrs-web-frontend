@@ -23,7 +23,7 @@ export function HeroSection({
   checkItems = [
     "5000+ OEM-Compatible Parts",
     "AAR-M1003 Certified",
-    "57+ Countries Served",
+    "37+ Countries Served",
     "60+ Years Combined Experience",
   ],
 }: HeroSectionProps) {
