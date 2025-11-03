@@ -6,6 +6,7 @@ import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
 import { QuoteCartBar } from "@/components/products/QuoteCart";
 import { ToastContainer } from "@/components/ui/toast-container";
+import { Toaster } from "sonner";
 
 const manrope = Manrope({
   variable: "--font-manrope",
@@ -175,6 +176,7 @@ export default function RootLayout({
         </main>
         <Footer />
         <ToastContainer />
+        <Toaster position="top-right" richColors />
       </body>
     </html>
   );
