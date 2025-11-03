@@ -1,4 +1,4 @@
-name: Deploy Frontend to Azure App Service (main)
+name: Deploy Frontend to Azure App Service (prod)
 
 on:
   push:
@@ -8,6 +8,7 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest  # build on Linux so native linux binaries are produced
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -18,29 +19,31 @@ jobs:
           node-version: '20.x'
           cache: 'npm'
 
-      # Use npm install (not ci) because your lockfile is out of sync.
-      # --include=optional lets npm install sharp if possible, but we also set images.unoptimized=true so it's not required.
-      # --legacy-peer-deps resolves the react-simple-maps peer range vs React 19.
-      - name: Install dependencies (with optional + legacy peer deps)
-        run: npm install --include=optional --legacy-peer-deps
+      # If lockfile is out of sync, npm ci fails; fall back to npm install.
+      # Also include optional deps (e.g., optional sharp) and relax peer deps to avoid React 19 peer warnings.
+      - name: Install dependencies (ci -> install fallback)
+        run: |
+          npm ci --include=optional --legacy-peer-deps || \
+          npm install --include=optional --legacy-peer-deps
 
-      - name: Build
+      - name: Build (standalone)
         run: npm run build
 
-      # Copy the static assets and public folder into the standalone bundle.
-      # Without this, CSS/JS are missing and the site looks unstyled.
-      - name: Bundle static assets into standalone
+      # Bundle everything Azure needs:
+      # - the standalone server
+      # - the static assets folder (.next/static)
+      # - the public folder (images, fonts, etc.)
+      - name: Prepare deploy folder
         run: |
-          mkdir -p .next/standalone/.next
-          cp -r .next/static .next/standalone/.next/static
-          if [ -d public ]; then
-            cp -r public .next/standalone/public
-          fi
+          rm -rf deploy
+          mkdir -p deploy/.next
+          cp -R .next/standalone/* deploy/
+          cp -R .next/static deploy/.next/static
+          if [ -d public ]; then cp -R public deploy/public; fi
 
-      # Deploy only the standalone output
-      - name: Deploy to Azure Web App (prod)
+      - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: ucrs-frontend-prod
-          package: .next/standalone
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_PROD }}
+          package: deploy
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }} # use the same secret you already used in your last successful run
