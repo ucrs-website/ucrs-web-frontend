@@ -1,17 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // produce the self-contained server bundle
+  // Produce a self-contained server bundle for Azure
   output: 'standalone',
   reactStrictMode: true,
 
-  // prevent runtime image optimization (and the hard dependency on sharp)
+  // Disable Next/Image optimization so Sharp isn't required
   images: {
     unoptimized: true,
-    // If you load remote images, add their hostnames here:
-    // domains: ['ucrs.com', 'cdn.example.com'],
+    // domains: ['ucrs.com'], // add if you use remote images
   },
 
-  // keep build stable on CI
+  // Keep CI builds resilient; you can tighten later
   eslint: { ignoreDuringBuilds: true },
   typescript: { ignoreBuildErrors: true },
 };
