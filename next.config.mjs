@@ -1,18 +1,19 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Produce a self-contained server folder for Azure
+  // produce the self-contained server bundle
   output: 'standalone',
-
   reactStrictMode: true,
 
-  // Avoid native sharp on the server (works fine for <Image/>)
+  // prevent runtime image optimization (and the hard dependency on sharp)
   images: {
     unoptimized: true,
+    // If you load remote images, add their hostnames here:
+    // domains: ['ucrs.com', 'cdn.example.com'],
   },
 
-  // Let CI build even if TS or ESLint has issues
-  typescript: { ignoreBuildErrors: true },
+  // keep build stable on CI
   eslint: { ignoreDuringBuilds: true },
+  typescript: { ignoreBuildErrors: true },
 };
 
 export default nextConfig;
