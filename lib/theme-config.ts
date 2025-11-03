@@ -1,20 +1,29 @@
-import designSystem from '../public/DesignSystem.json'
+import * as designSystemModule from '../public/DesignSystem.json'
 
 /**
  * UCRS Theme Configuration
  * Maps DesignSystem.json to shadcn/ui theme variables and provides utility functions
  */
 
-export const ucrsTheme = {
-  // Brand Information
-  brand: {
-    name: designSystem.designSystem.brandName,
-    fullName: designSystem.designSystem.fullName,
-    industry: designSystem.designSystem.industry,
-  },
+// Helper function to safely access the design system data
+function getThemeData() {
+  const data: any = designSystemModule
+  return data.default?.designSystem || data.designSystem
+}
 
-  // Color System (HSL values for shadcn/ui compatibility)
-  colors: {
+// Create theme object using function to avoid build worker issues
+function createTheme() {
+  const _data = getThemeData()
+  return {
+    // Brand Information
+    brand: {
+      name: _data.brandName,
+      fullName: _data.fullName,
+      industry: _data.industry,
+    },
+
+    // Color System (HSL values for shadcn/ui compatibility)
+    colors: {
       // Primary Colors (Red)
       primary: {
         DEFAULT: '0 79% 50%', // #E53E3E
@@ -111,41 +120,43 @@ export const ucrsTheme = {
       input: '214 20% 90%',             // #E2E8F0
       ring: '0 79% 50%',                // #E53E3E
     },
-  },
 
-  // Typography System
-  typography: {
-    fontFamily: {
-      primary: designSystem.designSystem.typography.fontFamilies.primary,
-      heading: designSystem.designSystem.typography.fontFamilies.heading,
-      mono: designSystem.designSystem.typography.fontFamilies.mono,
+    // Typography System
+    typography: {
+      fontFamily: {
+        primary: _data.typography.fontFamilies.primary,
+        heading: _data.typography.fontFamilies.heading,
+        mono: _data.typography.fontFamilies.mono,
+      },
+      fontSize: _data.typography.fontSizes,
+      fontWeight: _data.typography.fontWeights,
+      lineHeight: _data.typography.lineHeights,
     },
-    fontSize: designSystem.designSystem.typography.fontSizes,
-    fontWeight: designSystem.designSystem.typography.fontWeights,
-    lineHeight: designSystem.designSystem.typography.lineHeights,
-  },
 
-  // Spacing System
-  spacing: designSystem.designSystem.spacing,
+    // Spacing System
+    spacing: _data.spacing,
 
-  // Layout System
-  layout: {
-    containerMaxWidth: designSystem.designSystem.layout.containerMaxWidth,
-    containerPadding: designSystem.designSystem.layout.containerPadding,
-    sectionPadding: designSystem.designSystem.layout.sectionPadding,
-    gridGap: designSystem.designSystem.layout.gridGap,
-    headerHeight: designSystem.designSystem.layout.headerHeight,
-  },
+    // Layout System
+    layout: {
+      containerMaxWidth: _data.layout.containerMaxWidth,
+      containerPadding: _data.layout.containerPadding,
+      sectionPadding: _data.layout.sectionPadding,
+      gridGap: _data.layout.gridGap,
+      headerHeight: _data.layout.headerHeight,
+    },
 
-  // Component Specifications
-  components: designSystem.designSystem.components,
+    // Component Specifications
+    components: _data.components,
 
-  // Responsive Breakpoints
-  breakpoints: designSystem.designSystem.responsive.breakpoints,
+    // Responsive Breakpoints
+    breakpoints: _data.responsive.breakpoints,
 
-  // Animation System
-  animations: designSystem.designSystem.animations,
+    // Animation System
+    animations: _data.animations,
+  }
 }
+
+export const ucrsTheme = createTheme()
 
 /**
  * Utility function to get CSS custom properties
