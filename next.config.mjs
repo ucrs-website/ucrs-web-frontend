@@ -1,16 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Output a self-contained server folder for Azure
   output: 'standalone',
+
+  // Avoid sharp errors on Azure App Service
+  images: { unoptimized: true },
+
+  // Keep builds clean on CI
   reactStrictMode: true,
-
-  // Avoid Sharp at runtime/build on Azure
-  images: {
-    unoptimized: true,
-  },
-
-  // Keep CI resilient; tighten later if you want
-  eslint: { ignoreDuringBuilds: true },
-  typescript: { ignoreBuildErrors: true },
+  eslint: { ignoreDuringBuilds: true }
 };
 
 export default nextConfig;
