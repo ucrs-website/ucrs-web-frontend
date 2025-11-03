@@ -31,26 +31,19 @@ jobs:
       - name: Install dependencies
         run: npm install --no-audit --no-fund --legacy-peer-deps
 
-      - name: Build (Next.js standalone)
+      - name: Build (standalone)
         run: npm run build
 
-      # ⬇️ KEY CHANGE: deployy the standalone folder as the app root
-      - name: Assemble deploy folder (standalone as root)
+      - name: Prepare deploy folder
         run: |
           set -e
-          rm -rf deploy
           mkdir -p deploy
-          # copy standalone server files (this includes server.js)
-          cp -r .next/standalone/* deploy/
-          # ensure Next static assets are beside the server
-          mkdir -p deploy/.next
-          cp -r .next/static deploy/.next/static
-          # public assets (served at /)
+          cp -r .next/standalone deploy/
+          cp -r .next/static deploy/.next/
           if [ -d public ]; then cp -r public deploy/public; fi
-          # (optional) include package.json for runtime introspection
-          if [ -f package.json ]; then cp package.json deploy/; fi
-          echo "---- deploy root ----"; ls -la deploy
-          echo "---- deploy/.next ----"; ls -la deploy/.next | head
+          cp package*.json deploy/
+          ls -la deploy
+          ls -la deploy/.next | head
 
       - name: Zip deploy folder
         run: |
@@ -58,7 +51,7 @@ jobs:
           zip -r ../release.zip .
           cd ..
 
-      - name: Deploy to App Service
+      - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: ucrs-frontend-prod
