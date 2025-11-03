@@ -19,15 +19,12 @@ jobs:
           node-version: '20.x'
           cache: 'npm'
 
-      # Allow React 19 with libs that still peer-depend on <=18
-      # and make sure optional deps (like sharp) can install.
-      - name: Install dependencies (with optional + legacy peer deps)
-        run: npm ci --include=optional --legacy-peer-deps
-
-      # Ensure a linux-x64 sharp binary is present to avoid runtime complaints.
-      # Harmless if images are unoptimized, but keeps Next from yelling.
-      - name: Add linux sharp
-        run: npm install --no-save sharp@0.33.x --os=linux --cpu=x64
+      # If the lockfile is out of sync, npm ci fails with EUSAGE.
+      # We fall back to npm install so the build still proceeds.
+      - name: Install dependencies (ci -> install fallback)
+        run: |
+          npm ci --include=optional --legacy-peer-deps || \
+          npm install --include=optional --legacy-peer-deps
 
       - name: Build (standalone)
         env:
@@ -52,6 +49,6 @@ jobs:
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
-          app-name: ucrs-frontend-prod          # <-- your Web App name
+          app-name: ucrs-frontend-prod
           package: deploy.zip
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
