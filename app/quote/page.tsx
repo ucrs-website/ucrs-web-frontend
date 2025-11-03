@@ -166,6 +166,7 @@ export default function QuotePage() {
               <QuoteRequestForm
                 onSuccess={handleSuccess}
                 onError={handleError}
+                defaultTab="products"
               />
             </div>
           </div>

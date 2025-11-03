@@ -18,9 +18,10 @@ import type { QuoteFormData, QuoteFormErrors, QuoteService } from "@/lib/types/q
 interface QuoteRequestFormProps {
   onSuccess?: () => void;
   onError?: (error: string) => void;
+  defaultTab?: "products" | "services";
 }
 
-export function QuoteRequestForm({ onSuccess, onError }: QuoteRequestFormProps) {
+export function QuoteRequestForm({ onSuccess, onError, defaultTab = "products" }: QuoteRequestFormProps) {
   const { items } = useQuoteCart();
 
   const [formData, setFormData] = useState<QuoteFormData>({
@@ -30,7 +31,7 @@ export function QuoteRequestForm({ onSuccess, onError }: QuoteRequestFormProps) 
     country: "",
     phone: "",
     phoneCountryCode: "+1",
-    quoteType: "products",
+    quoteType: defaultTab,
     attachments: [],
     services: {
       serviceTypes: {
