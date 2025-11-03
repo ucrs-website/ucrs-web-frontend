@@ -2,13 +2,12 @@ name: Deploy Frontend to Azure App Service (prod)
 
 on:
   push:
-    branches: [ main ]  # change if your prod deploy tracks another branch
+    branches: [prod]   # change to [main] if your prod branch is main
   workflow_dispatch:
 
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-latest
-
+    runs-on: ubuntu-latest   # build on Linux so native linux binaries are produced
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -16,15 +15,16 @@ jobs:
       - name: Use Node 20
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '20.x'
           cache: 'npm'
 
-      # 🔧 Key fix: make sure sharp (optional) is present and built for linux-x64
-      - name: Install dependencies (with optional + sharp for linux)
-        run: |
-          npm ci --include=optional
-          # Rebuild sharp for the target runtime (linux-x64); ignore if already correct
-          npm rebuild sharp --platform=linux --arch=x64 || true
+      # ignore peer-dep fight (react 19 vs react-simple-maps) and include optional deps
+      - name: Install dependencies (with optional & legacy peer deps)
+        run: npm ci --include=optional --legacy-peer-deps
+
+      # ensure linux-x64 sharp exists (harmless if not used, prevents runtime nags)
+      - name: Add linux sharp
+        run: npm install --no-save sharp@0.33.x --os=linux --cpu=x64
 
       - name: Build (standalone)
         env:
@@ -32,16 +32,13 @@ jobs:
           NEXT_TELEMETRY_DISABLED: 1
         run: npm run build
 
-      # Keep the same layout your App Service startup command uses:
-      #   node .next/standalone/server.js
       - name: Prepare deploy folder
         run: |
           rm -rf deploy
-          mkdir -p deploy/.next/standalone
           mkdir -p deploy/.next/static
-          cp -R .next/standalone/* deploy/.next/standalone/
-          cp -R .next/static/* deploy/.next/static/
-          if [ -d public ]; then mkdir -p deploy/public && cp -R public/* deploy/public/; fi
+          cp -r .next/standalone deploy/.next/standalone
+          cp -r .next/static/* deploy/.next/static/
+          cp -r public deploy/public
           cp package.json deploy/package.json
 
       - name: Zip deploy folder
@@ -50,8 +47,9 @@ jobs:
           zip -r ../deploy.zip .
 
       - name: Deploy to Azure Web App
-        uses: azure/webapps-deploy@v2
+        uses: azure/webapps-deploy@v3
         with:
-          app-name: ucrs-frontend-prod                 # <-- your App Service name
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}  # <-- use your existing secret name
+          app-name: ucrs-frontend-prod
           package: deploy.zip
+          # use your existing publish profile secret name if it's different
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
