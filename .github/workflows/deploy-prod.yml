@@ -34,7 +34,7 @@ jobs:
       - name: Build (Next.js standalone)
         run: npm run build
 
-      # ⬇️ KEY CHANGE: deploy the standalone folder as the app root
+      # ⬇️ KEY CHANGE: deployy the standalone folder as the app root
       - name: Assemble deploy folder (standalone as root)
         run: |
           set -e
