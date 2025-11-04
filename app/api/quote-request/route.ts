@@ -1,11 +1,11 @@
 /**
  * Quote Request API Route
- * Handles quote request submissions and sends emails via Gmail API
+ * Handles quote request submissions and sends emails via SMTP
  */
 
 import { NextRequest, NextResponse } from "next/server";
 import type { QuoteFormData } from "@/lib/types/quote";
-import { sendQuoteRequestEmail } from "@/lib/services/gmail-service";
+import { sendQuoteRequestEmailSMTP } from "@/lib/services/smtp-email-service";
 import { addQuoteRequest } from "@/lib/googleSheets";
 
 /**
@@ -182,8 +182,8 @@ export async function POST(request: NextRequest) {
       attachments: data.attachmentUrls,
     };
 
-    // Step 3: Send email via Gmail API
-    const emailResult = await sendQuoteRequestEmail(emailData);
+    // Step 3: Send email via SMTP
+    const emailResult = await sendQuoteRequestEmailSMTP(emailData);
 
     if (!emailResult.success) {
       throw new Error("Failed to send quote request email");
