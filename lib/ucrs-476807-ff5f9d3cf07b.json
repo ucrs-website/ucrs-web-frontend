@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "ucrs-476807",
+  "private_key_id": "ff5f9d3cf07bd30e61b8808bd857a2538e9626db",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDE8m+7cQDZAdCp\nEanGBTtnJrSbJ99MN6kfPpaBC9gapWw4I3/3TG2NWCu7sYzgzRqiF8oHlV10cgJq\nARX5eFb7QQn2TtI3PG8snUBMlnR3q1R8Klv0QhEfRm1BIcvFj4gmhp7RYFtHZta6\n4aFxEXli1VCJtdu0BmDsFzcB1sgrfgrDBxpY1CwJ7p5aQ7CK29FU5lsDE8W50k6o\na92Yl0v+5PFElMQzKcUhnI6Odf016eaYY+OwH0YSFXqLTjztgOc3YPP4KodpgCsz\nxELtOVtN1cjVRzU7uRAq6ckc+zIgF0vWZZMOHlGfRAmMq4rApVR3PIbS5HVcH7w6\nqP8uyrb7AgMBAAECggEAMVPhfUqX4kJsnzPv2EuOLc9JdAUADihwwQUdkBPF3CKr\noMHvdqKbW8gGKBwXw2RLs+aOcOjNv/EgPqmn9dRYwNRw6NKkHzaRR9TY+nXClQiC\nABlh76Mug61RhvsufPxupuuX0qw2IIOW67bAhz/PrdvssJkufoAMfYVw/xJrD00x\nV5NKeAIkgqqchPf8pCdSJnUppUZ+PVKfvZd0j4fMoyeBcKq4cbyNZAdmf3+9wpWz\nEuWQbKscflzvbOauF2pjvfemlCDHH3QujDVo5hqaTzd/qtTmcnkksW0gxmHE5r4h\nz2CWVbjZfswmXt7PlColN+kTKzx1aHrc4UDm/CO46QKBgQDpZ31M9Jou/GQyYaPH\nUjA7MdsTlnewst5REqb5O85ADiJZJbN3wz5VJO9TMxqh7sGk9gTsMAd5m4++wDVy\n9i8y5dA9cTkPzHoxNTQ9hQU7F14/1Ja/3XMA6vpQzhb6QVnUfkvILykVyCFF1yJp\n5yFgvYH7JNuMxknSl4fogEWDYwKBgQDYA2tDxJ2bgMsCcpfCqnt/1o56fIXxhJym\n9DEcLj3JootMGGu8BOpx82p7D2aY4n5j86Gwawmwie7ElY/hPdgrm0oCCdeo6Jq9\nGAYOubVHArL5I+1lNnqphCOunvfhXeq5kIFSrv9aJhqM84zZR7iJIk2JT+tAJFro\n0Q4SyjUtiQKBgCCwsPkFTU8FZJc127WACmdQDUoKCguCkeazARXpTXLlR+RKhn9g\npitQuABkKPfDM/YByyC1fWaH5jMmQpYuat/rFiZ05DQVRIv90qpHJjtng3jXMqH+\nxyu6vYJxywAUBRvg8IZCLLPzSs24WwaQK7mb8UeWmvV1lENdm9hxlsrXAoGBALfB\nQNAnQ4Ny7j8oyBya9e/rzsw3faHUk4YamGRGmd0a3rBe3dbVv7IrxVrl4PsRQT85\nk0QF6fo5e9nS+NA80dVWhoBxavmO1YMiGpUQOTss+p6hh2LgEzx84fW72VXnlLNC\nUCDMKQDBBTj+PcTgFATkH109lPu9cXA31mb5iH8xAoGBAIPjpvfkAeIaSnBaTblc\n8Mac5k7qpH7T5NEAHedAraFmDjOlLfwCKn1uRxYbqp5zpQxGBeO++6uYEzEQItmO\nYkPnOUUMg5aIqmZ6Px+87JyW8vkvOj9gwYBVDOZTMd+3qGHu2/h7HaqVg3v97U8X\nwDmpxSuvKbCQBPuxZu+wVqLe\n-----END PRIVATE KEY-----\n",
+  "client_email": "ucrs-newsletter-service@ucrs-476807.iam.gserviceaccount.com",
+  "client_id": "113481649059959822156",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/ucrs-newsletter-service%40ucrs-476807.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

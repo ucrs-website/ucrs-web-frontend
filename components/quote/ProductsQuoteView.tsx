@@ -5,11 +5,12 @@
 
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { Search, ChevronLeft, ChevronRight } from "lucide-react";
 import { useQuoteCart } from "@/lib/hooks/useQuoteCart";
 import { QuoteProductsTable } from "./QuoteProductsTable";
 import { useRouter } from "next/navigation";
+import { suggestProducts, type ProductSuggestion } from "@/lib/api/products";
 import type { Product } from "@/lib/types/products";
 
 interface ProductsQuoteViewProps {
@@ -20,11 +21,15 @@ const ITEMS_PER_PAGE = 10;
 
 export function ProductsQuoteView({ error }: ProductsQuoteViewProps) {
   const router = useRouter();
-  const { items } = useQuoteCart();
+  const { items, addToQuote } = useQuoteCart();
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState<Product[]>([]);
+  const [searchResults, setSearchResults] = useState<ProductSuggestion[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Debounce timer ref
+  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   // Calculate pagination
   const totalPages = Math.ceil(items.length / ITEMS_PER_PAGE);
@@ -32,35 +37,82 @@ export function ProductsQuoteView({ error }: ProductsQuoteViewProps) {
   const endIndex = startIndex + ITEMS_PER_PAGE;
   const currentItems = items.slice(startIndex, endIndex);
 
-  // Search products with 3-second delay
-  useEffect(() => {
-    if (!searchQuery.trim()) {
+  // Handle search input change with 1-second debounce (minimum 3 chars)
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchQuery(value);
+
+    // Clear existing timer
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current);
+    }
+
+    // If less than 3 characters, don't search
+    if (value.trim().length < 3) {
       setSearchResults([]);
       setIsSearching(false);
       return;
     }
 
     setIsSearching(true);
-    const timer = setTimeout(async () => {
+
+    // Set new timer with 1-second delay
+    debounceTimerRef.current = setTimeout(async () => {
       try {
-        // Search for products in the database
-        const response = await fetch(
-          `/api/products/search?q=${encodeURIComponent(searchQuery)}`
-        );
-        if (response.ok) {
-          const data = await response.json();
-          setSearchResults(data.products || []);
-        }
+        const results = await suggestProducts(value, 20);
+        setSearchResults(results);
       } catch (error) {
         console.error("Search error:", error);
         setSearchResults([]);
       } finally {
         setIsSearching(false);
       }
-    }, 3000);
+    }, 1000); // 1 second debounce
+  };
 
-    return () => clearTimeout(timer);
-  }, [searchQuery]);
+  // Handle adding product to quote cart
+  const handleAddProduct = (suggestion: ProductSuggestion) => {
+    if (!suggestion.oemSku || !suggestion.name) return;
+
+    // Convert suggestion to Product type for quote cart
+    const product: Product = {
+      name: suggestion.name,
+      oemSku: suggestion.oemSku,
+      description: "",
+      catId: 0,
+      groupId: 0,
+    };
+
+    addToQuote(product);
+    setSearchQuery("");
+    setSearchResults([]);
+  };
+
+  // Handle click outside to close dropdown
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setSearchResults([]);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+    };
+  }, []);
 
   const handleExploreProducts = () => {
     router.push("/products");
@@ -113,13 +165,13 @@ export function ProductsQuoteView({ error }: ProductsQuoteViewProps) {
     <div className="space-y-6">
       {/* Search and Explore Products */}
       <div className="flex flex-col md:flex-row gap-3">
-        <div className="relative flex-1">
+        <div className="relative flex-1" ref={dropdownRef}>
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
           <input
             type="text"
-            placeholder="Search your product id, name, category"
+            placeholder="Product Name, OEM, SKU (min 3 chars)"
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={handleSearchChange}
             className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
           />
 
@@ -131,21 +183,19 @@ export function ProductsQuoteView({ error }: ProductsQuoteViewProps) {
                   Searching...
                 </div>
               ) : searchResults.length > 0 ? (
-                searchResults.map((product) => (
+                searchResults.map((product, index) => (
                   <button
-                    key={product.oemSku}
+                    key={`${product.oemSku}-${index}`}
                     type="button"
-                    onClick={() => {
-                      // Add product to quote cart
-                      setSearchQuery("");
-                      setSearchResults([]);
-                    }}
+                    onClick={() => handleAddProduct(product)}
                     className="w-full px-4 py-3 text-left hover:bg-gray-50 transition-colors border-b border-gray-100 last:border-b-0"
                   >
-                    <p className="text-sm font-medium text-gray-900">
+                    <div className="text-sm font-medium text-gray-900">
                       {product.name}
-                    </p>
-                    <p className="text-xs text-gray-500">{product.oemSku}</p>
+                    </div>
+                    <div className="text-xs text-gray-500">
+                      {product.oemSku}
+                    </div>
                   </button>
                 ))
               ) : (
@@ -212,7 +262,7 @@ export function ProductsQuoteView({ error }: ProductsQuoteViewProps) {
                   >
                     {page}
                   </span>
-                )
+                ),
               )}
 
               <button
@@ -231,7 +281,8 @@ export function ProductsQuoteView({ error }: ProductsQuoteViewProps) {
         <div className="text-center py-12 text-gray-400">
           <p>No products added yet.</p>
           <p className="text-sm mt-2">
-            Search for products above or click "Explore Products" to browse our catalog.
+            Search for products above or click "Explore Products" to browse our
+            catalog.
           </p>
         </div>
       )}

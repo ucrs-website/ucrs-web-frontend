@@ -111,7 +111,7 @@ export function WorldMapAbout() {
     closeTimeoutRef.current = setTimeout(() => {
       setHoveredMarker(null);
       setTooltip(null);
-    }, 500);
+    }, 300);
   };
 
   const handleTooltipMouseEnter = () => {
@@ -127,7 +127,7 @@ export function WorldMapAbout() {
     closeTimeoutRef.current = setTimeout(() => {
       setHoveredMarker(null);
       setTooltip(null);
-    }, 500);
+    }, 300);
   };
 
   return (
@@ -213,10 +213,7 @@ export function WorldMapAbout() {
 
               {/* Markers for capitals with staggered pulse animation */}
               {capitalCoordinates.map((capital, index) => (
-                <Marker
-                  key={capital.iso2}
-                  coordinates={capital.coordinates}
-                >
+                <Marker key={capital.iso2} coordinates={capital.coordinates}>
                   <g className="marker-group">
                     {/* Pulsing Ring 1 - always animating with staggered delay */}
                     <circle

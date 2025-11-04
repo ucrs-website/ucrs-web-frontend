@@ -95,3 +95,60 @@ export async function checkEmailExists(email: string): Promise<boolean> {
     throw error
   }
 }
+
+/**
+ * Add a quote request to Google Sheets
+ */
+export async function addQuoteRequest(data: {
+  timestamp: string
+  fullName: string
+  companyName: string
+  email: string
+  phone: string
+  country: string
+  quoteType: string
+  details: string
+  attachmentUrls: string
+  ipAddress: string
+  userAgent: string
+}) {
+  try {
+    const sheets = getGoogleSheetsClient()
+    const spreadsheetId = process.env.GOOGLE_QUOTE_SHEET_ID
+    const sheetName = process.env.GOOGLE_QUOTE_SHEET_NAME
+
+    if (!spreadsheetId || !sheetName) {
+      throw new Error('Missing Google Sheet configuration for quotes')
+    }
+
+    // Append the data to the sheet
+    // Columns: A=Timestamp, B=Full Name, C=Company Name, D=Email, E=Phone,
+    //          F=Country, G=Quote Type, H=Products/Services Details,
+    //          I=Attachment URLs, J=IP Address, K=User Agent
+    const response = await sheets.spreadsheets.values.append({
+      spreadsheetId,
+      range: `${sheetName}!A:K`,
+      valueInputOption: 'USER_ENTERED',
+      requestBody: {
+        values: [[
+          data.timestamp,
+          data.fullName,
+          data.companyName,
+          data.email,
+          data.phone,
+          data.country,
+          data.quoteType,
+          data.details,
+          data.attachmentUrls,
+          data.ipAddress,
+          data.userAgent,
+        ]],
+      },
+    })
+
+    return response.data
+  } catch (error) {
+    console.error('Error adding quote request to Google Sheets:', error)
+    throw error
+  }
+}

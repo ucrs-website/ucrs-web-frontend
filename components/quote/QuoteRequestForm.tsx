@@ -22,7 +22,7 @@ interface QuoteRequestFormProps {
 }
 
 export function QuoteRequestForm({ onSuccess, onError, defaultTab = "products" }: QuoteRequestFormProps) {
-  const { items } = useQuoteCart();
+  const { items, clearQuote } = useQuoteCart();
 
   const [formData, setFormData] = useState<QuoteFormData>({
     fullName: "",
@@ -153,6 +153,10 @@ export function QuoteRequestForm({ onSuccess, onError, defaultTab = "products" }
       const result = await response.json();
 
       if (result.success) {
+        // Clear the quote cart after successful submission
+        if (formData.quoteType === "products") {
+          clearQuote();
+        }
         onSuccess?.();
       } else {
         throw new Error(result.error || "Failed to submit quote request");
