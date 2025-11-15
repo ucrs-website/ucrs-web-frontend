@@ -25,7 +25,7 @@ export function QuoteTypeTabs({ activeTab, onTabChange }: QuoteTypeTabsProps) {
             : "bg-transparent text-gray-600 hover:text-gray-900"
         )}
       >
-        Buy Products
+        Order Products
       </button>
       <button
         type="button"
@@ -37,7 +37,7 @@ export function QuoteTypeTabs({ activeTab, onTabChange }: QuoteTypeTabsProps) {
             : "bg-transparent text-gray-600 hover:text-gray-900"
         )}
       >
-        Get Services
+        Order Services
       </button>
     </div>
   );
