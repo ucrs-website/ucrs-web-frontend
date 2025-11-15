@@ -79,6 +79,7 @@ export function ProductsQuoteView({ error }: ProductsQuoteViewProps) {
       name: suggestion.name,
       oemSku: suggestion.oemSku,
       description: "",
+      productId:suggestion.productId,
       catId: 0,
       groupId: 0,
     };

@@ -121,6 +121,7 @@ export function SearchDropdown() {
       oemSku: suggestion.oemSku || "",
       imageUrl: "/images/products/default-product.avif",
       description: "",
+      productId:suggestion.productId,
       catId: 0,
       groupId: 0,
     };

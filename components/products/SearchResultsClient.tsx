@@ -1,6 +1,6 @@
 /**
  * Search Results Client Component
- * Client-side component for search results page with filters and modal
+ * Client-side component for search results page with filters
  */
 
 "use client";
@@ -10,7 +10,6 @@ import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import type { ProductWithImage, Category } from "@/lib/types/products";
 import { ProductsTable } from "./ProductsTable";
 import { ProductsPagination } from "./ProductsPagination";
-import { ProductModal } from "./ProductModal";
 import { Search, X, Filter } from "lucide-react";
 
 interface SearchResultsClientProps {
@@ -36,25 +35,11 @@ export function SearchResultsClient({
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [searchQuery, setSearchQuery] = useState(query);
-  const [selectedProduct, setSelectedProduct] = useState<ProductWithImage | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Update search query when prop changes
   useEffect(() => {
     setSearchQuery(query);
   }, [query]);
-
-  // Handle virtual URL - check for ?product= param on mount
-  useEffect(() => {
-    const productParam = searchParams.get("product");
-    if (productParam) {
-      const product = products.find((p) => p.oemSku === productParam);
-      if (product) {
-        setSelectedProduct(product);
-        setIsModalOpen(true);
-      }
-    }
-  }, [searchParams, products]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -82,29 +67,6 @@ export function SearchResultsClient({
     params.delete("page");
 
     router.push(`${pathname}?${params.toString()}`);
-  };
-
-  const openModal = (product: ProductWithImage) => {
-    setSelectedProduct(product);
-    setIsModalOpen(true);
-
-    // Update URL with product param (shallow routing)
-    const params = new URLSearchParams(searchParams.toString());
-    params.set("product", product.oemSku);
-    router.push(`${pathname}?${params.toString()}`, { scroll: false });
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setSelectedProduct(null);
-
-    // Remove product param from URL (shallow routing)
-    const params = new URLSearchParams(searchParams.toString());
-    params.delete("product");
-    const queryString = params.toString();
-    router.push(queryString ? `${pathname}?${queryString}` : pathname, {
-      scroll: false,
-    });
   };
 
   return (
@@ -207,11 +169,7 @@ export function SearchResultsClient({
         </div>
       ) : (
         <>
-          <ProductsTable
-            products={products}
-            isLoading={false}
-            onProductClick={openModal}
-          />
+          <ProductsTable products={products} isLoading={false} />
 
           {/* Pagination */}
           {totalPages > 1 && (
@@ -225,13 +183,6 @@ export function SearchResultsClient({
           )}
         </>
       )}
-
-      {/* Product Modal */}
-      <ProductModal
-        product={selectedProduct}
-        isOpen={isModalOpen}
-        onClose={closeModal}
-      />
     </>
   );
 }

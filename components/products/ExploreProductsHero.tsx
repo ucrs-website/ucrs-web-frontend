@@ -127,6 +127,7 @@ export function ExploreProductsHero() {
       imageUrl: "/images/products/default-product.avif",
       description: "",
       catId: 0,
+      productId:suggestion.productId,
       groupId: 0,
     };
   };
@@ -162,7 +163,7 @@ export function ExploreProductsHero() {
             </p>
 
             {/* Search Bar */}
-            <div className="max-w-md mx-auto relative" ref={dropdownRef}>
+            <div className="max-w-2xl mx-auto relative" ref={dropdownRef}>
               <div className="relative flex items-center">
                 <div className="absolute left-4 pointer-events-none z-10">
                   <Search className="w-5 h-5 text-gray-400" />

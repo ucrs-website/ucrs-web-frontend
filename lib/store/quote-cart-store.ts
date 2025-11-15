@@ -64,6 +64,7 @@ export const useQuoteCartStore = create<QuoteCartState>()(
           catId: product.catId,
           groupId: product.groupId,
           quantity: 1,
+          productId:product.productId,
           addedAt: new Date().toISOString(),
         }
 
