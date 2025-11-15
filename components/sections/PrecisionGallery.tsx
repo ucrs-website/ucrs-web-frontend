@@ -20,21 +20,25 @@ export function PrecisionGallery() {
       number: "1",
       title: "Milling",
       video: "/videos/factory-tour/Milling.mp4",
+      poster: "/images/factory-tour/milling.webp",
     },
     {
       number: "2",
       title: "Turning",
       video: "/videos/factory-tour/Turning.mp4",
+      poster: "/images/factory-tour/turning.webp",
     },
     {
       number: "3",
       title: "Welding",
       video: "/videos/factory-tour/Welding.mp4",
+      poster: "/images/factory-tour/welding.webp",
     },
     {
       number: "4",
       title: "Inspection",
       video: "/videos/factory-tour/Inspecting.mp4",
+      poster: "/images/factory-tour/inspection.webp",
     },
   ];
 
@@ -122,10 +126,11 @@ export function PrecisionGallery() {
             >
               {slides.map((slide, index) => (
                 <SwiperSlide key={index}>
-                  <div className="relative w-full aspect-[9/16] overflow-hidden bg-gray-100 rounded-lg">
+                  <div className="relative w-full aspect-[9/16] overflow-hidden bg-gray-100 rounded-lg group">
                     {/* Video element */}
                     <video
                       src={slide.video}
+                      poster={slide.poster}
                       className="absolute inset-0 w-full h-full object-cover"
                       muted
                       loop

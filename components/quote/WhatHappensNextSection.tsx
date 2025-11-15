@@ -45,11 +45,11 @@ export function WhatHappensNextSection() {
         <div className="relative max-w-6xl mx-auto">
           {/* Background Image with Overlay */}
           <div
-            className="relative rounded-3xl overflow-hidden"
+            className="relative rounded-3xl overflow-hidden md:pt-20"
             style={{
-              backgroundImage: "url(/images/quote/what-happens-bg.avif)",
+              backgroundImage: "url(/images/quote/what-happens-bg.webp)",
               backgroundSize: "cover",
-              backgroundPosition: "0 75%",
+              backgroundPosition: "0 100%",
               maskRepeat: "no-repeat",
             }}
           >

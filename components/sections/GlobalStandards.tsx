@@ -23,7 +23,7 @@ export function GlobalStandards() {
           {/* Certificate Image */}
           <div className="relative w-full max-w-[800px] aspect-[800/612]">
             <Image
-              src="/images/about/certificate.png"
+              src="/images/about/8066-Certificate.png"
               alt="AAR-M1003 Quality Assurance Program Certification"
               fill
               className="object-contain"

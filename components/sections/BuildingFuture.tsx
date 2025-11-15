@@ -21,7 +21,7 @@ export function BuildingFuture() {
       title: "Obsolescence Management",
       description:
         "Professional designing, prototyping, and manufacturing of components no longer produced by OEM",
-      image: "/images/factory-tour/factory-tour-3.webp",
+      image: "/images/factory-tour/factory-tour-3-2.webp",
     },
   ];
 
@@ -43,7 +43,7 @@ export function BuildingFuture() {
       title: "Medical Devices",
       description:
         "Producing ultra-precise and reliable components for life-saving medical equipment, manufactured to meet the highest regulatory standards. Export to Sheets",
-      image: "/images/factory-tour/factory-tour-3.webp",
+      image: "/images/factory-tour/factory-tour-3-2.webp",
     },
   ];
 
@@ -54,7 +54,7 @@ export function BuildingFuture() {
           {/* Header */}
           <div className="mb-12 lg:mb-16 text-center">
             <h2 className="text-3xl lg:text-[44px] font-semibold text-[#181d27] lg:leading-[52.8px] tracking-tight">
-              Building a Greener Future
+              Comprehensive Rolling Stock Solutions
             </h2>
           </div>
 

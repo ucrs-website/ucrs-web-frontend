@@ -29,13 +29,13 @@ async function createGmailClient() {
 /**
  * Create email message in RFC 2822 format
  */
-function createMessage(to: string, from: string, subject: string, htmlContent: string, replyTo?: string, bcc?: string) {
+function createMessage(to: string, from: string, subject: string, htmlContent: string, replyTo?: string, cc?: string) {
   const utf8Subject = `=?utf-8?B?${Buffer.from(subject).toString('base64')}?=`;
 
   const messageParts = [
     `From: ${from}`,
     `To: ${to}`,
-    bcc ? `Bcc: ${bcc}` : '',
+    cc ? `Cc: ${cc}` : '',
     replyTo ? `Reply-To: ${replyTo}` : '',
     'Content-Type: text/html; charset=utf-8',
     'MIME-Version: 1.0',
@@ -120,11 +120,17 @@ export async function sendQuoteRequestEmail(data: QuoteEmailData) {
     const subject = `New Quote Request from ${data.userInfo.fullName} - ${data.quoteType === 'products' ? 'Products' : 'Services'}`;
     const from = `UCRS Quote System <${process.env.GMAIL_USER_EMAIL}>`;
     const to = process.env.QUOTE_ADMIN_EMAIL;
-    const bcc = process.env.QUOTE_BCC_EMAIL;
+    const cc = process.env.QUOTE_CC_EMAIL;
     const replyTo = data.userInfo.email;
 
     // Create the email message
-    const encodedMessage = createMessage(to, from, subject, htmlContent, replyTo, bcc);
+    const encodedMessage = createMessage(to, from, subject, htmlContent, replyTo, cc);
+
+    console.log('📤 Sending email with configuration:');
+    console.log(`   From: ${from}`);
+    console.log(`   To: ${to}`);
+    console.log(`   CC: ${cc}`);
+    console.log(`   Reply-To: ${replyTo}`);
 
     // Send email using Gmail API
     const result = await gmail.users.messages.send({
@@ -136,9 +142,11 @@ export async function sendQuoteRequestEmail(data: QuoteEmailData) {
 
     console.log('✅ Quote request email sent successfully');
     console.log(`   Message ID: ${result.data.id}`);
+    console.log(`   From: ${from}`);
     console.log(`   To: ${to}`);
-    console.log(`   BCC: ${bcc}`);
-    console.log(`   From: ${data.userInfo.fullName} (${data.userInfo.email})`);
+    console.log(`   CC: ${cc}`);
+    console.log(`   Reply-To: ${replyTo}`);
+    console.log(`   Customer: ${data.userInfo.fullName} (${data.userInfo.email})`);
     console.log(`   Type: ${data.quoteType}`);
 
     return {

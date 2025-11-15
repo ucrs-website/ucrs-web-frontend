@@ -5,40 +5,45 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
-permissions:
-  contents: read
-
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-latest
-    env:
-      NODE_ENV: production
-      NODE_OPTIONS: --max-old-space-size=4096
+    runs-on: ubuntu-latest  # build on Linux so native linux binaries are produced
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node 22
+      - name: Use Node 20
         uses: actions/setup-node@v4
         with:
-          node-version: '22.x'
+          node-version: '20.x'
           cache: 'npm'
 
-      - name: Install
-        run: npm ci
+      # If lockfile is out of sync, npm ci fails; fall back to npm install.
+      # Also include optional deps (e.g., optional sharp) and relax peer deps to avoid React 19 peer warnings.
+      - name: Install dependencies (ci -> install fallback)
+        run: |
+          npm ci --include=optional --legacy-peer-deps || \
+          npm install --include=optional --legacy-peer-deps
 
-      - name: Build (Next.js)
+      - name: Build (standalone)
         run: npm run build
 
-      - name: Verify build exists
-        run: test -d .next && ls -la .next
-
-      - name: Prune dev dependencies
-        run: npm prune --omit=dev
+      # Bundle everything Azure needs:
+      # - the standalone server
+      # - the static assets folder (.next/static)
+      # - the public folder (images, fonts, etc.)
+      - name: Prepare deploy folder
+        run: |
+          rm -rf deploy
+          mkdir -p deploy/.next
+          cp -R .next/standalone/* deploy/
+          cp -R .next/static deploy/.next/static
+          if [ -d public ]; then cp -R public deploy/public; fi
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: ucrs-frontend-prod
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISH_PROFILE }}
-          package: .
+          package: deploy
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }} # use the same secret you already used in your last successful run

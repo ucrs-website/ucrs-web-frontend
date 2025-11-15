@@ -29,6 +29,7 @@ export interface Product {
   description: string
   catId: number
   groupId: number
+  productId:string
 }
 
 export interface ProductWithImage extends Product {
@@ -73,6 +74,7 @@ export type ProductsResponse = PaginatedResponse<Product>
 // ============================================================================
 
 export interface QuoteItem {
+  productId: string
   oemSku: string
   name: string
   description: string

@@ -277,6 +277,7 @@ export async function searchProducts(
 export interface ProductSuggestion {
   oemSku: string | null
   name: string | null
+  productId: string
 }
 
 /**

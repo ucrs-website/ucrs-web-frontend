@@ -100,9 +100,9 @@ export function BreathingNewLife({
                       <path
                         d="M43.5 19.75L25.625 37.625L17.5 29.5"
                         stroke="#A9C5F2"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       />
                     </svg>
                     {/* Numbered Circle */}
@@ -160,9 +160,9 @@ export function BreathingNewLife({
                       <path
                         d="M43.5 19.75L25.625 37.625L17.5 29.5"
                         stroke="#A9C5F2"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       />
                     </svg>
                     {/* Numbered Circle */}

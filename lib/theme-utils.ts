@@ -8,12 +8,11 @@ import { ucrsTheme } from './theme-config'
 /**
  * Get a color value from the theme
  * @param path - Path to the color (e.g., 'primary.500', 'secondary.50')
- * @param mode - Color mode ('light' or 'dark')
  * @returns HSL color value or null if not found
  */
-export const getThemeColor = (path: string, mode: 'light' | 'dark' = 'light'): string | null => {
+export const getThemeColor = (path: string): string | null => {
   const keys = path.split('.')
-  let current: any = ucrsTheme.colors[mode]
+  let current: any = ucrsTheme.colors
 
   for (const key of keys) {
     if (current && typeof current === 'object' && key in current) {
@@ -76,65 +75,65 @@ export const getThemeComponent = (component: string, variant: string = 'default'
 }
 
 /**
- * Generate CSS custom properties for light mode
+ * Generate CSS custom properties
  */
-export const generateLightModeCSS = () => {
+export const generateThemeCSS = () => {
   return {
     ':root': {
       // Base colors
-      '--background': ucrsTheme.colors.light.background,
-      '--foreground': ucrsTheme.colors.light.foreground,
-      '--card': ucrsTheme.colors.light.card,
-      '--card-foreground': ucrsTheme.colors.light['card-foreground'],
-      '--popover': ucrsTheme.colors.light.popover,
-      '--popover-foreground': ucrsTheme.colors.light['popover-foreground'],
+      '--background': ucrsTheme.colors.background,
+      '--foreground': ucrsTheme.colors.foreground,
+      '--card': ucrsTheme.colors.card,
+      '--card-foreground': ucrsTheme.colors['card-foreground'],
+      '--popover': ucrsTheme.colors.popover,
+      '--popover-foreground': ucrsTheme.colors['popover-foreground'],
 
       // Primary colors
-      '--primary': ucrsTheme.colors.light.primary.DEFAULT,
-      '--primary-foreground': ucrsTheme.colors.light.primary.foreground,
-      '--primary-hover': ucrsTheme.colors.light.primary.hover || ucrsTheme.colors.light.primary[600],
+      '--primary': ucrsTheme.colors.primary.DEFAULT,
+      '--primary-foreground': ucrsTheme.colors.primary.foreground,
+      '--primary-hover': ucrsTheme.colors.primary.hover || ucrsTheme.colors.primary[600],
 
       // Secondary colors
-      '--secondary': ucrsTheme.colors.light.secondary.DEFAULT,
-      '--secondary-foreground': ucrsTheme.colors.light.secondary.foreground,
+      '--secondary': ucrsTheme.colors.secondary.DEFAULT,
+      '--secondary-foreground': ucrsTheme.colors.secondary.foreground,
 
       // UI state colors
-      '--muted': ucrsTheme.colors.light.muted,
-      '--muted-foreground': ucrsTheme.colors.light['muted-foreground'],
-      '--accent': ucrsTheme.colors.light.accent.green.DEFAULT,
-      '--accent-foreground': ucrsTheme.colors.light.accent.green.foreground,
-      '--accent-orange': ucrsTheme.colors.light.accent.orange.DEFAULT,
-      '--accent-orange-foreground': ucrsTheme.colors.light.accent.orange.foreground,
+      '--muted': ucrsTheme.colors.muted,
+      '--muted-foreground': ucrsTheme.colors['muted-foreground'],
+      '--accent': ucrsTheme.colors.accent.green.DEFAULT,
+      '--accent-foreground': ucrsTheme.colors.accent.green.foreground,
+      '--accent-orange': ucrsTheme.colors.accent.orange.DEFAULT,
+      '--accent-orange-foreground': ucrsTheme.colors.accent.orange.foreground,
 
       // Interactive elements
-      '--destructive': ucrsTheme.colors.light.destructive,
-      '--destructive-foreground': ucrsTheme.colors.light['destructive-foreground'],
-      '--border': ucrsTheme.colors.light.border,
-      '--input': ucrsTheme.colors.light.input,
-      '--ring': ucrsTheme.colors.light.ring,
+      '--destructive': ucrsTheme.colors.destructive,
+      '--destructive-foreground': ucrsTheme.colors['destructive-foreground'],
+      '--border': ucrsTheme.colors.border,
+      '--input': ucrsTheme.colors.input,
+      '--ring': ucrsTheme.colors.ring,
 
       // Extended color scales
-      '--primary-50': ucrsTheme.colors.light.primary[50],
-      '--primary-100': ucrsTheme.colors.light.primary[100],
-      '--primary-200': ucrsTheme.colors.light.primary[200],
-      '--primary-300': ucrsTheme.colors.light.primary[300],
-      '--primary-400': ucrsTheme.colors.light.primary[400],
-      '--primary-500': ucrsTheme.colors.light.primary[500],
-      '--primary-600': ucrsTheme.colors.light.primary[600],
-      '--primary-700': ucrsTheme.colors.light.primary[700],
-      '--primary-800': ucrsTheme.colors.light.primary[800],
-      '--primary-900': ucrsTheme.colors.light.primary[900],
+      '--primary-50': ucrsTheme.colors.primary[50],
+      '--primary-100': ucrsTheme.colors.primary[100],
+      '--primary-200': ucrsTheme.colors.primary[200],
+      '--primary-300': ucrsTheme.colors.primary[300],
+      '--primary-400': ucrsTheme.colors.primary[400],
+      '--primary-500': ucrsTheme.colors.primary[500],
+      '--primary-600': ucrsTheme.colors.primary[600],
+      '--primary-700': ucrsTheme.colors.primary[700],
+      '--primary-800': ucrsTheme.colors.primary[800],
+      '--primary-900': ucrsTheme.colors.primary[900],
 
-      '--secondary-50': ucrsTheme.colors.light.secondary[50],
-      '--secondary-100': ucrsTheme.colors.light.secondary[100],
-      '--secondary-200': ucrsTheme.colors.light.secondary[200],
-      '--secondary-300': ucrsTheme.colors.light.secondary[300],
-      '--secondary-400': ucrsTheme.colors.light.secondary[400],
-      '--secondary-500': ucrsTheme.colors.light.secondary[500],
-      '--secondary-600': ucrsTheme.colors.light.secondary[600],
-      '--secondary-700': ucrsTheme.colors.light.secondary[700],
-      '--secondary-800': ucrsTheme.colors.light.secondary[800],
-      '--secondary-900': ucrsTheme.colors.light.secondary[900],
+      '--secondary-50': ucrsTheme.colors.secondary[50],
+      '--secondary-100': ucrsTheme.colors.secondary[100],
+      '--secondary-200': ucrsTheme.colors.secondary[200],
+      '--secondary-300': ucrsTheme.colors.secondary[300],
+      '--secondary-400': ucrsTheme.colors.secondary[400],
+      '--secondary-500': ucrsTheme.colors.secondary[500],
+      '--secondary-600': ucrsTheme.colors.secondary[600],
+      '--secondary-700': ucrsTheme.colors.secondary[700],
+      '--secondary-800': ucrsTheme.colors.secondary[800],
+      '--secondary-900': ucrsTheme.colors.secondary[900],
 
       // Typography
       '--font-primary': ucrsTheme.typography.fontFamily.primary,
@@ -207,145 +206,6 @@ export const generateLightModeCSS = () => {
 }
 
 /**
- * Generate CSS custom properties for dark mode
- */
-export const generateDarkModeCSS = () => {
-  return {
-    '.dark': {
-      // Base colors
-      '--background': ucrsTheme.colors.dark.background,
-      '--foreground': ucrsTheme.colors.dark.foreground,
-      '--card': ucrsTheme.colors.dark.card,
-      '--card-foreground': ucrsTheme.colors.dark['card-foreground'],
-      '--popover': ucrsTheme.colors.dark.popover,
-      '--popover-foreground': ucrsTheme.colors.dark['popover-foreground'],
-
-      // Primary colors (same as light mode for brand consistency)
-      '--primary': ucrsTheme.colors.dark.primary,
-      '--primary-foreground': ucrsTheme.colors.dark['primary-foreground'],
-      '--primary-hover': ucrsTheme.colors.dark.primary,
-
-      // Secondary colors (same as light mode for brand consistency)
-      '--secondary': ucrsTheme.colors.dark.secondary,
-      '--secondary-foreground': ucrsTheme.colors.dark['secondary-foreground'],
-
-      // UI state colors
-      '--muted': ucrsTheme.colors.dark.muted,
-      '--muted-foreground': ucrsTheme.colors.dark['muted-foreground'],
-      '--accent': ucrsTheme.colors.dark.accent,
-      '--accent-foreground': ucrsTheme.colors.dark['accent-foreground'],
-
-      // Interactive elements
-      '--destructive': ucrsTheme.colors.dark.destructive,
-      '--destructive-foreground': ucrsTheme.colors.dark['destructive-foreground'],
-      '--border': ucrsTheme.colors.dark.border,
-      '--input': ucrsTheme.colors.dark.input,
-      '--ring': ucrsTheme.colors.dark.ring,
-
-      // Extended color scales (same as light mode for consistency)
-      '--primary-50': ucrsTheme.colors.light.primary[50],
-      '--primary-100': ucrsTheme.colors.light.primary[100],
-      '--primary-200': ucrsTheme.colors.light.primary[200],
-      '--primary-300': ucrsTheme.colors.light.primary[300],
-      '--primary-400': ucrsTheme.colors.light.primary[400],
-      '--primary-500': ucrsTheme.colors.light.primary[500],
-      '--primary-600': ucrsTheme.colors.light.primary[600],
-      '--primary-700': ucrsTheme.colors.light.primary[700],
-      '--primary-800': ucrsTheme.colors.light.primary[800],
-      '--primary-900': ucrsTheme.colors.light.primary[900],
-
-      '--secondary-50': ucrsTheme.colors.light.secondary[50],
-      '--secondary-100': ucrsTheme.colors.light.secondary[100],
-      '--secondary-200': ucrsTheme.colors.light.secondary[200],
-      '--secondary-300': ucrsTheme.colors.light.secondary[300],
-      '--secondary-400': ucrsTheme.colors.light.secondary[400],
-      '--secondary-500': ucrsTheme.colors.light.secondary[500],
-      '--secondary-600': ucrsTheme.colors.light.secondary[600],
-      '--secondary-700': ucrsTheme.colors.light.secondary[700],
-      '--secondary-800': ucrsTheme.colors.light.secondary[800],
-      '--secondary-900': ucrsTheme.colors.light.secondary[900],
-
-      // Typography (same as light mode)
-      '--font-primary': ucrsTheme.typography.fontFamily.primary,
-      '--font-heading': ucrsTheme.typography.fontFamily.heading,
-      '--font-mono': ucrsTheme.typography.fontFamily.mono,
-
-      // Font sizes (same as light mode)
-      '--font-size-xs': ucrsTheme.typography.fontSize.xs,
-      '--font-size-sm': ucrsTheme.typography.fontSize.sm,
-      '--font-size-base': ucrsTheme.typography.fontSize.base,
-      '--font-size-lg': ucrsTheme.typography.fontSize.lg,
-      '--font-size-xl': ucrsTheme.typography.fontSize.xl,
-      '--font-size-2xl': ucrsTheme.typography.fontSize['2xl'],
-      '--font-size-3xl': ucrsTheme.typography.fontSize['3xl'],
-      '--font-size-4xl': ucrsTheme.typography.fontSize['4xl'],
-      '--font-size-5xl': ucrsTheme.typography.fontSize['5xl'],
-      '--font-size-6xl': ucrsTheme.typography.fontSize['6xl'],
-      '--font-size-7xl': ucrsTheme.typography.fontSize['7xl'],
-
-      // Font weights (same as light mode)
-      '--font-weight-normal': ucrsTheme.typography.fontWeight.normal,
-      '--font-weight-medium': ucrsTheme.typography.fontWeight.medium,
-      '--font-weight-semibold': ucrsTheme.typography.fontWeight.semibold,
-      '--font-weight-bold': ucrsTheme.typography.fontWeight.bold,
-      '--font-weight-extrabold': ucrsTheme.typography.fontWeight.extrabold,
-
-      // Line heights (same as light mode)
-      '--line-height-tight': ucrsTheme.typography.lineHeight.tight,
-      '--line-height-snug': ucrsTheme.typography.lineHeight.snug,
-      '--line-height-normal': ucrsTheme.typography.lineHeight.normal,
-      '--line-height-relaxed': ucrsTheme.typography.lineHeight.relaxed,
-      '--line-height-loose': ucrsTheme.typography.lineHeight.loose,
-
-      // Spacing (same as light mode)
-      '--spacing-xs': ucrsTheme.spacing.xs,
-      '--spacing-sm': ucrsTheme.spacing.sm,
-      '--spacing-md': ucrsTheme.spacing.md,
-      '--spacing-lg': ucrsTheme.spacing.lg,
-      '--spacing-xl': ucrsTheme.spacing.xl,
-      '--spacing-2xl': ucrsTheme.spacing['2xl'],
-      '--spacing-3xl': ucrsTheme.spacing['3xl'],
-      '--spacing-4xl': ucrsTheme.spacing['4xl'],
-      '--spacing-5xl': ucrsTheme.spacing['5xl'],
-      '--spacing-6xl': ucrsTheme.spacing['6xl'],
-
-      // Layout (same as light mode)
-      '--container-max-width': ucrsTheme.layout.containerMaxWidth,
-      '--container-padding': ucrsTheme.layout.containerPadding,
-
-      // Breakpoints (same as light mode)
-      '--breakpoint-sm': ucrsTheme.breakpoints.sm,
-      '--breakpoint-md': ucrsTheme.breakpoints.md,
-      '--breakpoint-lg': ucrsTheme.breakpoints.lg,
-      '--breakpoint-xl': ucrsTheme.breakpoints.xl,
-      '--breakpoint-2xl': ucrsTheme.breakpoints['2xl'],
-
-      // Animation (same as light mode)
-      '--animation-duration-fast': ucrsTheme.animations.duration.fast,
-      '--animation-duration-normal': ucrsTheme.animations.duration.normal,
-      '--animation-duration-slow': ucrsTheme.animations.duration.slow,
-      '--animation-easing-default': ucrsTheme.animations.easing.default,
-      '--animation-easing-in': ucrsTheme.animations.easing.in,
-      '--animation-easing-out': ucrsTheme.animations.easing.out,
-      '--animation-easing-in-out': ucrsTheme.animations.easing.inOut,
-
-      // Border radius (same as light mode)
-      '--radius': '0.375rem',
-    }
-  }
-}
-
-/**
- * Create a complete theme CSS object
- */
-export const createThemeCSS = () => {
-  return {
-    ...generateLightModeCSS(),
-    ...generateDarkModeCSS()
-  }
-}
-
-/**
  * Helper function to get button styles based on variant
  */
 export const getButtonStyles = (variant: 'primary' | 'secondary' | 'ghost' = 'primary') => {
@@ -401,51 +261,14 @@ export const getInputStyles = () => {
   }
 }
 
-/**
- * Get the current color mode based on system preference or stored preference
- */
-export const getCurrentColorMode = (): 'light' | 'dark' => {
-  if (typeof window !== 'undefined') {
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-  }
-  return 'light'
-}
-
-/**
- * Apply theme to document root
- */
-export const applyTheme = (mode: 'light' | 'dark' = getCurrentColorMode()) => {
-  if (typeof document !== 'undefined') {
-    const root = document.documentElement
-    const cssVariables = mode === 'light' ? generateLightModeCSS()[':root'] : generateDarkModeCSS()['.dark']
-
-    if (cssVariables) {
-      Object.entries(cssVariables).forEach(([property, value]) => {
-        root.style.setProperty(property, value)
-      })
-    }
-
-    // Add/remove dark class
-    if (mode === 'dark') {
-      root.classList.add('dark')
-    } else {
-      root.classList.remove('dark')
-    }
-  }
-}
-
 export default {
   getThemeColor,
   getThemeTypography,
   getThemeSpacing,
   getThemeLayout,
   getThemeComponent,
-  generateLightModeCSS,
-  generateDarkModeCSS,
-  createThemeCSS,
+  generateThemeCSS,
   getButtonStyles,
   getCardStyles,
   getInputStyles,
-  getCurrentColorMode,
-  applyTheme
 }

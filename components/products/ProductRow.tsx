@@ -1,6 +1,7 @@
 /**
  * Product Row Component
  * Individual product row in table (desktop) or card (mobile)
+ * Uses ProductModal for viewing details
  */
 
 "use client";
@@ -11,19 +12,16 @@ import type { ProductWithImage } from "@/lib/types/products";
 import { useQuoteCart } from "@/lib/hooks/useQuoteCart";
 import { cn } from "@/lib/utils";
 import { Plus, ChevronRight } from "lucide-react";
+import { ProductModal } from "./ProductModal";
 
 interface ProductRowProps {
   product: ProductWithImage;
-  onProductClick?: (product: ProductWithImage) => void;
   className?: string;
 }
 
-export function ProductRow({
-  product,
-  onProductClick,
-  className,
-}: ProductRowProps) {
+export function ProductRow({ product, className }: ProductRowProps) {
   const [imageError, setImageError] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const {
     addToQuote,
     items,
@@ -33,6 +31,7 @@ export function ProductRow({
     setExpanded,
   } = useQuoteCart();
   const [localQuantity, setLocalQuantity] = useState("");
+  
 
   // Derive reactive values from items array
   const cartItem = items.find((item) => item.oemSku === product.oemSku);
@@ -88,9 +87,11 @@ export function ProductRow({
   };
 
   const handleViewDetails = () => {
-    if (onProductClick) {
-      onProductClick(product);
-    }
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
   };
 
   // Truncate description to max length
@@ -321,6 +322,13 @@ export function ProductRow({
           )}
         </div>
       </div>
+
+      {/* Product Modal */}
+      <ProductModal
+        product={product}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+      />
     </>
   );
 }

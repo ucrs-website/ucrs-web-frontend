@@ -1,23 +1,28 @@
-import { Check, Phone, MapPin, Truck } from "lucide-react";
+import { FileChartPie, Phone, AppWindow, Package, Truck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import Link from "next/link";
 
 const features = [
   {
-    icon: Check,
-    title: "Order Confirmation",
+    icon: FileChartPie,
+    title: "Receive & Analyze Inquiries",
   },
   {
     icon: Phone,
-    title: "Customs Clearance",
+    title: "Timely response and competitive offers",
   },
   {
-    icon: MapPin,
-    title: "Real-Time Tracking",
+    icon: AppWindow,
+    title: "Order Status Update",
+  },
+  {
+    icon: Package,
+    title: "Tailored Packing Solution",
   },
   {
     icon: Truck,
-    title: "Delivery & Support",
+    title: "Logistic Services",
   },
 ];
 
@@ -63,7 +68,7 @@ export function GlobalTradeFeatures() {
               size="lg"
               className="bg-primary hover:bg-primary/90 text-white h-[60px] px-6 text-lg"
             >
-              Contact us
+              <Link href="/about#contact-us">Contact us</Link>
             </Button>
           </div>
         </div>
@@ -122,7 +127,7 @@ export function GlobalTradeFeatures() {
               size="lg"
               className="bg-primary hover:bg-primary/90 text-white h-[60px] px-6 text-lg w-auto"
             >
-              Contact us
+              <Link href="/about#contact-us">Contact us</Link>
             </Button>
           </div>
         </div>

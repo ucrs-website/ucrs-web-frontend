@@ -12,14 +12,12 @@ import { cn } from "@/lib/utils";
 interface ProductsTableProps {
   products: ProductWithImage[];
   isLoading?: boolean;
-  onProductClick?: (product: ProductWithImage) => void;
   className?: string;
 }
 
 export function ProductsTable({
   products,
   isLoading = false,
-  onProductClick,
   className,
 }: ProductsTableProps) {
   if (isLoading) {
@@ -77,11 +75,7 @@ export function ProductsTable({
       {/* Products List */}
       <div className="space-y-2">
         {products.map((product) => (
-          <ProductRow
-            key={product.oemSku}
-            product={product}
-            onProductClick={onProductClick}
-          />
+          <ProductRow key={product.oemSku} product={product} />
         ))}
       </div>
     </div>

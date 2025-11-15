@@ -21,13 +21,13 @@ const teamMembers: TeamMember[] = [
   {
     name: "Zahra Rafeyi",
     role: "CFO",
-    brief: "A short Brief",
+    brief: "Financial strategy & global operations",
     image: "/images/about/team/zahra-rafeyi.avif",
   },
   {
     name: "Daniel Ahmady",
     role: "Design Engineer",
-    brief: "A short Brief",
+    brief: "Precision engineering for locomotive systems",
     image: "/images/about/team/daniel-ahmady.avif",
   },
   {

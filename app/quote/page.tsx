@@ -5,7 +5,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { Metadata } from "next";
 import { HeroQuotePage } from "@/components/quote/HeroQuotePage";
 import { QuoteRequestForm } from "@/components/quote/QuoteRequestForm";
@@ -23,60 +23,76 @@ export default function QuotePage() {
   const handleSuccess = () => {
     setShowSuccess(true);
     setShowError(false);
-    // Scroll to top to show success message
-    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleError = (error: string) => {
     setErrorMessage(error);
     setShowError(true);
     setShowSuccess(false);
-    // Scroll to top to show error message
-    window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  // Scroll to top when success or error state changes
+  useEffect(() => {
+    if (showSuccess || showError) {
+      // Small delay to ensure DOM has updated
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }, 100);
+    }
+  }, [showSuccess, showError]);
 
   // Success State View
   if (showSuccess) {
     return (
       <section className="min-h-screen flex items-center justify-center bg-gray-50 py-16">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto bg-gradient-to-br from-green-50 to-green-100 rounded-3xl p-12 md:p-16 relative overflow-hidden">
-            {/* UCRS Watermark */}
-            <div className="absolute right-0 top-1/2 -translate-y-1/2 text-[200px] font-bold text-green-200/30 select-none pointer-events-none">
-              UCRS
-            </div>
-
-            <div className="relative z-10 text-center">
-              {/* Success Icon */}
-              <div className="inline-flex items-center justify-center w-20 h-20 bg-green-500 rounded-full mb-6">
-                <svg
-                  className="w-10 h-10 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={3}
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-              </div>
-
-              <h1 className="text-4xl md:text-5xl font-bold text-green-900 mb-4">
-                We Received Your Request
-              </h1>
-              <p className="text-lg md:text-xl text-green-800">
-                Our team will contact you shortly.
+          <div
+            className="max-w-5xl mx-auto rounded-3xl p-12 md:p-16 relative overflow-hidden"
+            style={{
+              background:
+                "linear-gradient(to bottom, rgba(134, 239, 172, 0.95), transparent)",
+              backgroundImage:
+                "linear-gradient(to bottom, rgba(134, 239, 172, 0.95), transparent), url(/images/quote/quote-form-bg.avif)",
+              backgroundSize: "contain",
+              backgroundPosition: "center right",
+              backgroundRepeat: "no-repeat",
+            }}
+          >
+            <div className="relative z-10">
+              {/* Header */}
+              <p className="text-base font-bold uppercase tracking-wider mb-6 text-gray-900">
+                REQUEST FOR QUOTE
               </p>
 
-              <button
-                onClick={() => setShowSuccess(false)}
-                className="mt-8 px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors"
-              >
-                Submit Another Request
-              </button>
+              {/* Success Message - Icon and Text in One Line */}
+              <div className="flex items-center gap-4 mb-4">
+                {/* Success Icon */}
+                <div className="inline-flex items-center justify-center w-12 h-12 bg-green-600 rounded-full flex-shrink-0">
+                  <svg
+                    className="w-7 h-7 text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={3}
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                </div>
+
+                {/* Success Title */}
+                <h1 className="text-4xl md:text-5xl font-bold text-green-600">
+                  We Received Your Request
+                </h1>
+              </div>
+
+              {/* Subtitle */}
+              <p className="text-lg md:text-xl text-gray-800 mb-8">
+                Our team will contact you shortly.
+              </p>
             </div>
           </div>
         </div>

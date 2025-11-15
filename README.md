@@ -28,7 +28,6 @@ A modern, SEO-optimized website boilerplate for Upper Canada Railway Services bu
 - **shadcn/ui** component patterns
 - **UCRS design system** integrated
 - Responsive breakpoints configured
-- Dark mode ready
 
 ### 📦 Project Structure
 

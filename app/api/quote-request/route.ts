@@ -1,11 +1,52 @@
 /**
  * Quote Request API Route
- * Handles quote request submissions and sends emails via Gmail API
+ * Handles quote request submissions and sends emails via SMTP
  */
 
 import { NextRequest, NextResponse } from "next/server";
 import type { QuoteFormData } from "@/lib/types/quote";
-import { sendQuoteRequestEmail } from "@/lib/services/gmail-service";
+import { sendQuoteRequestEmailSMTP } from "@/lib/services/smtp-email-service";
+import { addQuoteRequest } from "@/lib/googleSheets";
+
+/**
+ * Get client IP address from request
+ */
+function getClientIP(request: NextRequest): string {
+  const forwarded = request.headers.get('x-forwarded-for')
+  const real = request.headers.get('x-real-ip')
+  const cfConnecting = request.headers.get('cf-connecting-ip')
+
+  if (forwarded) {
+    return forwarded.split(',')[0].trim()
+  }
+  if (real) {
+    return real
+  }
+  if (cfConnecting) {
+    return cfConnecting
+  }
+
+  return 'Unknown'
+}
+
+/**
+ * Format quote details for Google Sheets
+ */
+function formatQuoteDetails(data: QuoteFormData): string {
+  if (data.quoteType === "products" && data.products) {
+    const productsText = data.products.map((p, i) =>
+      `${i + 1}. ${p.name} (SKU: ${p.oemSku}) - Qty: ${p.quantity}${p.description ? ` - ${p.description}` : ''}`
+    ).join('\n')
+    return `PRODUCTS:\n${productsText}`
+  } else if (data.quoteType === "services" && data.services) {
+    const selectedServices = Object.entries(data.services.serviceTypes)
+      .filter(([_, selected]) => selected)
+      .map(([service]) => service.charAt(0).toUpperCase() + service.slice(1))
+      .join(', ')
+    return `SERVICES: ${selectedServices}\n\nDESCRIPTION:\n${data.services.description}`
+  }
+  return ''
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -85,7 +126,39 @@ export async function POST(request: NextRequest) {
         : [],
     });
 
-    // Prepare email data
+    // Get client info
+    const userAgent = request.headers.get('user-agent') || 'Unknown'
+    const ipAddress = getClientIP(request)
+    const timestamp = new Date().toISOString()
+
+    // Format quote details for Google Sheets
+    const quoteDetails = formatQuoteDetails(data)
+    const fullPhone = `${data.phoneCountryCode} ${data.phone}`
+    const attachmentUrls = data.attachmentUrls?.join(', ') || ''
+
+    // Step 1: Save to Google Sheets FIRST
+    try {
+      await addQuoteRequest({
+        timestamp,
+        fullName: data.fullName,
+        companyName: data.companyName || '',
+        email: data.email,
+        phone: fullPhone,
+        country: data.country || '',
+        quoteType: data.quoteType.toUpperCase(),
+        details: quoteDetails,
+        attachmentUrls,
+        ipAddress,
+        userAgent,
+      })
+      console.log("✅ Quote request saved to Google Sheets")
+    } catch (sheetError) {
+      console.error("❌ Failed to save to Google Sheets:", sheetError)
+      // Continue with email even if Sheets fails
+      console.warn("⚠️ Continuing with email despite Sheets error")
+    }
+
+    // Step 2: Prepare email data
     const emailData = {
       userInfo: {
         fullName: data.fullName,
@@ -109,8 +182,8 @@ export async function POST(request: NextRequest) {
       attachments: data.attachmentUrls,
     };
 
-    // Send email via Gmail API
-    const emailResult = await sendQuoteRequestEmail(emailData);
+    // Step 3: Send email via SMTP
+    const emailResult = await sendQuoteRequestEmailSMTP(emailData);
 
     if (!emailResult.success) {
       throw new Error("Failed to send quote request email");

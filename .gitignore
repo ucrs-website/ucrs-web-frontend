@@ -42,3 +42,11 @@ next-env.d.ts
 
 # task planning
 .tasks/
+
+# Google Cloud service account keys (sensitive credentials)
+*.json
+!package.json
+!package-lock.json
+!tsconfig.json
+!next.config.json
+!public/**/*.json

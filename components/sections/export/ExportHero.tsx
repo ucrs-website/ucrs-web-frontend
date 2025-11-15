@@ -1,5 +1,6 @@
 import { Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export function ExportHero() {
   return (
@@ -50,7 +51,7 @@ export function ExportHero() {
           <div className="flex flex-col items-center gap-3 md:gap-6 max-w-[768px]">
             <div className="flex flex-col items-center gap-3">
               <h1 className="text-2xl md:text-7xl lg:text-[72px] font-display font-semibold text-white leading-tight md:leading-[90px] tracking-tight md:tracking-[-1.44px]">
-                Powering Rail Networks Across 57+ Countries
+                Powering Rail Networks Across 37+ Countries
               </h1>
             </div>
             <p className="text-base md:text-xl text-[#feeaea] leading-relaxed md:leading-[30px]">
@@ -62,10 +63,9 @@ export function ExportHero() {
           <div className="flex gap-3">
             <Button
               size="lg"
-              className="bg-primary hover:bg-primary/90 text-white border-2 border-white/12 shadow-[inset_0px_0px_0px_1px_rgba(10,13,18,0.18),inset_0px_-2px_0px_0px_rgba(10,13,18,0.05)] text-base md:text-lg px-5 md:px-6 py-3 md:py-4 h-auto"
+              className="bg-primary hover:bg-primary/90 text-white shadow-[inset_0px_0px_0px_1px_rgba(10,13,18,0.18),inset_0px_-2px_0px_0px_rgba(10,13,18,0.05)] text-base md:text-lg px-5 md:px-6 py-3 md:py-4 h-auto"
             >
-              <Download className="w-5 h-5 md:w-6 md:h-6" />
-              Download Compliance Guide
+              <Link href="/quote">GET A QUOTE</Link>
             </Button>
           </div>
         </div>

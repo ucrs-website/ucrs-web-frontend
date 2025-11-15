@@ -1,16 +1,16 @@
-import Image from 'next/image'
+import Image from "next/image";
 
 const metrics = [
   {
-    icon: '/icons/export/worldwide.svg',
+    icon: "/icons/export/worldwide.svg",
     label: (
       <>
-        <span className="font-bold">57+</span> Countries Served
+        <span className="font-bold">37+</span> Countries Served
       </>
     ),
   },
   {
-    icon: '/icons/export/shipping.svg',
+    icon: "/icons/export/shipping.svg",
     label: (
       <>
         <span className="font-bold">20,000+</span> Parts Shipped Annually
@@ -18,7 +18,7 @@ const metrics = [
     ),
   },
   {
-    icon: '/icons/export/on-time.svg',
+    icon: "/icons/export/on-time.svg",
     label: (
       <>
         <span className="font-bold">98%</span> On-Time Delivery
@@ -26,14 +26,14 @@ const metrics = [
     ),
   },
   {
-    icon: '/icons/export/support-24-7.svg',
+    icon: "/icons/export/support-24-7.svg",
     label: (
       <>
-        <span className="font-bold">24/7</span> Multilingual Support
+        <span className="font-bold">24/7</span> Support
       </>
     ),
   },
-]
+];
 
 export function GlobalMetrics() {
   return (
@@ -96,5 +96,5 @@ export function GlobalMetrics() {
         </div>
       </div>
     </section>
-  )
+  );
 }
