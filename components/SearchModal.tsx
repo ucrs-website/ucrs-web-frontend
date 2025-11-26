@@ -104,11 +104,19 @@ export function SearchModal({ open, onOpenChange }: SearchModalProps) {
     return {
       name: suggestion.name || "Unknown Product",
       oemSku: suggestion.oemSku || "",
-      imageUrl: "/images/products/default-product.avif",
+      imageUrl: suggestion.imageId
+        ? `https://v1.ucrs.com/Image/Serve/${suggestion.imageId}`
+        : "/images/products/default-product.avif",
       description: "",
-      productId:suggestion.productId,
-      catId: 0,
-      groupId: 0,
+      productId: suggestion.productId,
+      catId: suggestion.catId,
+      groupId: suggestion.groupId,
+      parentCatId: suggestion.parentCatId,
+      childCatId: suggestion.childCatId,
+      imageId: suggestion.imageId || null,
+      parentCatName: suggestion.parentCatName,
+      childCatName: suggestion.childCatName,
+      groupName: suggestion.groupName,
     };
   };
 

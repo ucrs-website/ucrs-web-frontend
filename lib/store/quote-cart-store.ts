@@ -56,15 +56,13 @@ export const useQuoteCartStore = create<QuoteCartState>()(
         }
 
         // Create quote item with initial quantity of 1
+        // Spread all Product fields and add QuoteItem-specific fields
         const quoteItem: QuoteItem = {
-          oemSku: product.oemSku,
-          name: product.name,
-          description: product.description,
-          imageUrl: getProductImage(product.oemSku),
-          catId: product.catId,
-          groupId: product.groupId,
+          ...product, // Spread all Product fields
+          imageUrl: product.imageId
+            ? `https://v1.ucrs.com/Image/Serve/${product.imageId}`
+            : getProductImage(product.oemSku),
           quantity: 1,
-          productId:product.productId,
           addedAt: new Date().toISOString(),
         }
 

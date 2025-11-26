@@ -83,8 +83,10 @@ export function ProductModal({ product, isOpen, onClose }: ProductModalProps) {
   }, [isOpen]);
 
   const handleAddToQuote = () => {
-    if (product) {
-      addToQuote(product);
+    if (product && !('addedAt' in product)) {
+      // Only allow adding if it's a ProductWithImage (not a QuoteItem)
+      // QuoteItem has 'addedAt' field, ProductWithImage doesn't
+      addToQuote(product as ProductWithImage);
       setExpanded(true);
     }
   };
@@ -124,7 +126,7 @@ export function ProductModal({ product, isOpen, onClose }: ProductModalProps) {
             <div className="relative aspect-square bg-gray-100 rounded-lg overflow-hidden">
               <Image
                 src={
-                  imageError ? getProductImageFallback() : `https://v1.ucrs.com/Image/Serve/${product.productId}`
+                  imageError ? getProductImageFallback() : product.imageUrl
                 }
                 alt={product.name}
                 fill
@@ -174,19 +176,19 @@ export function ProductModal({ product, isOpen, onClose }: ProductModalProps) {
                   <div className="flex justify-between">
                     <dt className="text-gray-600">Category:</dt>
                     <dd className="font-medium text-gray-900">
-                      -
+                      {product.parentCatName}
                     </dd>
                   </div>
                   <div className="flex justify-between">
                     <dt className="text-gray-600">Sub Category:</dt>
                     <dd className="font-medium text-gray-900">
-                      -
+                      {product.childCatName}
                     </dd>
                   </div>
                   <div className="flex justify-between">
                     <dt className="text-gray-600">Group:</dt>
                     <dd className="font-medium text-gray-900">
-                      -
+                      {product.groupName}
                     </dd>
                   </div>
                   

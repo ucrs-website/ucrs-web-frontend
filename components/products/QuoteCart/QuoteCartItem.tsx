@@ -83,7 +83,7 @@ export function QuoteCartItem({ item, onRemove }: QuoteCartItemProps) {
             src={imageError ? getProductImageFallback() : item.imageUrl}
             alt={item.name}
             fill
-            className="object-contain p-1"
+            className="object-contain p-1 rounded-md"
             sizes="64px"
             onError={() => setImageError(true)}
           />

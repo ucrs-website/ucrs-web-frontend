@@ -79,9 +79,15 @@ export function ProductsQuoteView({ error }: ProductsQuoteViewProps) {
       name: suggestion.name,
       oemSku: suggestion.oemSku,
       description: "",
-      productId:suggestion.productId,
-      catId: 0,
-      groupId: 0,
+      productId: suggestion.productId,
+      catId: suggestion.catId,
+      groupId: suggestion.groupId,
+      parentCatId: suggestion.parentCatId,
+      childCatId: suggestion.childCatId,
+      imageId: suggestion.imageId || null,
+      parentCatName: suggestion.parentCatName,
+      childCatName: suggestion.childCatName,
+      groupName: suggestion.groupName,
     };
 
     addToQuote(product);
