@@ -16,7 +16,7 @@ interface QuoteCartDropdownProps {
 }
 
 export function QuoteCartDropdown({ isOpen }: QuoteCartDropdownProps) {
-  const { items, removeFromQuote, clearQuote } = useQuoteCart();
+  const { items, removeFromQuote, clearQuote, setExpanded } = useQuoteCart();
   const [showClearConfirm, setShowClearConfirm] = useState(false);
 
   const quotePageUrl = process.env.NEXT_PUBLIC_QUOTE_PAGE_URL || "/quote";
@@ -32,6 +32,28 @@ export function QuoteCartDropdown({ isOpen }: QuoteCartDropdownProps) {
     }
   };
 
+  const handleContinue = () => {
+    // Check if we're already on the quote page
+    const isOnQuotePage = window.location.pathname === quotePageUrl || window.location.pathname.startsWith(quotePageUrl);
+
+    if (isOnQuotePage) {
+      // Close the dropdown
+      setExpanded(false);
+
+      // Scroll to quote-form
+      const quoteFormElement = document.getElementById('quote-form');
+      if (quoteFormElement) {
+        quoteFormElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    } else {
+      // Navigate to quote page with hash
+      window.location.href = `${quotePageUrl}#quote-form`;
+    }
+  };
+
   return (
     <div
       className={cn(
@@ -41,7 +63,10 @@ export function QuoteCartDropdown({ isOpen }: QuoteCartDropdownProps) {
     >
       {/* Container matching QuoteCartBar width */}
       <div className="mx-auto w-full max-w-[var(--container-max-width,1200px)] px-2 md:px-4">
-        <div className="px-4 md:px-6 py-4 border-[1px] shadow-sm border-gray-100 bg-white rounded-2xl mt-2">
+        <div
+          className="px-4 md:px-6 py-4 border-[1px] shadow-sm border-gray-100 bg-white rounded-2xl mt-2"
+          onClick={(e) => e.stopPropagation()}
+        >
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-semibold text-gray-900">
@@ -84,12 +109,13 @@ export function QuoteCartDropdown({ isOpen }: QuoteCartDropdownProps) {
         {/* Continue Button */}
         {items.length > 0 && (
           <div className="flex justify-end pt-3 border-t border-gray-200">
-            <a
-              href={quotePageUrl}
+            <button
+              type="button"
+              onClick={handleContinue}
               className="inline-flex items-center px-6 py-2.5 bg-primary text-white font-medium rounded-md hover:bg-primary/90 transition-colors text-sm"
             >
               Click to continue
-            </a>
+            </button>
           </div>
         )}
         </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   ComposableMap,
   Geographies,
@@ -61,9 +61,25 @@ export function WorldMapAbout() {
   const [hoveredMarker, setHoveredMarker] = useState<string | null>(null);
   const [tooltip, setTooltip] = useState<TooltipData | null>(null);
   const [zoom] = useState(1);
+  const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Clear timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (closeTimeoutRef.current) {
+        clearTimeout(closeTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const handleMarkerMouseEnter =
     (capital: (typeof capitalCoordinates)[0]) => (event: React.MouseEvent) => {
+      // Clear any pending close timeout
+      if (closeTimeoutRef.current) {
+        clearTimeout(closeTimeoutRef.current);
+        closeTimeoutRef.current = null;
+      }
+
       setHoveredMarker(capital.iso2);
       setTooltip({
         name: capital.name,
@@ -91,8 +107,27 @@ export function WorldMapAbout() {
     };
 
   const handleMarkerMouseLeave = () => {
-    setHoveredMarker(null);
-    setTooltip(null);
+    // Set a delayed close
+    closeTimeoutRef.current = setTimeout(() => {
+      setHoveredMarker(null);
+      setTooltip(null);
+    }, 300);
+  };
+
+  const handleTooltipMouseEnter = () => {
+    // Clear close timeout when hovering tooltip
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+  };
+
+  const handleTooltipMouseLeave = () => {
+    // Set delayed close when leaving tooltip
+    closeTimeoutRef.current = setTimeout(() => {
+      setHoveredMarker(null);
+      setTooltip(null);
+    }, 300);
   };
 
   return (
@@ -176,44 +211,41 @@ export function WorldMapAbout() {
                 }
               </Geographies>
 
-              {/* Markers for capitals with conditional ripple pulse animation */}
-              {capitalCoordinates.map((capital) => (
-                <Marker
-                  key={capital.iso2}
-                  coordinates={capital.coordinates}
-                  onMouseEnter={handleMarkerMouseEnter(capital)}
-                  onMouseMove={handleMarkerMouseMove(capital)}
-                  onMouseLeave={handleMarkerMouseLeave}
-                >
+              {/* Markers for capitals with staggered pulse animation */}
+              {capitalCoordinates.map((capital, index) => (
+                <Marker key={capital.iso2} coordinates={capital.coordinates}>
                   <g className="marker-group">
-                    {/* Pulsing Ring 1 - only shows on hover */}
-                    {hoveredMarker === capital.iso2 && (
-                      <>
-                        <circle
-                          r={4}
-                          fill="none"
-                          stroke="#0052FF"
-                          strokeWidth={2}
-                          className="animate-ripple-pulse"
-                          style={{
-                            animationDelay: "0s",
-                          }}
-                        />
-                        {/* Pulsing Ring 2 - delayed for continuous effect */}
-                        <circle
-                          r={4}
-                          fill="none"
-                          stroke="#0052FF"
-                          strokeWidth={2}
-                          className="animate-ripple-pulse"
-                          style={{
-                            animationDelay: "1s",
-                          }}
-                        />
-                      </>
-                    )}
-                    {/* Inner Circle (solid dot) */}
-                    <circle r={4} fill="#0052FF" className="cursor-pointer" />
+                    {/* Pulsing Ring 1 - always animating with staggered delay */}
+                    <circle
+                      r={4}
+                      fill="none"
+                      stroke="#0052FF"
+                      strokeWidth={2}
+                      className="animate-ripple-pulse pointer-events-none"
+                      style={{
+                        animationDelay: `${(index * 0.3) % 2}s`,
+                      }}
+                    />
+                    {/* Pulsing Ring 2 - offset from ring 1 */}
+                    <circle
+                      r={4}
+                      fill="none"
+                      stroke="#0052FF"
+                      strokeWidth={2}
+                      className="animate-ripple-pulse pointer-events-none"
+                      style={{
+                        animationDelay: `${((index * 0.3) % 2) + 1}s`,
+                      }}
+                    />
+                    {/* Inner Circle (solid dot) - only this triggers hover */}
+                    <circle
+                      r={4}
+                      fill="#0052FF"
+                      className="cursor-pointer"
+                      onMouseEnter={handleMarkerMouseEnter(capital)}
+                      onMouseMove={handleMarkerMouseMove(capital)}
+                      onMouseLeave={handleMarkerMouseLeave}
+                    />
                   </g>
                 </Marker>
               ))}
@@ -233,8 +265,8 @@ export function WorldMapAbout() {
                 left: tooltip.x,
                 top: tooltip.y - 10,
               }}
-              onMouseEnter={() => setHoveredMarker(tooltip.iso2)}
-              onMouseLeave={handleMarkerMouseLeave}
+              onMouseEnter={handleTooltipMouseEnter}
+              onMouseLeave={handleTooltipMouseLeave}
             >
               <div className="flex items-center gap-3">
                 {/* Flag Icon */}

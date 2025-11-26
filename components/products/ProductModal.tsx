@@ -1,28 +1,27 @@
 /**
  * Product Modal Component
- * Modal dialog for displaying product details with virtual URL support
+ * Modal dialog for displaying product details
+ * Supports both ProductWithImage and QuoteItem types
  */
 
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
-import type { ProductWithImage } from "@/lib/types/products";
+import type { ProductWithImage, QuoteItem } from "@/lib/types/products";
 import { useQuoteCart } from "@/lib/hooks/useQuoteCart";
 import { cn } from "@/lib/utils";
 import { X } from "lucide-react";
+import { getProductImageFallback } from "@/lib/utils/image-helpers";
 
 interface ProductModalProps {
-  product: ProductWithImage | null;
+  product: ProductWithImage | QuoteItem | null;
   isOpen: boolean;
   onClose: () => void;
 }
 
 export function ProductModal({ product, isOpen, onClose }: ProductModalProps) {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const { addToQuote, isInQuote } = useQuoteCart();
+  const { addToQuote, isInQuote, setExpanded } = useQuoteCart();
   const [imageError, setImageError] = useState(false);
   const inCart = product ? isInQuote(product.oemSku) : false;
 
@@ -84,8 +83,11 @@ export function ProductModal({ product, isOpen, onClose }: ProductModalProps) {
   }, [isOpen]);
 
   const handleAddToQuote = () => {
-    if (product) {
-      addToQuote(product);
+    if (product && !('addedAt' in product)) {
+      // Only allow adding if it's a ProductWithImage (not a QuoteItem)
+      // QuoteItem has 'addedAt' field, ProductWithImage doesn't
+      addToQuote(product as ProductWithImage);
+      setExpanded(true);
     }
   };
 
@@ -99,11 +101,12 @@ export function ProductModal({ product, isOpen, onClose }: ProductModalProps) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200"
+      className="fixed top-0 left-0 right-0 bottom-0 z-[9999] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200"
       onClick={handleOverlayClick}
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-title"
+      style={{ width: '100vw', height: '100vh', margin: 0 }}
     >
       {/* Modal Content */}
       <div className="relative bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto animate-in zoom-in-95 duration-200">
@@ -123,9 +126,7 @@ export function ProductModal({ product, isOpen, onClose }: ProductModalProps) {
             <div className="relative aspect-square bg-gray-100 rounded-lg overflow-hidden">
               <Image
                 src={
-                  imageError
-                    ? "/images/products/default-product.avif"
-                    : product.imageUrl
+                  imageError ? getProductImageFallback() : product.imageUrl
                 }
                 alt={product.name}
                 fill
@@ -154,34 +155,43 @@ export function ProductModal({ product, isOpen, onClose }: ProductModalProps) {
 
               {/* Description */}
               <div className="flex-1 mb-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                  Description
+                <h3 className="text-lg font-semibold text-gray-900 mb-3 text-start">
+                  Notes:
                 </h3>
-                <p className="text-gray-700 leading-relaxed">
-                  {product.description}
+                <p className="text-gray-700 leading-relaxed text-start">
+                  {product.description || "No notes available"}
                 </p>
               </div>
 
               {/* Product Info */}
               <div className="bg-gray-50 rounded-lg p-4 mb-6">
-                <h3 className="text-sm font-semibold text-gray-900 mb-3">
+                <h3 className="text-sm font-semibold text-gray-900 mb-3 text-start">
                   Product Information
                 </h3>
                 <dl className="space-y-2 text-sm">
-                  <div className="flex justify-between">
+                  {/* <div className="flex justify-between">
                     <dt className="text-gray-600">Brand:</dt>
                     <dd className="font-medium text-gray-900">UCRS</dd>
-                  </div>
+                  </div> */}
                   <div className="flex justify-between">
                     <dt className="text-gray-600">Category:</dt>
                     <dd className="font-medium text-gray-900">
-                      Locomotive Components
+                      {product.parentCatName}
                     </dd>
                   </div>
                   <div className="flex justify-between">
-                    <dt className="text-gray-600">Availability:</dt>
-                    <dd className="font-medium text-green-600">In Stock</dd>
+                    <dt className="text-gray-600">Sub Category:</dt>
+                    <dd className="font-medium text-gray-900">
+                      {product.childCatName}
+                    </dd>
                   </div>
+                  <div className="flex justify-between">
+                    <dt className="text-gray-600">Group:</dt>
+                    <dd className="font-medium text-gray-900">
+                      {product.groupName}
+                    </dd>
+                  </div>
+                  
                 </dl>
               </div>
 

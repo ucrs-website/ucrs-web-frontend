@@ -29,6 +29,13 @@ export interface Product {
   description: string
   catId: number
   groupId: number
+  productId:string
+  parentCatId: number
+  childCatId: number
+  imageId: string | null
+  parentCatName: string
+  childCatName: string
+  groupName: string
 }
 
 export interface ProductWithImage extends Product {
@@ -72,13 +79,8 @@ export type ProductsResponse = PaginatedResponse<Product>
 // Quote Cart Types
 // ============================================================================
 
-export interface QuoteItem {
-  oemSku: string
-  name: string
-  description: string
-  imageUrl: string
-  catId: number
-  groupId: number
+export interface QuoteItem extends Product {
+  imageUrl: string // From ProductWithImage
   quantity: number
   addedAt: string // ISO timestamp
 }

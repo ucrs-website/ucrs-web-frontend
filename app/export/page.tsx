@@ -20,7 +20,7 @@ export const metadata = generateSEO({
     "locomotive parts export",
     "railway compliance",
     "certified rail parts",
-    "24/7 multilingual support",
+    "24/7 support",
   ],
 });
 

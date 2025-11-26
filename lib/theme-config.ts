@@ -1,21 +1,29 @@
-import designSystem from '../public/DesignSystem.json'
+import * as designSystemModule from '../public/DesignSystem.json'
 
 /**
  * UCRS Theme Configuration
  * Maps DesignSystem.json to shadcn/ui theme variables and provides utility functions
  */
 
-export const ucrsTheme = {
-  // Brand Information
-  brand: {
-    name: designSystem.designSystem.brandName,
-    fullName: designSystem.designSystem.fullName,
-    industry: designSystem.designSystem.industry,
-  },
+// Helper function to safely access the design system data
+function getThemeData() {
+  const data: any = designSystemModule
+  return data.default?.designSystem || data.designSystem
+}
 
-  // Color System - Light Mode (HSL values for shadcn/ui compatibility)
-  colors: {
-    light: {
+// Create theme object using function to avoid build worker issues
+function createTheme() {
+  const _data = getThemeData()
+  return {
+    // Brand Information
+    brand: {
+      name: _data.brandName,
+      fullName: _data.fullName,
+      industry: _data.industry,
+    },
+
+    // Color System (HSL values for shadcn/ui compatibility)
+    colors: {
       // Primary Colors (Red)
       primary: {
         DEFAULT: '0 79% 50%', // #E53E3E
@@ -113,121 +121,75 @@ export const ucrsTheme = {
       ring: '0 79% 50%',                // #E53E3E
     },
 
-    // Dark Mode Colors
-    dark: {
-      background: '214 32% 10%',        // #171923
-      foreground: '214 14% 96%',        // #F7FAFC
-      card: '214 32% 10%',              // #171923
-      'card-foreground': '214 14% 96%', // #F7FAFC
-      popover: '214 32% 10%',           // #171923
-      'popover-foreground': '214 14% 96%', // #F7FAFC
-      primary: '0 79% 50%',             // #E53E3E
-      'primary-foreground': '0 0% 100%', // #FFFFFF
-      secondary: '214 84% 37%',         // #2B6CB0
-      'secondary-foreground': '0 0% 100%', // #FFFFFF
-      muted: '214 32% 15%',             // #2D3748
-      'muted-foreground': '214 14% 65%', // #A0AEC0
-      accent: '142 71% 45%',            // #38A169
-      'accent-foreground': '0 0% 100%', // #FFFFFF
-      destructive: '0 79% 50%',        // #E53E3E
-      'destructive-foreground': '0 0% 100%', // #FFFFFF
-      border: '214 32% 15%',            // #2D3748
-      input: '214 32% 15%',             // #2D3748
-      ring: '0 79% 50%',                // #E53E3E
+    // Typography System
+    typography: {
+      fontFamily: {
+        primary: _data.typography.fontFamilies.primary,
+        heading: _data.typography.fontFamilies.heading,
+        mono: _data.typography.fontFamilies.mono,
+      },
+      fontSize: _data.typography.fontSizes,
+      fontWeight: _data.typography.fontWeights,
+      lineHeight: _data.typography.lineHeights,
     },
-  },
 
-  // Typography System
-  typography: {
-    fontFamily: {
-      primary: designSystem.designSystem.typography.fontFamilies.primary,
-      heading: designSystem.designSystem.typography.fontFamilies.heading,
-      mono: designSystem.designSystem.typography.fontFamilies.mono,
+    // Spacing System
+    spacing: _data.spacing,
+
+    // Layout System
+    layout: {
+      containerMaxWidth: _data.layout.containerMaxWidth,
+      containerPadding: _data.layout.containerPadding,
+      sectionPadding: _data.layout.sectionPadding,
+      gridGap: _data.layout.gridGap,
+      headerHeight: _data.layout.headerHeight,
     },
-    fontSize: designSystem.designSystem.typography.fontSizes,
-    fontWeight: designSystem.designSystem.typography.fontWeights,
-    lineHeight: designSystem.designSystem.typography.lineHeights,
-  },
 
-  // Spacing System
-  spacing: designSystem.designSystem.spacing,
+    // Component Specifications
+    components: _data.components,
 
-  // Layout System
-  layout: {
-    containerMaxWidth: designSystem.designSystem.layout.containerMaxWidth,
-    containerPadding: designSystem.designSystem.layout.containerPadding,
-    sectionPadding: designSystem.designSystem.layout.sectionPadding,
-    gridGap: designSystem.designSystem.layout.gridGap,
-    headerHeight: designSystem.designSystem.layout.headerHeight,
-  },
+    // Responsive Breakpoints
+    breakpoints: _data.responsive.breakpoints,
 
-  // Component Specifications
-  components: designSystem.designSystem.components,
-
-  // Responsive Breakpoints
-  breakpoints: designSystem.designSystem.responsive.breakpoints,
-
-  // Animation System
-  animations: designSystem.designSystem.animations,
+    // Animation System
+    animations: _data.animations,
+  }
 }
 
-/**
- * Utility function to get CSS custom properties for light mode
- */
-export const getLightModeCSSProperties = () => ({
-  '--background': ucrsTheme.colors.light.background,
-  '--foreground': ucrsTheme.colors.light.foreground,
-  '--card': ucrsTheme.colors.light.card,
-  '--card-foreground': ucrsTheme.colors.light['card-foreground'],
-  '--popover': ucrsTheme.colors.light.popover,
-  '--popover-foreground': ucrsTheme.colors.light['popover-foreground'],
-  '--primary': ucrsTheme.colors.light.primary.DEFAULT,
-  '--primary-foreground': ucrsTheme.colors.light.primary.foreground,
-  '--secondary': ucrsTheme.colors.light.secondary.DEFAULT,
-  '--secondary-foreground': ucrsTheme.colors.light.secondary.foreground,
-  '--muted': ucrsTheme.colors.light.muted,
-  '--muted-foreground': ucrsTheme.colors.light['muted-foreground'],
-  '--accent': ucrsTheme.colors.light.accent.green.DEFAULT,
-  '--accent-foreground': ucrsTheme.colors.light.accent.green.foreground,
-  '--destructive': ucrsTheme.colors.light.destructive,
-  '--destructive-foreground': ucrsTheme.colors.light['destructive-foreground'],
-  '--border': ucrsTheme.colors.light.border,
-  '--input': ucrsTheme.colors.light.input,
-  '--ring': ucrsTheme.colors.light.ring,
-  '--radius': '0.5rem',
-})
+export const ucrsTheme = createTheme()
 
 /**
- * Utility function to get CSS custom properties for dark mode
+ * Utility function to get CSS custom properties
  */
-export const getDarkModeCSSProperties = () => ({
-  '--background': ucrsTheme.colors.dark.background,
-  '--foreground': ucrsTheme.colors.dark.foreground,
-  '--card': ucrsTheme.colors.dark.card,
-  '--card-foreground': ucrsTheme.colors.dark['card-foreground'],
-  '--popover': ucrsTheme.colors.dark.popover,
-  '--popover-foreground': ucrsTheme.colors.dark['popover-foreground'],
-  '--primary': ucrsTheme.colors.dark.primary,
-  '--primary-foreground': ucrsTheme.colors.dark['primary-foreground'],
-  '--secondary': ucrsTheme.colors.dark.secondary,
-  '--secondary-foreground': ucrsTheme.colors.dark['secondary-foreground'],
-  '--muted': ucrsTheme.colors.dark.muted,
-  '--muted-foreground': ucrsTheme.colors.dark['muted-foreground'],
-  '--accent': ucrsTheme.colors.dark.accent,
-  '--accent-foreground': ucrsTheme.colors.dark['accent-foreground'],
-  '--destructive': ucrsTheme.colors.dark.destructive,
-  '--destructive-foreground': ucrsTheme.colors.dark['destructive-foreground'],
-  '--border': ucrsTheme.colors.dark.border,
-  '--input': ucrsTheme.colors.dark.input,
-  '--ring': ucrsTheme.colors.dark.ring,
+export const getCSSProperties = () => ({
+  '--background': ucrsTheme.colors.background,
+  '--foreground': ucrsTheme.colors.foreground,
+  '--card': ucrsTheme.colors.card,
+  '--card-foreground': ucrsTheme.colors['card-foreground'],
+  '--popover': ucrsTheme.colors.popover,
+  '--popover-foreground': ucrsTheme.colors['popover-foreground'],
+  '--primary': ucrsTheme.colors.primary.DEFAULT,
+  '--primary-foreground': ucrsTheme.colors.primary.foreground,
+  '--secondary': ucrsTheme.colors.secondary.DEFAULT,
+  '--secondary-foreground': ucrsTheme.colors.secondary.foreground,
+  '--muted': ucrsTheme.colors.muted,
+  '--muted-foreground': ucrsTheme.colors['muted-foreground'],
+  '--accent': ucrsTheme.colors.accent.green.DEFAULT,
+  '--accent-foreground': ucrsTheme.colors.accent.green.foreground,
+  '--destructive': ucrsTheme.colors.destructive,
+  '--destructive-foreground': ucrsTheme.colors['destructive-foreground'],
+  '--border': ucrsTheme.colors.border,
+  '--input': ucrsTheme.colors.input,
+  '--ring': ucrsTheme.colors.ring,
+  '--radius': '0.5rem',
 })
 
 /**
  * Get color value by path (e.g., 'primary.500', 'secondary.50')
  */
-export const getColor = (path: string, mode: 'light' | 'dark' = 'light') => {
+export const getColor = (path: string) => {
   const keys = path.split('.')
-  let current: any = ucrsTheme.colors[mode]
+  let current: any = ucrsTheme.colors
 
   for (const key of keys) {
     if (current && typeof current === 'object' && key in current) {

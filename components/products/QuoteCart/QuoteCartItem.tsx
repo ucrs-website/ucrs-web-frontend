@@ -1,6 +1,7 @@
 /**
  * Quote Cart Item Component
  * Individual product item in the quote cart dropdown
+ * Uses ProductModal for viewing details
  */
 
 'use client'
@@ -11,6 +12,7 @@ import type { QuoteItem } from '@/lib/types/products'
 import { getProductImageFallback } from '@/lib/utils/image-helpers'
 import { useState } from 'react'
 import { useQuoteCart } from '@/lib/hooks/useQuoteCart'
+import { ProductModal } from '../ProductModal'
 
 interface QuoteCartItemProps {
   item: QuoteItem
@@ -19,6 +21,7 @@ interface QuoteCartItemProps {
 
 export function QuoteCartItem({ item, onRemove }: QuoteCartItemProps) {
   const [imageError, setImageError] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const { incrementQuantity, decrementQuantity, updateQuantity } = useQuoteCart()
   const [localQuantity, setLocalQuantity] = useState(item.quantity.toString())
 
@@ -63,32 +66,44 @@ export function QuoteCartItem({ item, onRemove }: QuoteCartItemProps) {
     setLocalQuantity(item.quantity.toString())
   }
 
-  return (
-    <div className="flex items-start gap-3 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
-      {/* Product Image */}
-      <div className="flex-shrink-0 w-16 h-16 bg-gray-100 rounded-md overflow-hidden relative">
-        <Image
-          src={imageError ? getProductImageFallback() : item.imageUrl}
-          alt={item.name}
-          fill
-          className="object-contain p-1"
-          sizes="64px"
-          onError={() => setImageError(true)}
-        />
-      </div>
+  const handleViewDetails = () => {
+    setIsModalOpen(true)
+  }
 
-      {/* Product Info */}
-      <div className="flex-1 min-w-0">
-        <h4 className="text-sm font-semibold text-gray-900 line-clamp-1">
-          {item.name}
-        </h4>
-        <p className="text-xs text-gray-600 mt-0.5">{item.oemSku}</p>
-        {item.description && (
-          <p className="text-xs text-gray-500 mt-1 line-clamp-2">
-            {item.description}
-          </p>
-        )}
-      </div>
+  const handleCloseModal = () => {
+    setIsModalOpen(false)
+  }
+
+  return (
+    <>
+      <div className="flex items-start gap-3 p-3 hover:bg-gray-50 rounded-lg transition-colors group">
+        {/* Product Image */}
+        <div className="flex-shrink-0 w-16 h-16 bg-gray-100 rounded-md overflow-hidden relative">
+          <Image
+            src={imageError ? getProductImageFallback() : item.imageUrl}
+            alt={item.name}
+            fill
+            className="object-contain p-1 rounded-md"
+            sizes="64px"
+            onError={() => setImageError(true)}
+          />
+        </div>
+
+        {/* Product Info */}
+        <div className="flex-1 min-w-0">
+          <h4
+            className="text-sm font-semibold text-gray-900 line-clamp-1 cursor-pointer hover:text-primary transition-colors"
+            onClick={handleViewDetails}
+          >
+            {item.name}
+          </h4>
+          <p className="text-xs text-gray-600 mt-0.5">{item.oemSku}</p>
+          {item.description && (
+            <p className="text-xs text-gray-500 mt-1 line-clamp-2">
+              {item.description}
+            </p>
+          )}
+        </div>
 
       {/* Quantity Controls */}
       <div className="flex items-center gap-2 px-2 py-1 bg-gray-50 border border-gray-200 rounded-lg">
@@ -153,5 +168,9 @@ export function QuoteCartItem({ item, onRemove }: QuoteCartItemProps) {
         <Trash2 className="w-4 h-4" />
       </button>
     </div>
+
+    {/* Product Modal */}
+    <ProductModal product={item} isOpen={isModalOpen} onClose={handleCloseModal} />
+  </>
   )
 }

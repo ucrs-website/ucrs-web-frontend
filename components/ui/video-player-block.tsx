@@ -56,15 +56,20 @@ export function VideoPlayerBlock({
   const handleTimeUpdate = () => {
     if (videoRef.current) {
       setCurrentTime(videoRef.current.currentTime);
+      // Also update duration if it's not set yet but available
+      if (duration === 0 && !isNaN(videoRef.current.duration)) {
+        setDuration(videoRef.current.duration);
+      }
     }
   };
 
-  // Handle seek
-  const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newTime = parseFloat(e.target.value);
-    if (videoRef.current) {
+  // Handle seek (both input and click)
+  const handleSeek = (e: React.ChangeEvent<HTMLInputElement> | React.MouseEvent<HTMLInputElement>) => {
+    const target = e.target as HTMLInputElement;
+    const newTime = parseFloat(target.value);
+    if (videoRef.current && !isNaN(newTime) && duration > 0) {
       videoRef.current.currentTime = newTime;
-      setCurrentTime(newTime);
+      // Don't call setCurrentTime here - let onTimeUpdate handle it
     }
   };
 
@@ -136,6 +141,14 @@ export function VideoPlayerBlock({
     resetControlsTimeout();
   }, [isPlaying]);
 
+  // Check if video duration is already available on mount
+  useEffect(() => {
+    const video = videoRef.current;
+    if (video && !isNaN(video.duration) && video.duration > 0) {
+      setDuration(video.duration);
+    }
+  }, []);
+
   return (
     <div
       ref={containerRef}
@@ -151,6 +164,8 @@ export function VideoPlayerBlock({
         poster={videoPoster}
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
+        onLoadedData={handleLoadedMetadata}
+        onCanPlay={handleLoadedMetadata}
         onClick={togglePlay}
         playsInline
         suppressHydrationWarning
@@ -185,8 +200,11 @@ export function VideoPlayerBlock({
             type="range"
             min="0"
             max={duration || 0}
+            step="0.1"
             value={currentTime}
             onChange={handleSeek}
+            onInput={handleSeek}
+            onClick={handleSeek}
             className="w-full h-1 bg-white/30 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:cursor-pointer [&::-moz-range-thumb]:w-3 [&::-moz-range-thumb]:h-3 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-white [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:cursor-pointer"
             aria-label="Video progress"
           />

@@ -40,14 +40,16 @@ const Footer: React.FC = () => {
             {/* Action buttons */}
             <div className="flex flex-col sm:flex-row gap-3 items-center justify-center">
               {/* View demo button */}
-              <Button
-                variant="outline"
-                size="lg"
-                className="h-12 px-5 gap-2 text-base font-semibold"
-              >
-                <PlayCircle className="h-5 w-5" />
-                Factory Tour
-              </Button>
+              <Link href="/factory-tour">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="h-12 px-5 gap-2 text-base font-semibold"
+                >
+                  <PlayCircle className="h-5 w-5" />
+                  Factory Tour
+                </Button>
+              </Link>
 
               {/* Explore products button */}
               <Button
